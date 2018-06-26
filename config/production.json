@@ -7,5 +7,6 @@
   "twilioToken": "process.env.TWILIO_TOKEN",
   "twilioNumber": "process.env.TWILIO_NUMBER",
   "mailjetKey": "process.env.MAILJET_KEY",
-  "mailjetSecret": "process.env.MAILJET_SECRET"
+  "mailjetSecret": "process.env.MAILJET_SECRET",
+  "stripeLive": "process.env.STRIPE_LIVE"
 }

@@ -1,0 +1,11 @@
+{
+  "environment": "default",
+  "dbURI": "",
+  "stripeTest": "",
+  "jwtSecret": "",
+  "twilioSID": "",
+  "twilioToken": "",
+  "twilioNumber": "",
+  "mailjetKey": "",
+  "mailjetSecret": ""
+}

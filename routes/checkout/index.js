@@ -4,6 +4,7 @@ import { stripeTest } from '../../config/keys';
 import { processedText, twilioSend } from '../../apis/twilio';
 import formatPhone from './formatPhone';
 import mailjetReceipt from '../../apis/mailjet/mailjetReceipt';
+import mailjetCheckoutError from '../../apis/mailjet/mailjetCheckoutError';
 import saveOrder from './saveOrder';
 
 const stripe = stripePackage(stripeTest);
@@ -64,18 +65,34 @@ router.post('/', async (req, res) => {
     orderFields.mailjet = mailjetResponse.status;
 
     // Send twilio text message
-
     const bodyText = processedText(firstName);
     const twilioResponse = await twilioSend(bodyText, orderFields.phone);
     orderFields.twilio = twilioResponse.status;
 
     // Save order in DB
+    const dbResponse = await saveOrder(orderFields);
 
-    const newOrder = await saveOrder(orderFields);
+    // Send email if exceptions thrown
+    let errorResponse;
+    if (
+      mailjetResponse.status === 'error' ||
+      twilioResponse.status === 'error' ||
+      dbResponse.status === 'error'
+    ) {
+      const errorData = {
+        orderFields, twilioResponse, mailjetResponse, dbResponse,
+      };
+      errorResponse = await mailjetCheckoutError(errorData);
+    }
+    console.log('error: ', errorResponse);
 
-    res
-      .status(200)
-      .json({ mongoDB: newOrder, twilio: twilioResponse.status, mailjet: mailjetResponse.status });
+    // Send success response
+    res.status(200).json({
+      mongoDB: dbResponse,
+      twilio: twilioResponse.status,
+      mailjet: mailjetResponse.status,
+      errorEmail: errorResponse,
+    });
   } catch (e) {
     res.status(400).json({ message: e.message });
   }

@@ -1,8 +1,8 @@
 import nodeMailjet from 'node-mailjet';
 
-import { mailjetKey, mailjetSecret } from '../keys';
+import { mailjetKey, mailjetSecret } from '../../config/keys';
 
-const templateID = 461240;
+const templateID = 461239;
 
 // Set up mailjet connection and verify
 const mailjet = nodeMailjet.connect(
@@ -13,7 +13,7 @@ const mailjet = nodeMailjet.connect(
 // Begin async request
 const request = async (mailjetData) => {
   const {
-    email, name, additionalDescription, additionalAmount,
+    email, name, refundDescription, refundAmount,
   } = mailjetData;
 
   // Begin mailjet send api data
@@ -32,10 +32,10 @@ const request = async (mailjetData) => {
         ],
         TemplateID: templateID,
         TemplateLanguage: true,
-        Subject: 'Additional Charge',
+        Subject: 'Refund Receipt',
         Variables: {
-          additionalDescription,
-          additionalAmount,
+          refundDescription,
+          refundAmount,
         },
       },
     ],

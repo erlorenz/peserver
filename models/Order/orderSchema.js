@@ -1,8 +1,4 @@
-import mongoose from 'mongoose';
-
-const { Schema } = mongoose;
-
-const OrderSchema = new Schema({
+export default {
   created: {
     type: Date,
     default: Date.now,
@@ -160,6 +156,12 @@ const OrderSchema = new Schema({
     required: false,
     type: Number,
   },
-});
-
-export default mongoose.model('Order', OrderSchema);
+  twilio: {
+    required: true,
+    type: String,
+  },
+  mailjet: {
+    required: true,
+    type: String,
+  },
+};

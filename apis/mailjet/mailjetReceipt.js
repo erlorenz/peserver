@@ -1,6 +1,6 @@
 import nodeMailjet from 'node-mailjet';
 
-import { mailjetKey, mailjetSecret } from '../keys';
+import { mailjetKey, mailjetSecret } from '../../config/keys';
 
 const templateID = 460188;
 
@@ -52,13 +52,16 @@ const request = async (mailjetData, firstName) => {
       },
     ],
   };
+  const response = { status: 'success' };
 
   try {
-    const response = await mailjet.post('send', { version: 'v3.1' }).request(message);
-    return response.body.Messages[0].To[0].MessageID;
+    const mailjetResponse = await mailjet.post('send', { version: 'v3.1' }).request(message);
+    response.message = mailjetResponse.body.Messages[0].To[0].MessageID;
   } catch (e) {
-    return e.ErrorMessage;
+    response.status = 'error';
+    response.message = e.ErrorMessage;
   }
+  return response;
 };
 
 export default request;

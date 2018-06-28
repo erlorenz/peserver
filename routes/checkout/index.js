@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import stripePackage from 'stripe';
 import { stripeTest } from '../../config/keys';
-import { processedText, twilioSend } from '../../config/twilio';
+import { processedText, twilioSend } from '../../apis/twilio';
 import formatPhone from './formatPhone';
-import mailjetReceipt from '../../config/mailjet/mailjetReceipt';
-import Order from '../../models/Order';
+import mailjetReceipt from '../../apis/mailjet/mailjetReceipt';
+import saveOrder from './saveOrder';
 
 const stripe = stripePackage(stripeTest);
 const router = new Router();
@@ -61,18 +61,21 @@ router.post('/', async (req, res) => {
 
     // Send mailjet email
     const mailjetResponse = await mailjetReceipt(orderFields, firstName);
+    orderFields.mailjet = mailjetResponse.status;
 
     // Send twilio text message
 
     const bodyText = processedText(firstName);
     const twilioResponse = await twilioSend(bodyText, orderFields.phone);
+    orderFields.twilio = twilioResponse.status;
 
     // Save order in DB
-    const newOrder = await new Order(orderFields).save();
 
-    // Notify that processing went through but twilio was bad
+    const newOrder = await saveOrder(orderFields);
 
-    res.status(200).json({ msg: newOrder, twilio: twilioResponse, mailjet: mailjetResponse });
+    res
+      .status(200)
+      .json({ mongoDB: newOrder, twilio: twilioResponse.status, mailjet: mailjetResponse.status });
   } catch (e) {
     res.status(400).json({ message: e.message });
   }

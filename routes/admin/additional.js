@@ -1,7 +1,7 @@
 import stripePackage from 'stripe';
 import Order from '../../models/Order';
 import { stripeTest } from '../../config/keys';
-import mailjetAdditional from '../../config/mailjet/mailjetAdditional';
+import mailjetAdditional from '../../apis/mailjet/mailjetAdditional';
 
 //
 const stripe = stripePackage(stripeTest);

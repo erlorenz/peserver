@@ -1,5 +1,5 @@
 import Order from '../../models/Order';
-import { twilioSend, pickupText, outForDeliveryText, completedText } from '../../config/twilio';
+import { twilioSend, pickupText, outForDeliveryText, completedText } from '../../apis/twilio';
 //
 //
 

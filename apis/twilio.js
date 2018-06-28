@@ -1,9 +1,10 @@
 import twilio from 'twilio';
-import { twilioToken, twilioSID, twilioNumber } from './keys';
+import { twilioToken, twilioSID, twilioNumber } from '../config/keys';
 
 const client = new twilio(twilioSID, twilioToken);
 
 export const twilioSend = async (bodyText, toNumber) => {
+  const response = { status: 'success' };
   try {
     // Create and send the twilio message
     const message = await client.messages.create({
@@ -11,10 +12,12 @@ export const twilioSend = async (bodyText, toNumber) => {
       to: toNumber, // Text this number
       from: twilioNumber, // From a valid Twilio number
     });
-    return message.sid;
+    response.message = message.sid;
   } catch (e) {
-    return e.message;
+    response.status = 'error';
+    response.message = e.message;
   }
+  return response;
 };
 
 export const processedText = name =>

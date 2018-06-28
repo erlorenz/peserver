@@ -1,5 +1,4 @@
 {
-  "environment": "production",
   "dbURI": "MONGODB_URI",
   "stripeTest": "STRIPE_TEST",
   "jwtSecret": "JWT_SECRET",

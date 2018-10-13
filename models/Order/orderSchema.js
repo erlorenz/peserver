@@ -96,10 +96,24 @@ export default {
     type: String,
     default: 'Processed',
   },
-  adminComment: {
-    required: false,
-    type: String,
-  },
+  adminComments:
+  [
+    {
+      _id: false,
+      user: {
+        required: true,
+        type: String,
+      },
+      time: {
+        default: Date.now,
+        type: Date,
+      },
+      comment: {
+        required: true,
+        type: String,
+      },
+    },
+  ],
   pickedUp: {
     type: Date,
     default: null,

@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import active from './active';
-import { orderGet, orderPatch } from './id';
+import orderGet from './order';
 import completed from './completed';
 import exceptions from './exceptions';
 import cancelled from './cancelled';
 import refund from './refund';
 import additional from './additional';
+import orderPatchComments from './comments';
+import orderPatchStatus from './status';
 
 const router = new Router();
 
@@ -15,8 +17,11 @@ router.get('/active', active);
 // ----------------------------------Get individual order------------
 router.get('/order/:id', orderGet);
 
-// ----------------------------------Patch individual order ----------
-router.patch('/order/:id', orderPatch);
+// ----------------------------------Update status ----------
+router.patch('/order/:id/status', orderPatchStatus);
+
+// ----------------------------------Update status ----------
+router.patch('/order/:id/comments', orderPatchComments);
 
 // ----------------------------------Get recent completed orders ----------
 router.get('/completed', completed);

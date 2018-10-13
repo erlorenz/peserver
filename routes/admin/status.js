@@ -1,27 +1,18 @@
 import Order from '../../models/Order';
 import { twilioSend, pickupText, outForDeliveryText, completedText } from '../../apis/twilio';
-//
-//
-
-const orderGet = async (req, res) => {
-  // ----Get order by ID
-  try {
-    const order = await Order.findById(req.params.id);
-
-    res.json(order);
-    // Error
-  } catch (e) {
-    res.status(404).json({ error: e.message });
-  }
-};
 
 //
 //
-const orderPatch = async (req, res) => {
+const orderPatchStatus = async (req, res) => {
   const updates = req.body;
   let bodyText = '';
 
-  // ------Add the timestamp to the status update
+  // --- If incorrect or no status return message
+  if (!req.body.status) {
+    res.status(404).json({ error: 'nothing entered' });
+  }
+
+  // ------Add the timestamp to the status update and choose text
   if (req.body.status === 'Picked Up') {
     updates.pickedUp = Date.now();
     bodyText = pickupText;
@@ -31,7 +22,7 @@ const orderPatch = async (req, res) => {
     updates.checkedIn = Date.now();
   }
 
-  if (req.body.status === 'Out for Delivery') {
+  if (req.body.status === 'Out For Delivery') {
     updates.outForDelivery = Date.now();
     bodyText = outForDeliveryText;
   }
@@ -41,7 +32,7 @@ const orderPatch = async (req, res) => {
     bodyText = completedText;
   }
 
-  //
+
   try {
     // ---- Get and update order by ID
     const order = await Order.findByIdAndUpdate(req.params.id, { $set: updates }, { new: true });
@@ -58,4 +49,4 @@ const orderPatch = async (req, res) => {
   }
 };
 
-export { orderGet, orderPatch };
+export default orderPatchStatus;

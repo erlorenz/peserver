@@ -7,6 +7,7 @@ import connectToDB from './db/connect';
 import checkout from './routes/checkout';
 import admin from './routes/admin';
 import auth from './routes/auth';
+import customOrder from './routes/customOrder';
 import strategy from './config/passport';
 
 const app = express();
@@ -30,7 +31,7 @@ passport.use(strategy);
 app.use('/checkout', checkout);
 app.use('/admin', passport.authenticate('jwt', { session: false }), admin);
 app.use('/auth', auth);
-
+app.use('/customOrder', customOrder);
 // Basic root route
 app.get('/', (req, res) => res.send('working'));
 // Connect server to port

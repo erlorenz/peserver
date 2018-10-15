@@ -4,9 +4,7 @@ import orderFormGet from './get';
 import orderFormPatchStatus from './patchStatus';
 import orderFormPatchComments from './patchComments';
 
-
 const router = new Router();
-
 
 // ----------------------------------Add New Order ----------
 router.post('/', orderFormPost);
@@ -19,6 +17,5 @@ router.patch('/order/:id/status', orderFormPatchStatus);
 
 // ----------------------------------Update Comments ----------
 router.patch('/order/:id/comments', orderFormPatchComments);
-
 
 export default router;

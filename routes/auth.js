@@ -16,22 +16,26 @@ router.post('/login', async (req, res) => {
     // ----------Check if user exists-----------------------
     const existingUser = await User.findOne({ email });
 
+    if (!existingUser) {
+      throw new Error('User does not exist');
+    }
+
     // -------Compare password to password in DB------------------
     const isMatch = await bcrypt.compare(password, existingUser.password);
 
-    // --------Match not found ------------------------------
     if (!isMatch) {
-      throw new Error();
+      throw new Error('Password is incorrect');
     }
+
     // ------------Sign JWT and return it-------------------
     const payload = { email };
     const createToken = jwt.sign(payload, jwtSecret, { expiresIn: 3600 });
     const token = `Bearer ${createToken}`;
-    return res.json({ token });
+    return res.json({ token, userName: existingUser.name });
 
     // ---------Error----------------------
   } catch (e) {
-    return res.status(400).json({ errorMsg: 'Email/password not found' });
+    return res.status(401).json({ message: e.message });
   }
 });
 

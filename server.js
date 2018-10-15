@@ -2,12 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import passport from 'passport';
+import morgan from 'morgan';
 import config from 'config';
 import connectToDB from './db/connect';
 import checkout from './routes/checkout';
 import admin from './routes/admin';
 import auth from './routes/auth';
-import customOrder from './routes/customOrder';
+import orderForm from './routes/orderForm';
 import strategy from './config/passport';
 
 const app = express();
@@ -16,6 +17,7 @@ const app = express();
 connectToDB();
 
 // Middleware
+app.use(morgan('combined'));
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
@@ -31,9 +33,9 @@ passport.use(strategy);
 app.use('/checkout', checkout);
 app.use('/admin', passport.authenticate('jwt', { session: false }), admin);
 app.use('/auth', auth);
-app.use('/customOrder', customOrder);
+app.use('/orderform', orderForm);
 // Basic root route
-app.get('/', (req, res) => res.send('working'));
+app.get('/', (req, res) => res.send('Server is running'));
 // Connect server to port
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Express is on port ${port}!`));

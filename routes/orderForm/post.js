@@ -1,17 +1,16 @@
-import { Router } from 'express';
 import stripePackage from 'stripe';
 import { stripeTest } from '../../config/keys';
-
-
+import saveOrderForm from './saveToDB';
+//
+//
 const stripe = stripePackage(stripeTest);
-const router = new Router();
 
-// Checkout function
-router.post('/', async (req, res) => {
+
+const orderFormPost = async (req, res) => {
   // Create object of all the fields
 
   const orderFields = {};
-  orderFields.information = req.body.information;
+  orderFields.description = req.body.description;
   orderFields.totalPrice = req.body.totalPrice;
   orderFields.name = req.body.name;
   orderFields.email = req.body.email;
@@ -22,7 +21,8 @@ router.post('/', async (req, res) => {
     // Create Stripe customer
     const customer = await stripe.customers.create({
       email: req.body.email,
-      source: req.body.stripeToken,
+      // source: req.body.stripeToken,
+      source: 'tok_visa',
       metadata: {
         email: req.body.email,
         name: req.body.name,
@@ -43,35 +43,35 @@ router.post('/', async (req, res) => {
     orderFields.stripeCustomer = customer.id;
 
 
-    // Send mailjet email
-    const mailjetResponse = await mailjetReceipt(orderFields);
-    orderFields.mailjet = mailjetResponse.status;
+    // // Send mailjet email
+    // const mailjetResponse = await mailjetReceipt(orderFields);
+    // orderFields.mailjet = mailjetResponse.status;
 
     // Save order in DB
-    const dbResponse = await saveOrder(orderFields);
+    const dbResponse = await saveOrderForm(orderFields);
 
-    // Send email if exceptions thrown
-    let errorResponse;
-    if (
-      mailjetResponse.status === 'error' ||
-      dbResponse.status === 'error'
-    ) {
-      const errorData = {
-        orderFields, mailjetResponse, dbResponse,
-      };
-      errorResponse = await mailjetCheckoutError(errorData);
-    }
-    console.log('error: ', errorResponse);
+    // // Send email if exceptions thrown
+    // let errorResponse;
+    // if (
+    //   mailjetResponse.status === 'error'
+    //   || dbResponse.status === 'error'
+    // ) {
+    //   const errorData = {
+    //     orderFields, mailjetResponse, dbResponse,
+    //   };
+    //   errorResponse = await mailjetCheckoutError(errorData);
+    // }
+    // console.log('error: ', errorResponse);
 
     // Send success response
     res.status(200).json({
       mongoDB: dbResponse,
-      mailjet: mailjetResponse.status,
-      errorEmail: errorResponse,
+      // mailjet: mailjetResponse.status,
+      // errorEmail: errorResponse,
     });
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
-});
+};
 
-export default router;
+export default orderFormPost;

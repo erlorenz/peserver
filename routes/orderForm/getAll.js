@@ -1,0 +1,14 @@
+import OrderForm from '../../models/OrderForm';
+//
+//
+//
+export default async (req, res) => {
+  // ----Get all orders sorted by date
+  try {
+    const orders = await OrderForm.find().sort({ created: -1 });
+
+    res.json(orders);
+  } catch (e) {
+    res.status(404).json({ error: e.message });
+  }
+};

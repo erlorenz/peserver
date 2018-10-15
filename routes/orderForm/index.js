@@ -3,6 +3,7 @@ import orderFormPost from './post';
 import orderFormGet from './get';
 import orderFormPatchStatus from './patchStatus';
 import orderFormPatchComments from './patchComments';
+import orderFormGetAll from './getAll';
 
 const router = new Router();
 
@@ -10,12 +11,15 @@ const router = new Router();
 router.post('/', orderFormPost);
 
 // ----------------------------------Retrieve Order ----------
-router.get('/', orderFormGet);
+router.get('/:id', orderFormGet);
+
+// ----------------------------------Retrieve Order ----------
+router.get('/', orderFormGetAll);
 
 // ----------------------------------Update Status ----------
-router.patch('/order/:id/status', orderFormPatchStatus);
+router.patch('/:id/status', orderFormPatchStatus);
 
 // ----------------------------------Update Comments ----------
-router.patch('/order/:id/comments', orderFormPatchComments);
+router.patch('/:id/comments', orderFormPatchComments);
 
 export default router;

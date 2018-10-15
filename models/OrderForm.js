@@ -41,8 +41,7 @@ const OrderFormSchema = new mongoose.Schema({
     type: String,
     default: 'Processed',
   },
-  adminComments:
-  [
+  adminComments: [
     {
       _id: false,
       user: {

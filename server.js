@@ -26,16 +26,19 @@ app.use(passport.initialize());
 // Configuration
 console.log(`Environment: ${config.get('environment')}`);
 
-// Passport strategy
+// Passport
 passport.use(strategy);
+const nosession = { session: false };
 
 // Use routes
 app.use('/checkout', checkout);
-app.use('/admin', passport.authenticate('jwt', { session: false }), admin);
+app.use('/admin', passport.authenticate('jwt', nosession), admin);
+app.use('/orderform', passport.authenticate('jwt', nosession), orderForm);
 app.use('/auth', auth);
-app.use('/orderform', orderForm);
+
 // Basic root route
 app.get('/', (req, res) => res.send('Server is running'));
+
 // Connect server to port
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Express is on port ${port}!`));

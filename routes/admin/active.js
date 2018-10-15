@@ -7,7 +7,9 @@ export default async (req, res) => {
   // ----Get all orders sorted by date
   try {
     const orders = await Order.find({
-      status: { $in: ['Processed', 'Picked Up', 'Checked In', 'Out for Delivery'] },
+      status: {
+        $in: ['Processed', 'Picked Up', 'Checked In', 'Out for Delivery'],
+      },
     }).sort({ created: -1 });
 
     res.json(orders);

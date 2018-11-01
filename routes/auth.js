@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
 // whats the deal
@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
     }
 
     // -------Compare password to password in DB------------------
-    const isMatch = await bcrypt.compare(password, existingUser.password);
+    const isMatch = await bcrypt.compareSync(password, existingUser.password);
 
     if (!isMatch) {
       throw new Error('Password is incorrect');

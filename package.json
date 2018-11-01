@@ -14,27 +14,27 @@
   "author": "Erik Lorenz",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.1",
+    "bcryptjs": "^2.4.3",
     "config": "^2.0.1",
     "cors": "^2.8.4",
     "esm": "^3.0.84",
     "express": "^4.16.4",
     "helmet": "^3.14.0",
     "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.3.3",
+    "mongoose": "^5.3.8",
     "morgan": "^1.9.1",
-    "node-mailjet": "^3.3.0",
+    "node-mailjet": "^3.3.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "stripe": "^6.12.1",
-    "twilio": "^3.22.0",
+    "stripe": "^6.13.0",
+    "twilio": "^3.23.2",
     "validator": "^10.8.0"
   },
   "devDependencies": {
-    "eslint": "^5.7.0",
+    "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "nodemon": "^1.18.4",
+    "nodemon": "^1.18.5",
     "prettier": "^1.14.3"
   }
 }

@@ -36,6 +36,8 @@ app.use('/admin', passport.authenticate('jwt', nosession), admin);
 app.use('/orderform', passport.authenticate('jwt', nosession), orderForm);
 app.use('/auth', auth);
 
+// Errors
+
 // Basic root route
 app.get('/', (req, res) => res.send('Server is running'));
 

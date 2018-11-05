@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import specialOrderController from '../../controllers/specialOrder/specialOrder';
 import specialOrderGet from './get';
-import specialOrderPatchStatus from './patchStatus';
-import specialOrderPatchComments from './patchComments';
+import specialOrderPatchStatus from './changeStatus';
+import specialOrderPatchComments from './addComment';
 import specialOrderGetAll from './getAll';
 
 const router = new Router();

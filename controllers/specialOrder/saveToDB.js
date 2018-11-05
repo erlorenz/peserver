@@ -1,6 +1,6 @@
 import SpecialOrder from '../../models/SpecialOrder';
 
-const saveOrderForm = async payload => {
+const saveSpecialOrder = async payload => {
   try {
     const result = await new SpecialOrder(payload).save();
     return { status: 'success', message: result };
@@ -9,4 +9,4 @@ const saveOrderForm = async payload => {
   }
 };
 
-export default saveOrderForm;
+export default saveSpecialOrder;

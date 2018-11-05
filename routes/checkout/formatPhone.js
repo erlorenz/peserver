@@ -1,4 +1,4 @@
-const formatPhone = (phone) => {
+const formatPhone = phone => {
   let newString = phone.match(/[0-9]{0,14}/g);
 
   // Join parts returned from RegEx match

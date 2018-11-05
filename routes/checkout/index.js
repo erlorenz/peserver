@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import stripePackage from 'stripe';
 import { stripeTest } from '../../config/keys';
-import { processedText, twilioSend } from '../../apis/twilio';
+import { processedText, twilioSend } from '../../controllers/twilio';
 import formatPhone from './formatPhone';
-import mailjetReceipt from '../../apis/mailjet/mailjetReceipt';
-import mailjetCheckoutError from '../../apis/mailjet/mailjetCheckoutError';
+import mailjetReceipt from '../../controllers/mailjet/mailjetReceipt';
+import mailjetCheckoutError from '../../controllers/mailjet/mailjetCheckoutError';
 import saveOrder from './saveOrder';
 
 const stripe = stripePackage(stripeTest);
@@ -80,7 +80,10 @@ router.post('/', async (req, res) => {
       dbResponse.status === 'error'
     ) {
       const errorData = {
-        orderFields, twilioResponse, mailjetResponse, dbResponse,
+        orderFields,
+        twilioResponse,
+        mailjetResponse,
+        dbResponse,
       };
       errorResponse = await mailjetCheckoutError(errorData);
     }

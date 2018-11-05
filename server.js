@@ -9,7 +9,7 @@ import checkout from './routes/checkout';
 import admin from './routes/admin';
 import auth from './routes/auth';
 import orderForm from './routes/orderForm';
-import strategy from './config/passport';
+import strategy from './middleware/passport';
 
 const app = express();
 

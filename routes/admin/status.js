@@ -1,5 +1,10 @@
 import Order from '../../models/Order';
-import { twilioSend, pickupText, outForDeliveryText, completedText } from '../../apis/twilio';
+import {
+  twilioSend,
+  pickupText,
+  outForDeliveryText,
+  completedText,
+} from '../../controllers/twilio';
 
 //
 //
@@ -32,10 +37,13 @@ const orderPatchStatus = async (req, res) => {
     bodyText = completedText;
   }
 
-
   try {
     // ---- Get and update order by ID
-    const order = await Order.findByIdAndUpdate(req.params.id, { $set: updates }, { new: true });
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      { $set: updates },
+      { new: true },
+    );
 
     res.json(order);
 

@@ -9,9 +9,12 @@ const mailjet = nodeMailjet.connect(
 );
 
 // Begin async request
-const request = async (mailjetData) => {
+const request = async mailjetData => {
   const {
-    twilioResponse, dbResponse, mailjetResponse, orderFields,
+    twilioResponse,
+    dbResponse,
+    mailjetResponse,
+    orderFields,
   } = mailjetData;
 
   let orderDetails = '';

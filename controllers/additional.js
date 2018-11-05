@@ -1,12 +1,7 @@
-import stripePackage from 'stripe';
-import Order from '../../models/Order';
-import { stripeTest } from '../../config/keys';
-import mailjetAdditional from '../../controllers/mailjet/mailjetAdditional';
+import Order from '../models/Order';
+import mailjetAdditional from './mailjet/mailjetAdditional';
+import { createRefund } from './stripe';
 
-//
-const stripe = stripePackage(stripeTest);
-
-//
 const additional = async (req, res) => {
   //
   try {

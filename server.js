@@ -8,7 +8,7 @@ import connectToDB from './db/connect';
 import checkout from './routes/checkout';
 import admin from './routes/admin';
 import auth from './routes/auth';
-import orderForm from './routes/orderForm';
+import specialOrder from './routes/specialOrder';
 import strategy from './middleware/passport';
 
 const app = express();
@@ -33,7 +33,7 @@ const nosession = { session: false };
 // Use routes
 app.use('/checkout', checkout);
 app.use('/admin', passport.authenticate('jwt', nosession), admin);
-app.use('/orderform', passport.authenticate('jwt', nosession), orderForm);
+app.use('/specialorder', passport.authenticate('jwt', nosession), specialOrder);
 app.use('/auth', auth);
 
 // Errors

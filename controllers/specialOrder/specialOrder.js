@@ -1,10 +1,7 @@
-import stripePackage from 'stripe';
-import { stripeTest } from '../../config/keys';
-import saveOrderForm from './saveToDB';
+import saveSpecialOrder from './saveToDB';
+import { createCustomer, createCharge } from '../stripe';
 //
 //
-const stripe = stripePackage(stripeTest);
-
 
 const orderFormPost = async (req, res) => {
   // Create object of all the fields
@@ -42,13 +39,12 @@ const orderFormPost = async (req, res) => {
     orderFields.stripeCharge = charge.id;
     orderFields.stripeCustomer = customer.id;
 
-
     // // Send mailjet email
     // const mailjetResponse = await mailjetReceipt(orderFields);
     // orderFields.mailjet = mailjetResponse.status;
 
     // Save order in DB
-    const dbResponse = await saveOrderForm(orderFields);
+    const dbResponse = await saveSpecialOrder(orderFields);
 
     // // Send email if exceptions thrown
     // let errorResponse;

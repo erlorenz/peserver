@@ -55,7 +55,9 @@ const request = async (mailjetData, firstName) => {
   const response = { status: 'success' };
 
   try {
-    const mailjetResponse = await mailjet.post('send', { version: 'v3.1' }).request(message);
+    const mailjetResponse = await mailjet
+      .post('send', { version: 'v3.1' })
+      .request(message);
     response.message = mailjetResponse.body.Messages[0].To[0].MessageID;
   } catch (e) {
     response.status = 'error';

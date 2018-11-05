@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const OrderFormSchema = new mongoose.Schema({
+const SpecialOrderSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -64,4 +64,4 @@ const OrderFormSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model('OrderForm', OrderFormSchema);
+export default mongoose.model('SpecialOrder', SpecialOrderSchema);

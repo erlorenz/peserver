@@ -2,7 +2,7 @@ import config from 'config';
 
 export const dbURI = config.get('dbURI');
 
-export const stripeTest = config.get('stripeTest');
+export const stripeKey = config.get('stripeKey');
 
 export const jwtSecret = config.get('jwtSecret');
 

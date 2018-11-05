@@ -1,8 +1,8 @@
-import OrderForm from '../../models/OrderForm';
+import OrderForm from '../../models/SpecialOrder';
 
 //
 //
-const orderFormPatchComments = async (req, res) => {
+const orderFormComments = async (req, res) => {
   // ---- Validate
   if (!req.body.comment || !req.body.user) {
     return res.status(404).json({ error: 'Required data not submitted' });
@@ -22,4 +22,4 @@ const orderFormPatchComments = async (req, res) => {
   }
 };
 
-export default orderFormPatchComments;
+export default orderFormComments;

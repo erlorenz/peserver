@@ -1,23 +1,20 @@
-import stripePackage from 'stripe';
-import Order from '../../models/Order';
-import { stripeTest } from '../../config/keys';
-import mailjetRefund from '../../controllers/mailjet/mailjetRefund';
-
-//
-const stripe = stripePackage(stripeTest);
+import { createRefund } from './stripe';
+import mailjetRefund from './mailjet/mailjetRefund';
 
 //
 const refund = async (req, res) => {
-  //
+  // Create metadata object
+  const metadata = {
+    description: req.body.refundDescription,
+  };
+
   try {
     // ---- Make refund
-    const refundResponse = await stripe.refunds.create({
-      charge: req.body.stripeCharge,
-      amount: req.body.refundAmount,
-      metadata: {
-        description: req.body.refundDescription,
-      },
-    });
+    const refundResponse = await createRefund(
+      req.body.refundAmount,
+      req.body.stripeCharge,
+      metadata,
+    );
 
     // Send receipt email
     const mailjetData = {

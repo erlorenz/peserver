@@ -1,12 +1,11 @@
 {
   "environment": "production",
   "dbURI": "dbURI",
-  "stripeTest": "stripeTest",
+  "stripeKey": "stripeKey",
   "jwtSecret": "jwtSecret",
   "twilioSID": "twilioSID",
   "twilioToken": "twilioToken",
   "twilioNumber": "twilioNumber",
   "mailjetKey": "mailjetKey",
-  "mailjetSecret": "mailjetSecret",
-  "stripeLive": "stripeLive"
+  "mailjetSecret": "mailjetSecret"
 }

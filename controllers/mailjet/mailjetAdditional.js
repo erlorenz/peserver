@@ -11,10 +11,8 @@ const mailjet = nodeMailjet.connect(
 );
 
 // Begin async request
-const request = async (mailjetData) => {
-  const {
-    email, name, additionalDescription, additionalAmount,
-  } = mailjetData;
+const request = async mailjetData => {
+  const { email, name, additionalDescription, additionalAmount } = mailjetData;
 
   // Begin mailjet send api data
   const message = {
@@ -42,7 +40,9 @@ const request = async (mailjetData) => {
   };
 
   try {
-    const response = await mailjet.post('send', { version: 'v3.1' }).request(message);
+    const response = await mailjet
+      .post('send', { version: 'v3.1' })
+      .request(message);
     return response.body.Messages[0].To[0].MessageID;
   } catch (e) {
     return e.ErrorMessage;

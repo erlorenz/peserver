@@ -1,8 +1,7 @@
 {
   "environment": "default",
   "dbURI": "",
-  "stripeTest": "",
-  "stripeLive": "",
+  "stripeKey": "",
   "jwtSecret": "",
   "twilioSID": "",
   "twilioToken": "",

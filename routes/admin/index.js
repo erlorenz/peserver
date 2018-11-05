@@ -4,8 +4,8 @@ import orderGet from './order';
 import completed from './completed';
 import exceptions from './exceptions';
 import cancelled from './cancelled';
-import refund from './refund';
-import additional from './additional';
+import refundController from '../../controllers/refund';
+import additionalController from '../../controllers/additional';
 import orderPatchComments from './comments';
 import orderPatchStatus from './status';
 
@@ -33,10 +33,10 @@ router.get('/cancelled', cancelled);
 router.get('/exceptions', exceptions);
 
 // ----------------------------------Patch refund ----------
-router.patch('/order/:id/refund', refund);
+router.patch('/order/:id/refund', refundController);
 
 // ----------------------------------Patch additional charge ----------
-router.patch('/order/:id/additional', additional);
+router.patch('/order/:id/additional', additionalController);
 
 //
 export default router;

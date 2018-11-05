@@ -1,10 +1,10 @@
 import Order from '../../models/Order';
 import {
-  twilioSend,
   pickupText,
   outForDeliveryText,
   completedText,
-} from '../../controllers/twilio';
+} from '../../controllers/twilio/messages';
+import twilioSend from '../../controllers/twilio/twilio';
 
 //
 //

@@ -1,11 +1,10 @@
 {
   "dbURI": "MONGODB_URI",
-  "stripeTest": "STRIPE_TEST",
   "jwtSecret": "JWT_SECRET",
   "twilioSID": "TWILIO_SID",
   "twilioToken": "TWILIO_TOKEN",
   "twilioNumber": "TWILIO_NUMBER",
   "mailjetKey": "MAILJET_KEY",
   "mailjetSecret": "MAILJET_SECRET",
-  "stripeLive": "STRIPE_LIVE"
+  "stripeKey": "STRIPE_KEY"
 }

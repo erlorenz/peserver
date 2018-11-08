@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import specialOrderController from '../../controllers/specialOrder/specialOrder';
+import specialOrderController from '../../controllers/specialOrder';
 import specialOrderGet from './get';
 import specialOrderPatchStatus from './changeStatus';
 import specialOrderPatchComments from './addComment';

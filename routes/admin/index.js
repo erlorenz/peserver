@@ -14,15 +14,6 @@ const router = new Router();
 // ---------------------------------Get all active orders-------------
 router.get('/active', active);
 
-// ----------------------------------Get individual order------------
-router.get('/order/:id', orderGet);
-
-// ----------------------------------Update status ----------
-router.patch('/order/:id/status', orderPatchStatus);
-
-// ----------------------------------Update status ----------
-router.patch('/order/:id/comments', orderPatchComments);
-
 // ----------------------------------Get recent completed orders ----------
 router.get('/completed', completed);
 
@@ -31,6 +22,15 @@ router.get('/cancelled', cancelled);
 
 // ----------------------------------Get recent exceptions -------------
 router.get('/exceptions', exceptions);
+
+// ----------------------------------Get individual order------------
+router.get('/order/:id', orderGet);
+
+// ----------------------------------Update status ----------
+router.patch('/order/:id/status', orderPatchStatus);
+
+// ----------------------------------Update status ----------
+router.patch('/order/:id/comments', orderPatchComments);
 
 // ----------------------------------Patch refund ----------
 router.patch('/order/:id/refund', refundController);

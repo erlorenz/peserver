@@ -21,9 +21,8 @@ const orderPatchComments = async (req, res) => {
 
     res.json(order);
   } catch (e) {
-    res.status(404).json({ error: e.message });
+    res.status(400).json({ error: e.message });
   }
 };
-
 
 export default orderPatchComments;

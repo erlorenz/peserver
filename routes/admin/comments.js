@@ -5,7 +5,7 @@ import Order from '../../models/Order';
 const orderPatchComments = async (req, res) => {
   // ---- Validate
   if (!req.body.comment) {
-    return res.status(404).json({ error: 'No comment entered' });
+    return res.status(400).json({ error: 'No comment entered' });
   }
 
   // --- Create data

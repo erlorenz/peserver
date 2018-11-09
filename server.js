@@ -21,7 +21,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
-// app.use(passport.initialize());
 
 // Configuration
 console.log(`Environment: ${config.get('environment')}`);

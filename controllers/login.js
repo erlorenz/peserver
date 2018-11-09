@@ -1,7 +1,5 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import User from '../models/User';
-import { jwtSecret } from '../config/keys';
 
 export default async (req, res) => {
   const { email, password } = req.body;
@@ -10,17 +8,16 @@ export default async (req, res) => {
     if (!email || !password) throw new Error('Must fill in both fields');
 
     // ----------Check if user exists-----------------------
-    const existingUser = await User.findOne({ email });
-    if (!existingUser) throw new Error('Incorrect username/password');
+    const user = await User.findOne({ email });
+    if (!user) throw new Error('Incorrect username/password');
 
     // -------Compare password to password in DB------------------
-    const isMatch = await bcrypt.compareSync(password, existingUser.password);
+    const isMatch = await bcrypt.compareSync(password, user.password);
     if (!isMatch) throw new Error('Incorrect password/username');
 
-    // ------------Sign JWT and return it-------------------
-    const payload = { email };
-    const createToken = jwt.sign(payload, jwtSecret, { expiresIn: 3600 });
-    return res.json({ token: createToken, userName: existingUser.name });
+    // Generate JWT
+    const token = user.generateJWT();
+    return res.json({ token, userName: user.name, isAdmin: user.isAdmin });
 
     // ---------Error----------------------
   } catch (e) {

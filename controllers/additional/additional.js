@@ -49,6 +49,6 @@ export default async (req, res) => {
 
     //
   } catch (e) {
-    res.status(404).json({ error: e.message });
+    res.status(400).json({ error: e.message });
   }
 };

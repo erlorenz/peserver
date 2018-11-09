@@ -8,6 +8,7 @@ import refundController from '../../controllers/refund';
 import additionalController from '../../controllers/additional';
 import orderPatchComments from './comments';
 import orderPatchStatus from './status';
+import admin from '../../middleware/admin';
 
 const router = new Router();
 
@@ -33,10 +34,10 @@ router.patch('/order/:id/status', orderPatchStatus);
 router.patch('/order/:id/comments', orderPatchComments);
 
 // ----------------------------------Post refund ----------
-router.post('/order/:id/refund', refundController);
+router.post('/order/:id/refund', admin, refundController);
 
 // ----------------------------------Post additional charge ----------
-router.post('/order/:id/additional', additionalController);
+router.post('/order/:id/additional', admin, additionalController);
 
 //
 export default router;

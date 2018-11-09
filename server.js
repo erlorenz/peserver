@@ -9,7 +9,7 @@ import checkout from './routes/checkout';
 import admin from './routes/admin';
 import auth from './routes/auth';
 import specialOrder from './routes/specialOrder';
-import strategy from './middleware/passport';
+import authorize from './middleware/authorize';
 
 const app = express();
 
@@ -21,19 +21,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 // Configuration
 console.log(`Environment: ${config.get('environment')}`);
 
-// Passport
-passport.use(strategy);
-const nosession = { session: false };
-
 // Use routes
 app.use('/checkout', checkout);
-app.use('/admin', passport.authenticate('jwt', nosession), admin);
-app.use('/specialorder', passport.authenticate('jwt', nosession), specialOrder);
+app.use('/admin', authorize, admin);
+app.use('/specialorder', authorize, specialOrder);
 app.use('/auth', auth);
 
 // Errors

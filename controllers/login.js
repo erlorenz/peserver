@@ -20,8 +20,7 @@ export default async (req, res) => {
     // ------------Sign JWT and return it-------------------
     const payload = { email };
     const createToken = jwt.sign(payload, jwtSecret, { expiresIn: 3600 });
-    const token = `Bearer ${createToken}`;
-    return res.json({ token, userName: existingUser.name });
+    return res.json({ token: createToken, userName: existingUser.name });
 
     // ---------Error----------------------
   } catch (e) {

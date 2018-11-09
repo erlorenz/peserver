@@ -5,7 +5,7 @@ export default payload => {
     user: Joi.string().required(),
     additionalDescription: Joi.string().required(),
     additionalAmount: Joi.number().required(),
-    stripeCharge: Joi.string().required(),
+    stripeCustomer: Joi.string().required(),
   };
 
   const result = Joi.validate(payload, schema);

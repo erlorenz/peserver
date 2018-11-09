@@ -32,11 +32,11 @@ router.patch('/order/:id/status', orderPatchStatus);
 // ----------------------------------Update status ----------
 router.patch('/order/:id/comments', orderPatchComments);
 
-// ----------------------------------Patch refund ----------
-router.patch('/order/:id/refund', refundController);
+// ----------------------------------Post refund ----------
+router.post('/order/:id/refund', refundController);
 
-// ----------------------------------Patch additional charge ----------
-router.patch('/order/:id/additional', additionalController);
+// ----------------------------------Post additional charge ----------
+router.post('/order/:id/additional', additionalController);
 
 //
 export default router;

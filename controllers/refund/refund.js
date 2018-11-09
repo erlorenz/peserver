@@ -1,6 +1,7 @@
-import { createRefund } from './stripe';
-import mailjetRefund from './mailjet/mailjetRefund';
+import { createRefund } from '../stripe';
+import mailjetRefund from '../mailjet/mailjetRefund';
 import validate from './refundValidation';
+import Order from '../../models/Order';
 
 export default async (req, res) => {
   // Create refund data object

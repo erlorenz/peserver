@@ -1,9 +1,9 @@
-import Order from '../models/Order';
-import mailjetAdditional from './mailjet/mailjetAdditional';
+import Order from '../../models/Order';
+import mailjetAdditional from '../mailjet/mailjetAdditional';
 import { createCharge } from '../stripe';
 import validate from './additionalValidation';
 
-const additional = async (req, res) => {
+export default async (req, res) => {
   // Create data object
   const data = req.body;
 
@@ -15,7 +15,7 @@ const additional = async (req, res) => {
     validate(data);
 
     // ---- Make refund
-    const charge = await stripe.charges.create(
+    const charge = await createCharge(
       data.additionalAmount,
       data.stripeCustomer,
       metadata,
@@ -23,20 +23,20 @@ const additional = async (req, res) => {
 
     // Send receipt email
     const mailjetData = {
-      name: req.body.name,
-      email: req.body.email,
-      additionalAmount: req.body.additionalAmount,
-      additionalDescription: req.body.additionalDescription,
+      name: data.name,
+      email: data.email,
+      additionalAmount: data.additionalAmount,
+      additionalDescription: data.additionalDescription,
     };
 
     const mailjetResponse = await mailjetAdditional(mailjetData);
 
     const additionalDetails = {
       additionalID: charge.id,
-      additionalAmount: req.body.additionalAmount,
+      additionalAmount: data.additionalAmount,
       additionalTime: Date.now(),
-      additionalUser: req.body.userID,
-      additionalDescription: req.body.additionalDescription,
+      additionalUser: data.user,
+      additionalDescription: data.additionalDescription,
     };
 
     const order = await Order.findByIdAndUpdate(
@@ -52,5 +52,3 @@ const additional = async (req, res) => {
     res.status(404).json({ error: e.message });
   }
 };
-
-export default additional;

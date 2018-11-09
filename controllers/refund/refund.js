@@ -1,38 +1,37 @@
 import { createRefund } from './stripe';
 import mailjetRefund from './mailjet/mailjetRefund';
+import validate from './refundValidation';
 
-//
-const refund = async (req, res) => {
+export default async (req, res) => {
+  // Create refund data object
+  const data = req.body;
+
   // Create metadata object
   const metadata = {
-    description: req.body.refundDescription,
+    description: data.refundDescription,
   };
 
   try {
+    // Validate data
+    validate(data);
+
     // ---- Make refund
     const refundResponse = await createRefund(
-      req.body.refundAmount,
-      req.body.stripeCharge,
+      data.refundAmount,
+      data.stripeCharge,
       metadata,
     );
 
     // Send receipt email
-    const mailjetData = {
-      name: req.body.name,
-      email: req.body.email,
-      refundAmount: req.body.refundAmount,
-      refundDescription: req.body.refundDescription,
-    };
-
-    const mailjetResponse = await mailjetRefund(mailjetData);
+    const mailjetResponse = await mailjetRefund(data);
 
     // Update database
     const refundDetails = {
       refundID: refundResponse.id,
-      refundAmount: req.body.refundAmount,
+      refundAmount: data.refundAmount,
       refundTime: Date.now(),
-      refundUser: req.body.userID,
-      refundDescription: req.body.refundDescription,
+      refundUser: data.user,
+      refundDescription: data.refundDescription,
     };
 
     const order = await Order.findByIdAndUpdate(
@@ -45,8 +44,6 @@ const refund = async (req, res) => {
 
     //
   } catch (e) {
-    res.status(404).json({ error: e.message });
+    res.status(400).json({ error: e.message });
   }
 };
-
-export default refund;

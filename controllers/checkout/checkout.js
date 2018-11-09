@@ -4,6 +4,7 @@ import mailjetReceipt from '../mailjet/mailjetReceipt';
 import mailjetCheckoutError from '../mailjet/mailjetCheckoutError';
 import twilioSend from '../twilio/twilio';
 import { processedText } from '../twilio/messages';
+import validate from './checkoutValidation';
 
 const checkout = async (req, res) => {
   // Create order object and metadata object
@@ -14,8 +15,11 @@ const checkout = async (req, res) => {
   };
 
   try {
+    // Validation
+    validate(orderFields);
+
     // Format phone number - fails on error
-    const formattedPhone = formatPhone(req.body.phone);
+    const formattedPhone = formatPhone(orderFields.phone);
     metadata.phone = formattedPhone;
 
     // Create Stripe customer - fails on error

@@ -1,5 +1,6 @@
 import saveToDB from './saveToDB';
 import { createCustomer, createCharge } from '../stripe';
+import validate from './specialOrderValidation';
 //
 //
 
@@ -12,16 +13,19 @@ export default async (req, res) => {
   };
 
   try {
+    // Validate Data
+    validate(orderFields);
+
     // Create Stripe customer
     const customer = await createCustomer(
-      req.body.email,
-      req.body.stripeToken,
+      orderFields.email,
+      orderFields.stripeToken,
       metadata,
     );
 
     // Create Stripe charge
     const charge = await createCharge(
-      req.body.totalPrice,
+      orderFields.totalPrice,
       customer.id,
       metadata,
     );
@@ -35,7 +39,6 @@ export default async (req, res) => {
 
     // Send success response
     res.status(200).json({
-      stripe: 'Success',
       mongoDB: dbResponse,
     });
   } catch (e) {

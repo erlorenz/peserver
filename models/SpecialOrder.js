@@ -29,6 +29,22 @@ const SpecialOrderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  pickedUp: {
+    type: Date,
+    default: null,
+  },
+  checkedIn: {
+    type: Date,
+    default: null,
+  },
+  outForDelivery: {
+    type: Date,
+    default: null,
+  },
+  completed: {
+    type: Date,
+    default: null,
+  },
   stripeCharge: {
     required: true,
     type: String,

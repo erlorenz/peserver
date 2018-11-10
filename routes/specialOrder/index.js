@@ -1,25 +1,22 @@
 import { Router } from 'express';
 import specialOrderController from '../../controllers/specialOrder';
-import specialOrderGet from './get';
-import specialOrderPatchStatus from './changeStatus';
-import specialOrderPatchComments from './addComment';
-import specialOrderGetAll from './getAll';
+import order from './get';
+import changeStatus from './changeStatus';
+import addComment from './addComment';
+import active from './getAll';
+import async from '../../middleware/async';
 
 const router = new Router();
 
 // ----------------------------------Add New Order ----------
-router.post('/', specialOrderController);
+router.post('/', async(specialOrderController));
 
-// ----------------------------------Retrieve Individual Order ----------
-router.get('/:id', specialOrderGet);
+router.get('/:id', async(order));
 
-// ----------------------------------Retrieve All Orders ----------
-router.get('/', specialOrderGetAll);
+router.get('/', async(active));
 
-// ----------------------------------Update Status ----------
-router.patch('/:id/status', specialOrderPatchStatus);
+router.put('/:id/status', async(changeStatus));
 
-// ----------------------------------Update Comments ----------
-router.patch('/:id/comments', specialOrderPatchComments);
+router.put('/:id/comments', async(addComment));
 
 export default router;

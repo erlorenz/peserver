@@ -1,43 +1,34 @@
 import { Router } from 'express';
 import active from './active';
-import orderGet from './order';
+import order from './order';
 import completed from './completed';
 import exceptions from './exceptions';
 import cancelled from './cancelled';
 import refundController from '../../controllers/refund';
 import additionalController from '../../controllers/additional';
-import orderPatchComments from './comments';
-import orderPatchStatus from './status';
+import addComment from './comments';
+import changeStatus from './changeStatus';
 import admin from '../../middleware/admin';
+import async from '../../middleware/async';
 
 const router = new Router();
 
-// ---------------------------------Get all active orders-------------
-router.get('/active', active);
+router.get('/active', async(active));
 
-// ----------------------------------Get recent completed orders ----------
-router.get('/completed', completed);
+router.get('/completed', async(completed));
 
-// ----------------------------------Get recent cancelled orders ----------
-router.get('/cancelled', cancelled);
+router.get('/cancelled', async(cancelled));
 
-// ----------------------------------Get recent exceptions -------------
-router.get('/exceptions', exceptions);
+router.get('/exceptions', async(exceptions));
 
-// ----------------------------------Get individual order------------
-router.get('/order/:id', orderGet);
+router.get('/order/:id', async(order));
 
-// ----------------------------------Update status ----------
-router.patch('/order/:id/status', orderPatchStatus);
+router.put('/order/:id/status', async(changeStatus));
 
-// ----------------------------------Update status ----------
-router.patch('/order/:id/comments', orderPatchComments);
+router.put('/order/:id/comments', async(addComment));
 
-// ----------------------------------Post refund ----------
-router.post('/order/:id/refund', admin, refundController);
+router.post('/order/:id/refund', admin, async(refundController));
 
-// ----------------------------------Post additional charge ----------
-router.post('/order/:id/additional', admin, additionalController);
+router.post('/order/:id/additional', admin, async(additionalController));
 
-//
 export default router;

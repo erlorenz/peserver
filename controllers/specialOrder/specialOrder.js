@@ -12,36 +12,32 @@ export default async (req, res) => {
     phone: req.body.phone,
   };
 
-  try {
-    // Validate Data
-    validate(orderFields);
+  // Validate Data
+  validate(orderFields);
 
-    // Create Stripe customer
-    const customer = await createCustomer(
-      orderFields.email,
-      orderFields.stripeToken,
-      metadata,
-    );
+  // Create Stripe customer
+  const customer = await createCustomer(
+    orderFields.email,
+    orderFields.stripeToken,
+    metadata,
+  );
 
-    // Create Stripe charge
-    const charge = await createCharge(
-      orderFields.totalPrice,
-      customer.id,
-      metadata,
-    );
+  // Create Stripe charge
+  const charge = await createCharge(
+    orderFields.totalPrice,
+    customer.id,
+    metadata,
+  );
 
-    // Add Stripe customer and charge to orderFields
-    orderFields.stripeCharge = charge.id;
-    orderFields.stripeCustomer = customer.id;
+  // Add Stripe customer and charge to orderFields
+  orderFields.stripeCharge = charge.id;
+  orderFields.stripeCustomer = customer.id;
 
-    // Save order in DB
-    const dbResponse = await saveToDB(orderFields);
+  // Save order in DB
+  const dbResponse = await saveToDB(orderFields);
 
-    // Send success response
-    res.status(200).json({
-      mongoDB: dbResponse,
-    });
-  } catch (e) {
-    res.status(400).json({ message: e.message });
-  }
+  // Send success response
+  res.status(200).json({
+    mongoDB: dbResponse,
+  });
 };

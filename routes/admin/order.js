@@ -1,17 +1,7 @@
 import Order from '../../models/Order';
-//
-//
 
-const orderGet = async (req, res) => {
-  // ----Get order by ID
-  try {
-    const order = await Order.findById(req.params.id);
-
-    res.json(order);
-    // Error
-  } catch (e) {
-    res.status(400).json({ error: e.message });
-  }
+export default async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (!order) throw new Error('No order exists by that ID');
+  res.json(order);
 };
-
-export default orderGet;

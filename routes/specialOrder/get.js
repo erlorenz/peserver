@@ -1,17 +1,8 @@
 import OrderForm from '../../models/SpecialOrder';
-//
-//
 
-const orderFormGet = async (req, res) => {
-  // ----Get order by ID
-  try {
-    const order = await OrderForm.findById(req.params.id);
+export default async (req, res) => {
+  const order = await OrderForm.findById(req.params.id);
+  if (!order) throw new Error('No order exists with that ID');
 
-    res.json(order);
-    // Error
-  } catch (e) {
-    res.status(400).json({ error: e.message });
-  }
+  res.json(order);
 };
-
-export default orderFormGet;

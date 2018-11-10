@@ -10,6 +10,7 @@ import admin from './routes/admin';
 import auth from './routes/auth';
 import specialOrder from './routes/specialOrder';
 import authorize from './middleware/authorize';
+import error from './middleware/error';
 
 const app = express();
 
@@ -22,19 +23,18 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 
-// Configuration
+// Environment
 console.log(`Environment: ${config.get('environment')}`);
 
-// Use routes
+// Routes
 app.use('/checkout', checkout);
 app.use('/admin', authorize, admin);
 app.use('/specialorder', authorize, specialOrder);
 app.use('/auth', auth);
-
-// Errors
-
-// Basic root route
 app.get('/', (req, res) => res.send('Server is running'));
+
+// Error middleware
+app.use(error);
 
 // Connect server to port
 const port = process.env.PORT || 3001;

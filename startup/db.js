@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 import { dbURI } from '../config/keys';
+import logger from './logging';
 
 const connectToDB = async () => {
   try {
     await mongoose.connect(dbURI);
-    console.log('mlab mongodb connected');
+    logger.info('mlab mongodb connected');
   } catch (err) {
-    console.log('couldnt connect to mongodb');
+    logger.error('couldnt connect to mongodb');
   }
 };
 

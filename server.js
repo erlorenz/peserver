@@ -4,13 +4,10 @@ import helmet from 'helmet';
 import passport from 'passport';
 import morgan from 'morgan';
 import config from 'config';
-import connectToDB from './db/connect';
-import checkout from './routes/checkout';
-import admin from './routes/admin';
-import auth from './routes/auth';
-import specialOrder from './routes/specialOrder';
-import authorize from './middleware/authorize';
+import connectToDB from './startup/db';
+import routes from './startup/routes';
 import error from './middleware/error';
+import logger from './startup/logging';
 
 const app = express();
 
@@ -19,23 +16,22 @@ connectToDB();
 
 // Middleware
 app.use(morgan('dev'));
-app.use(express.json());
 app.use(cors());
 app.use(helmet());
-
-// Environment
-console.log(`Environment: ${config.get('environment')}`);
+app.use(express.json());
 
 // Routes
-app.use('/checkout', checkout);
-app.use('/admin', authorize, admin);
-app.use('/specialorder', authorize, specialOrder);
-app.use('/auth', auth);
-app.get('/', (req, res) => res.send('Server is running'));
+routes(app);
 
-// Error middleware
+// Error handler
 app.use(error);
 
 // Connect server to port
 const port = process.env.PORT || 3001;
-app.listen(port, () => console.log(`Express is on port ${port}!`));
+app.listen(port, () =>
+  logger.info(
+    `Express running... port: ${port}, Environment: ${config.get(
+      'environment',
+    )}`,
+  ),
+);

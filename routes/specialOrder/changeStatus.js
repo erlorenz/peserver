@@ -1,36 +1,20 @@
 import SpecialOrder from '../../models/SpecialOrder';
 
 export default async (req, res) => {
+  const { status } = req.body;
+
   // Validate
-  if (!req.body.status) throw new Error('Nothing entered');
+  if (!status) throw new Error('Nothing entered');
 
   // Get order by ID, update, and save
   const order = await SpecialOrder.findById(req.params.id);
 
-  // Add the timestamp and choose text
-  switch (req.body.status) {
-    case 'Picked Up':
-      order.pickedUp = Date.now();
-      break;
+  if (!order) throw new Error('No order exists by that ID');
 
-    case 'Checked In':
-      order.checkedIn = Date.now();
-      break;
+  // Change status
+  order.changeStatus(status);
 
-    case 'Out For Delivery':
-      order.outForDelivery = Date.now();
-      break;
-
-    case 'Completed':
-      order.completed = Date.now();
-      break;
-
-    default:
-      throw new Error('Status is incorrect');
-  }
-
-  order.status = req.body.status;
-
+  // Save updated order
   const result = await order.save();
 
   return res.json(result);

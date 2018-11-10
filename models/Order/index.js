@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import schema from './orderSchema';
-import statusChange from './statusChange';
+import statusChange from './orderStatusChange';
 
 const orderSchema = new mongoose.Schema(schema);
 

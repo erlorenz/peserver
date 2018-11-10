@@ -19,8 +19,7 @@ export default async (req, res) => {
   const result = await order.save();
 
   // ------Send twilio message if it is a matching status
-  let twilioSent = false;
   if (textArray.includes(status)) twilioSend(textBody[status], order.phone);
 
-  return res.json({ mongoDB: result, twilioSent });
+  return res.json(result);
 };

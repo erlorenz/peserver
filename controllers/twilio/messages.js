@@ -12,7 +12,7 @@ const completedText =
 export const textBody = {
   processed: processedText,
   pickedUp: pickedUpText,
-  outforDelivery: outForDeliveryText,
+  outForDelivery: outForDeliveryText,
   completed: completedText,
 };
 

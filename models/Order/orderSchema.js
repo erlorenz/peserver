@@ -125,7 +125,7 @@ export default {
     type: Date,
     default: null,
   },
-  delivered: {
+  completed: {
     type: Date,
     default: null,
   },

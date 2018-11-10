@@ -3,7 +3,7 @@ import formatPhone from './formatPhone';
 import mailjetReceipt from '../mailjet/mailjetReceipt';
 import mailjetCheckoutError from '../mailjet/mailjetCheckoutError';
 import twilioSend from '../twilio/twilio';
-import { processedText } from '../twilio/messages';
+import { textBody } from '../twilio/messages';
 import validate from './checkoutValidation';
 
 const checkout = async (req, res) => {
@@ -49,7 +49,10 @@ const checkout = async (req, res) => {
 
     // Send twilio text message
     const bodyText = processedText(firstName);
-    const twilioResponse = await twilioSend(bodyText, orderFields.phone);
+    const twilioResponse = await twilioSend(
+      textBody.processed,
+      orderFields.phone,
+    );
     orderFields.twilio = twilioResponse.status;
 
     // Save order in DB

@@ -1,4 +1,9 @@
 import mongoose from 'mongoose';
-import orderSchema from './orderSchema';
+import schema from './orderSchema';
+import statusChange from './statusChange';
 
-export default mongoose.model('Order', new mongoose.Schema(orderSchema));
+const orderSchema = new mongoose.Schema(schema);
+
+orderSchema.methods.changeStatus = statusChange;
+
+export default mongoose.model('Order', orderSchema);

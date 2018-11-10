@@ -2,9 +2,7 @@ import mongoose from 'mongoose';
 import { jwtSecret } from '../config/keys';
 import jwt from 'jsonwebtoken';
 
-const Schema = mongoose.Schema;
-
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,

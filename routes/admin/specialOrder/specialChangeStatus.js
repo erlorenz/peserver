@@ -1,4 +1,4 @@
-import SpecialOrder from '../../models/SpecialOrder';
+import SpecialOrder from '../../../models/SpecialOrder';
 
 export default async (req, res) => {
   const { status } = req.body;

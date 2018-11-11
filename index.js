@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import passport from 'passport';
 import morgan from 'morgan';
 import config from 'config';
 import connectToDB from './startup/db';

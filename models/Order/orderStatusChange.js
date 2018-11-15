@@ -6,6 +6,7 @@ const statusList = [
   'exception',
   'refunded',
   'cancelled',
+  'processed',
 ];
 
 export default function(status) {

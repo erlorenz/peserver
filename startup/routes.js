@@ -10,8 +10,10 @@ export default app => {
   app.use('/specialorder', authorize, specialOrderForm);
   app.use('/auth', auth);
   app.get('/', (req, res) => res.status(400).send('Server is running'));
-  app.get('/*', (req, res) => res.status(400).send({error:'BAD ADDRESS'}));
-  app.post('/*', (req, res) => res.status(400).send({error:'BAD ADDRESS'}));
-  app.put('/*', (req, res) => res.status(400).send({error: 'BAD ADDRESS'}));
-  app.delete('/*', (req, res) => res.status(400).send({error:'BAD ADDRESS'}));
+  app.get('/*', (req, res) => res.status(400).send({ error: 'BAD ADDRESS' }));
+  app.post('/*', (req, res) => res.status(400).send({ error: 'BAD ADDRESS' }));
+  app.put('/*', (req, res) => res.status(400).send({ error: 'BAD ADDRESS' }));
+  app.delete('/*', (req, res) =>
+    res.status(400).send({ error: 'BAD ADDRESS' }),
+  );
 };

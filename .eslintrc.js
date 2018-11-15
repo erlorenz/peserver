@@ -14,5 +14,7 @@ module.exports = {
           'trailingComma': 'all',
           'jsxBracketSameLine': true,
         }],
+        'no-unused-vars': 'warn',
+        'no-console' : 'warn'
       },
 };

@@ -6,9 +6,13 @@ import config from 'config';
 import connectToDB from './startup/db';
 import routes from './startup/routes';
 import error from './middleware/error';
-import logger from './startup/logging';
+import configureWinston from './startup/logging';
+import winston from 'winston';
 
 const app = express();
+
+// Logging
+configureWinston();
 
 // DB connection
 connectToDB();
@@ -28,7 +32,7 @@ app.use(error);
 // Connect server to port
 const port = process.env.PORT || 3001;
 app.listen(port, () =>
-  logger.info(
+  winston.info(
     `Express running... port: ${port}, Environment: ${config.get(
       'environment',
     )}`,

@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 import { dbURI } from '../config/keys';
-import logger from './logging';
+import winston from 'winston';
 
 const connectToDB = async () => {
   try {
     await mongoose.connect(dbURI);
-    logger.info('mlab mongodb connected');
+    winston.info('mlab mongodb connected');
   } catch (err) {
-    logger.error('couldnt connect to mongodb');
+    winston.error('couldnt connect to mongodb');
   }
 };
 

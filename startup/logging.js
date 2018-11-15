@@ -1,7 +1,10 @@
-const { createLogger, format, transports } = require('winston');
+import winston from 'winston';
+const { format, transports } = winston;
+const { combine, simple, colorize } = format;
 
-export default createLogger({
-  level: 'debug',
-  format: format.combine(format.colorize(), format.simple()),
-  transports: [new transports.Console()],
-});
+export default () => {
+  winston.configure({
+    transports: [new transports.Console()],
+    format: combine(simple(), colorize()),
+  });
+};

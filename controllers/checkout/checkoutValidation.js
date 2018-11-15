@@ -20,6 +20,7 @@ export default payload => {
     specialInstructions: Joi.string().optional(),
     totalPrice: Joi.number().required(),
     promoCode: Joi.string().optional(),
+    stripeToken: Joi.string().required(),
   };
 
   const result = Joi.validate(payload, schema);

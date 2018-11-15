@@ -1,5 +1,4 @@
-const processedText = name =>
-  `Hi ${name}, this is Press Express. We received your order... check your email for the receipt and instructions!`;
+const processedText = `Hi this is Press Express. We received your order... check your email for the receipt and instructions!`;
 
 const pickedUpText = `Update from Press Express: Your items have been picked up!`;
 

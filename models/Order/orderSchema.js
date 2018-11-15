@@ -94,7 +94,7 @@ export default {
   },
   status: {
     type: String,
-    default: 'Processed',
+    default: 'processed',
   },
   adminComments: [
     {

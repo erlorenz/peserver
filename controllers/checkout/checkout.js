@@ -5,6 +5,7 @@ import mailjetCheckoutError from '../mailjet/mailjetCheckoutError';
 import twilioSend from '../twilio/twilio';
 import { textBody } from '../twilio/messages';
 import validate from './checkoutValidation';
+import saveOrder from './saveOrder';
 
 const checkout = async (req, res) => {
   // Create order object and metadata object
@@ -21,6 +22,7 @@ const checkout = async (req, res) => {
     // Format phone number - fails on error
     const formattedPhone = formatPhone(orderFields.phone);
     metadata.phone = formattedPhone;
+    orderFields.phone = formattedPhone;
 
     // Create Stripe customer - fails on error
     const customer = await createCustomer(
@@ -48,7 +50,6 @@ const checkout = async (req, res) => {
     orderFields.mailjet = mailjetResponse.status;
 
     // Send twilio text message
-    const bodyText = processedText(firstName);
     const twilioResponse = await twilioSend(
       textBody.processed,
       orderFields.phone,
@@ -59,7 +60,7 @@ const checkout = async (req, res) => {
     const dbResponse = await saveOrder(orderFields);
 
     // Send email if exceptions thrown
-    let errorResponse;
+    let errorEmailResponse;
     if (
       mailjetResponse.status === 'error' ||
       twilioResponse.status === 'error' ||
@@ -73,8 +74,6 @@ const checkout = async (req, res) => {
       };
       errorEmailResponse = await mailjetCheckoutError(errorData);
     }
-    console.log('error: ', errorResponse);
-
     // Send success response
     res.status(200).json({
       mongoDB: dbResponse,

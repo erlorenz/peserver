@@ -1,7 +1,7 @@
 import Order from '../../models/Order';
 
 export default async (req, res) => {
-  const orders = await Order.find({ status: 'Cancelled' })
+  const orders = await Order.find({ status: 'cancelled' })
     .sort({ created: -1 })
     .limit(30);
 

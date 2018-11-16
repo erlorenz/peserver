@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { dbURI } from '../config/keys';
 import winston from 'winston';
 
-const connectToDB = async () => {
+export default async () => {
   try {
     await mongoose.connect(dbURI);
     winston.info('mlab mongodb connected');
@@ -10,5 +10,3 @@ const connectToDB = async () => {
     winston.error('couldnt connect to mongodb');
   }
 };
-
-export default connectToDB;

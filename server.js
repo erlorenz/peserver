@@ -7,6 +7,8 @@ import connectToDB from './startup/db';
 import routes from './startup/routes';
 import error from './middleware/error';
 import configureWinston from './startup/logging';
+import graphQL from './startup/graphql';
+
 import winston from 'winston';
 
 const app = express();
@@ -22,6 +24,9 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
+
+// GraphQL
+app.use('/graphql', graphQL);
 
 // Routes
 routes(app);

@@ -1,5 +1,5 @@
-const formatPhone = phone => {
-  let regExArray = phone.match(/[0-9]{0,14}/g);
+export default unformattedNumber => {
+  let regExArray = unformattedNumber.match(/[0-9]{0,14}/g);
 
   // Join parts returned from RegEx match
   const newString = regExArray.join('');
@@ -11,5 +11,3 @@ const formatPhone = phone => {
 
   return final;
 };
-
-export default formatPhone;

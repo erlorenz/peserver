@@ -1,13 +1,12 @@
-import { createCustomer, createCharge } from '../stripe';
-import formatPhone from './formatPhone';
-import mailjetReceipt from '../mailjet/mailjetReceipt';
-import mailjetCheckoutError from '../mailjet/mailjetCheckoutError';
-import twilioSend from '../twilio/twilio';
+import StripeController from '../stripe';
+import { formatPhone, tryCatchAsync } from '../../utils';
+import EmailController from '../mailjet';
+import TextController from '../twilio/twilio';
 import { textBody } from '../twilio/messages';
 import validate from './checkoutValidation';
-import saveOrder from './saveOrder';
+import Order from '../../models/Order';
 
-const checkout = async (req, res) => {
+export default async (req, res) => {
   // Create order object and metadata object
   const orderFields = req.body;
   const metadata = {
@@ -25,14 +24,14 @@ const checkout = async (req, res) => {
     orderFields.phone = formattedPhone;
 
     // Create Stripe customer - fails on error
-    const customer = await createCustomer(
+    const customer = await StripeController.createCustomer(
       orderFields.email,
       orderFields.stripeToken,
       metadata,
     );
 
     // Create Stripe Charge - fails on error
-    const charge = await createCharge(
+    const charge = await StripeController.createCharge(
       orderFields.totalPrice,
       customer.id,
       metadata,
@@ -42,48 +41,44 @@ const checkout = async (req, res) => {
     orderFields.stripeCharge = charge.id;
     orderFields.stripeCustomer = customer.id;
 
-    // Get first name
-    const firstName = orderFields.name.split(' ')[0];
-
     // Send mailjet email
-    const mailjetResponse = await mailjetReceipt(orderFields, firstName);
-    orderFields.mailjet = mailjetResponse.status;
+    const receiptResponse = await tryCatchAsync(
+      EmailController.receiptEmail(orderFields),
+    );
 
     // Send twilio text message
-    const twilioResponse = await twilioSend(
-      textBody.processed,
-      orderFields.phone,
+    const textResponse = await tryCatchAsync(
+      TextController.sendText(textBody.processed, orderFields.phone),
     );
-    orderFields.twilio = twilioResponse.status;
 
     // Save order in DB
-    const dbResponse = await saveOrder(orderFields);
+    const dbResponse = await tryCatchAsync(new Order(orderFields).save());
 
     // Send email if exceptions thrown
     let errorEmailResponse;
     if (
-      mailjetResponse.status === 'error' ||
-      twilioResponse.status === 'error' ||
-      dbResponse.status === 'error'
+      !receiptResponse.success ||
+      !textResponse.success ||
+      !dbResponse.success
     ) {
       const errorData = {
         orderFields,
-        twilioResponse,
-        mailjetResponse,
+        textResponse,
+        receiptResponse,
         dbResponse,
       };
-      errorEmailResponse = await mailjetCheckoutError(errorData);
+      errorEmailResponse = await tryCatchAsync(
+        EmailController.errorEmail(errorData),
+      );
     }
     // Send success response
     res.status(200).json({
       mongoDB: dbResponse,
-      twilio: twilioResponse.status,
-      mailjet: mailjetResponse.status,
+      twilio: textResponse.status,
+      receiptEmail: receiptResponse,
       errorEmail: errorEmailResponse,
     });
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
 };
-
-export default checkout;

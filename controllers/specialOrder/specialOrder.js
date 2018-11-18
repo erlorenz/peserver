@@ -1,6 +1,7 @@
-import saveToDB from './saveToDB';
-import { createCustomer, createCharge } from '../stripe';
+import SpecialOrder from '../../models/SpecialOrder';
+import StripeController from '../stripe';
 import validate from './specialOrderValidation';
+import { tryCatchAsync } from '../../utils';
 //
 //
 
@@ -16,14 +17,14 @@ export default async (req, res) => {
   validate(orderFields);
 
   // Create Stripe customer
-  const customer = await createCustomer(
+  const customer = await StripeController.createCustomer(
     orderFields.email,
     orderFields.stripeToken,
     metadata,
   );
 
   // Create Stripe charge
-  const charge = await createCharge(
+  const charge = await StripeController.createCharge(
     orderFields.totalPrice,
     customer.id,
     metadata,
@@ -34,7 +35,7 @@ export default async (req, res) => {
   orderFields.stripeCustomer = customer.id;
 
   // Save order in DB
-  const dbResponse = await saveToDB(orderFields);
+  const dbResponse = tryCatchAsync(new SpecialOrder(orderFields).save());
 
   // Send success response
   res.status(200).json({

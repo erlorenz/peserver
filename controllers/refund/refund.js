@@ -1,4 +1,4 @@
-import { createRefund } from '../stripe';
+import StripeController from '../stripe';
 import mailjetRefund from '../mailjet/mailjetRefund';
 import validate from './refundValidation';
 import Order from '../../models/Order';
@@ -17,7 +17,7 @@ export default async (req, res) => {
     validate(data);
 
     // ---- Make refund
-    const refundResponse = await createRefund(
+    const refundResponse = await StripeController.createRefund(
       data.refundAmount,
       data.stripeCharge,
       metadata,

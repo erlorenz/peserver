@@ -12,9 +12,9 @@ export default {
         to: toNumber, // Text this number
         from: twilioNumber, // From a valid Twilio number
       });
-      return result.sid;
+      return { success: true, message: 'Twilio Text Sent' };
     } catch (e) {
-      throw new Error(e.message);
+      return { success: false, message: e.message };
     }
   },
 };

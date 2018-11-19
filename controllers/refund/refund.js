@@ -1,7 +1,8 @@
 import StripeController from '../stripe';
-import mailjetRefund from '../mailjet/mailjetRefund';
+import EmailController from '../mailjet';
 import validate from './refundValidation';
 import Order from '../../models/Order';
+import { tryCatchAsync } from '../../utils';
 
 export default async (req, res) => {
   // Create refund data object
@@ -12,39 +13,32 @@ export default async (req, res) => {
     description: data.refundDescription,
   };
 
-  try {
-    // Validate data
-    validate(data);
+  // Validate data
+  validate(data);
 
-    // ---- Make refund
-    const refundResponse = await StripeController.createRefund(
-      data.refundAmount,
-      data.stripeCharge,
-      metadata,
-    );
+  // ---- Make refund
+  const refundResponse = await StripeController.createRefund(
+    data.refundAmount,
+    data.stripeCharge,
+    metadata,
+  );
 
-    // Send receipt email
-    const mailjetResponse = await mailjetRefund(data);
+  // Send receipt email
+  const receiptResponse = await tryCatchAsync(
+    EmailController.refundEmail(data),
+  );
 
-    // Update database
-    const refundDetails = {
-      refundID: refundResponse.id,
-      refundAmount: data.refundAmount,
-      refundTime: Date.now(),
-      refundUser: data.user,
-      refundDescription: data.refundDescription,
-    };
+  // Update database
+  const refundDetails = {
+    refundID: refundResponse.id,
+    refundAmount: data.refundAmount,
+    refundTime: Date.now(),
+    refundUser: data.user,
+    refundDescription: data.refundDescription,
+  };
 
-    const order = await Order.findByIdAndUpdate(
-      req.params.id,
-      { $set: refundDetails },
-      { new: true },
-    );
+  const order = await Order.findById(req.params.id);
+  order.refunds.push(refundDetails);
 
-    res.json({ msg: order, mailjet: mailjetResponse });
-
-    //
-  } catch (e) {
-    res.status(400).json({ error: e.message });
-  }
+  res.json({ msg: order, email: receiptResponse });
 };

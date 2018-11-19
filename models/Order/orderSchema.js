@@ -129,51 +129,60 @@ export default {
     type: Date,
     default: null,
   },
-  refundID: {
-    required: false,
-    type: String,
-  },
-  refundTime: {
-    required: false,
-    type: Date,
-  },
-  refundUser: {
-    required: false,
-    type: String,
-  },
-  refundDescription: {
-    required: false,
-    type: String,
-  },
-  refundAmount: {
-    required: false,
-    type: Number,
-  },
-  additionalID: {
-    required: false,
-    type: String,
-  },
-  additionalTime: {
-    type: Date,
-    default: null,
-  },
-  additionalUser: {
-    required: false,
-    type: String,
-  },
-  additionalDescription: {
-    required: false,
-    type: String,
-  },
-  additionalAmount: {
-    required: false,
-    type: Number,
-  },
-  twilio: {
+  refunds: [
+    {
+      refundID: {
+        required: true,
+        type: String,
+      },
+      refundTime: {
+        required: true,
+        type: Date,
+      },
+      refundUser: {
+        required: true,
+        type: String,
+      },
+      refundDescription: {
+        required: true,
+        type: String,
+      },
+      refundAmount: {
+        required: true,
+        type: Number,
+      },
+    },
+  ],
+  additionals: [
+    {
+      additionalID: {
+        required: true,
+        type: String,
+      },
+      additionalTime: {
+        type: Date,
+        default: true,
+      },
+      additionalUser: {
+        required: true,
+        type: String,
+      },
+      additionalDescription: {
+        required: true,
+        type: String,
+      },
+      additionalAmount: {
+        required: true,
+        type: Number,
+      },
+    },
+  ],
+
+  textSent: {
     required: true,
     type: String,
   },
-  mailjet: {
+  emailSent: {
     required: true,
     type: String,
   },

@@ -7,33 +7,31 @@ const mailjet = nodeMailjet.connect(
 );
 
 export default async (payload, templateID, subject) => {
-  const message = {
-    Messages: [
-      {
-        From: {
-          Email: 'support@pressexpresslv.com',
-          Name: 'Press Express',
-        },
-        To: [
-          {
-            Email: payload.email,
-            Name: payload.name,
-          },
-        ],
-        TemplateID: templateID,
-        TemplateLanguage: true,
-        Subject: subject,
-        Variables: payload,
-      },
-    ],
-  };
-
   try {
-    const result = await mailjet
-      .post('send', { version: 'v3.1' })
-      .request(message);
-    return result.body.Messages[0].To[0].MessageID;
+    const message = {
+      Messages: [
+        {
+          From: {
+            Email: 'support@pressexpresslv.com',
+            Name: 'Press Express',
+          },
+          To: [
+            {
+              Email: payload.email,
+              Name: payload.name,
+            },
+          ],
+          TemplateID: templateID,
+          TemplateLanguage: true,
+          Subject: subject,
+          Variables: payload,
+        },
+      ],
+    };
+
+    await mailjet.post('send', { version: 'v3.1' }).request(message);
+    return { success: true, message: 'Email Sent' };
   } catch (e) {
-    throw new Error(e.ErrorMessage);
+    return { success: false, message: e.ErrorMessage };
   }
 };

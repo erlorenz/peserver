@@ -8,6 +8,7 @@ export default payload => {
       .required(),
     phone: Joi.string()
       .min(10)
+      .max(10)
       .required(),
     room: Joi.string().required(),
     hotel: Joi.string().required(),

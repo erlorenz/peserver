@@ -1,5 +1,5 @@
 export default unformattedNumber => {
-  let regExArray = unformattedNumber.match(/[0-9]{0,14}/g);
+  const regExArray = unformattedNumber.match(/[0-9]{0,14}/g);
 
   // Join parts returned from RegEx match
   const newString = regExArray.join('');

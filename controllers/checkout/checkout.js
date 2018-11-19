@@ -1,5 +1,5 @@
 import StripeController from '../stripe';
-import { formatPhone, tryCatchAsync } from '../../utils';
+import { formatPhone } from '../../utils';
 import EmailController from '../mailjet';
 import TextController from '../twilio/twilio';
 import { textBody } from '../twilio/messages';
@@ -42,17 +42,18 @@ export default async (req, res) => {
     orderFields.stripeCustomer = customer.id;
 
     // Send mailjet email
-    const receiptResponse = await tryCatchAsync(
-      EmailController.receiptEmail(orderFields),
-    );
+    const receiptResponse = await EmailController.receiptEmail(orderFields);
+    orderFields.emailSent = receiptResponse.success;
 
     // Send twilio text message
-    const textResponse = await tryCatchAsync(
-      TextController.sendText(textBody.processed, orderFields.phone),
+    const textResponse = await TextController.sendText(
+      textBody.processed,
+      orderFields.phone,
     );
+    orderFields.textSent = textResponse.success;
 
     // Save order in DB
-    const dbResponse = await tryCatchAsync(new Order(orderFields).save());
+    const dbResponse = await Order.createNew(orderFields);
 
     // Send email if exceptions thrown
     let errorEmailResponse;
@@ -67,18 +68,16 @@ export default async (req, res) => {
         receiptResponse,
         dbResponse,
       };
-      errorEmailResponse = await tryCatchAsync(
-        EmailController.errorEmail(errorData),
-      );
+      errorEmailResponse = await EmailController.errorEmail(errorData);
     }
     // Send success response
     res.status(200).json({
       mongoDB: dbResponse,
-      twilio: textResponse.status,
+      twilio: textResponse,
       receiptEmail: receiptResponse,
-      errorEmail: errorEmailResponse,
+      errorEmail: errorEmailResponse || 'No error email necessary',
     });
   } catch (e) {
-    res.status(400).json({ message: e.message });
+    res.json({ error: e.message });
   }
 };

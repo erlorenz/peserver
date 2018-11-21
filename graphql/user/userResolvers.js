@@ -1,5 +1,5 @@
-import loginController from './loginController';
+import User from '../../models/User';
 
 export const Mutation = {
-  login: (_, { email, password }) => loginController(email, password),
+  login: (_, { email, password }) => User.login(email, password),
 };

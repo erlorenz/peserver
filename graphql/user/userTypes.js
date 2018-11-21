@@ -4,13 +4,13 @@ export default gql`
   type User {
     name: String!
     email: String!
-    password: String!
-    isAdmin: Boolean!
+    roles: [String!]!
+    _id: ID!
   }
   type UserLoginResponse {
     token: String!
-    isAdmin: Boolean!
-    userName: String!
+    name: String!
+    roles: [String]
   }
   extend type Query {
     me: User

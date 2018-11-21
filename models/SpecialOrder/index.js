@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import schema from './SpecialOrderSchema';
+import schema from './specialOrderSchema';
 import statusChange from './specialOrderStatusChange';
 
 const specialOrderSchema = new mongoose.Schema(schema);

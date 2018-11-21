@@ -4,8 +4,6 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import config from 'config';
 import connectToDB from './startup/db';
-import routes from './startup/routes';
-import error from './middleware/error';
 import configureWinston from './startup/logging';
 import apolloServer from './graphql/schema';
 
@@ -27,12 +25,6 @@ app.use(express.json());
 
 // GraphQL
 apolloServer.applyMiddleware({ app });
-
-// Routes
-routes(app);
-
-// Error handler
-app.use(error);
 
 // Connect server to port
 const port = process.env.PORT || 3001;

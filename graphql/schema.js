@@ -5,6 +5,7 @@ import specialOrderTypes from './specialOrder/specialOrderTypes';
 import * as userResolvers from './user/userResolvers';
 import * as orderResolvers from './order/orderResolvers';
 import * as specialOrderResolvers from './specialOrder/specialOrderResolvers';
+import contextFunction from './context';
 
 // Combine typedefs
 const root = gql`
@@ -27,4 +28,5 @@ const resolvers = {
 export default new ApolloServer({
   typeDefs,
   resolvers,
+  context: contextFunction,
 });

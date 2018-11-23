@@ -12,6 +12,6 @@ export default async ({ req }) => {
 
     return { user, models };
   } catch (e) {
-    return;
+    return { models };
   }
 };

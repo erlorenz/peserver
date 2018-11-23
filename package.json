@@ -16,7 +16,7 @@
   "dependencies": {
     "apollo-server-express": "^2.2.2",
     "bcryptjs": "^2.4.3",
-    "config": "^2.0.2",
+    "config": "^3.0.0",
     "cors": "^2.8.5",
     "debug": "^4.1.0",
     "esm": "^3.0.84",

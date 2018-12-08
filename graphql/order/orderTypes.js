@@ -11,9 +11,13 @@ export default gql`
     hotel: String!
     room: String!
   }
+  input FindInput {
+    type: String!
+    value: String!
+  }
   extend type Query {
     ordersByStatus(status: [String]): [Order!]
     orderById(_id: ID!): Order!
-    orderByEmail(email: String!): [Order!]
+    orderByInput(input: FindInput!): [Order!]!
   }
 `;

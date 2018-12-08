@@ -14,5 +14,6 @@ export default gql`
   extend type Query {
     specialOrdersByStatus(status: [String]): [SpecialOrder!]
     specialOrderById(_id: ID!): SpecialOrder!
+    specialOrderByEmail(email: String!): [SpecialOrder!]
   }
 `;

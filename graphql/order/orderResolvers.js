@@ -1,5 +1,6 @@
 import { checkAuth } from '../../utils';
 import { UserInputError } from 'apollo-server-express';
+import checkoutController from '../../controllers/checkout';
 
 export const Query = {
   //
@@ -16,7 +17,7 @@ export const Query = {
       status: {
         $in: status,
       },
-    });
+    }).sort({ _id: -1 });
 
     // Throw error if no order found
     if (result.length === 0)
@@ -69,5 +70,11 @@ export const Query = {
       );
 
     return result;
+  },
+};
+
+export const Mutation = {
+  checkout: async (_, { payload }) => {
+    return await checkoutController(payload);
   },
 };

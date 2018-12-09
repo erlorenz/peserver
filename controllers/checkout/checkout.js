@@ -5,13 +5,14 @@ import TextController from '../twilio/twilio';
 import { textBody } from '../twilio/messages';
 import validate from './checkoutValidation';
 import Order from '../../models/Order';
+import { ApolloError } from 'apollo-server-express';
 
-export default async (req, res) => {
+export default async payload => {
   // Create order object and metadata object
-  const orderFields = req.body;
+  const orderFields = payload;
   const metadata = {
-    email: req.body.email,
-    name: req.body.name,
+    email: payload.email,
+    name: payload.name,
   };
 
   try {
@@ -54,7 +55,7 @@ export default async (req, res) => {
 
     // Save order in DB
     const dbResponse = await Order.createNew(orderFields);
-
+    console.log(dbResponse);
     // Send email if exceptions thrown
     let errorEmailResponse;
     if (
@@ -71,13 +72,13 @@ export default async (req, res) => {
       errorEmailResponse = await EmailController.errorEmail(errorData);
     }
     // Send success response
-    res.status(200).json({
+    return {
       mongoDB: dbResponse,
       twilio: textResponse,
       receiptEmail: receiptResponse,
       errorEmail: errorEmailResponse || 'No error email necessary',
-    });
+    };
   } catch (e) {
-    res.json({ error: e.message });
+    throw new ApolloError(e.message);
   }
 };

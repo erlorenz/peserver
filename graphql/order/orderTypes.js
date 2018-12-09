@@ -39,9 +39,53 @@ export default gql`
     name: String!
     amount: Int!
   }
+  type DbResponse {
+    success: Boolean!
+    message: Order
+  }
+  type SuccessAndMessage {
+    success: Boolean
+    message: String
+  }
+  type CheckoutResponse {
+    mongoDB: DbResponse!
+    twilio: SuccessAndMessage
+    receiptEmail: SuccessAndMessage
+    errorEmail: SuccessAndMessage
+  }
+  input CheckoutPayload {
+    name: String!
+    totalPrice: Int!
+    phone: String!
+    email: String!
+    hotel: String!
+    room: String!
+    pickupDate: String!
+    returnDate: String!
+    starch: Boolean!
+    specialInstructions: String
+    promoCode: PromoCodeInput
+    cartItems: [CartItemInput!]!
+    stripeToken: String!
+  }
+  input PromoCodeInput {
+    name: String!
+    id: String!
+    price: Int!
+    quantity: Int!
+  }
+  input CartItemInput {
+    name: String!
+    id: String!
+    price: Int!
+    quantity: Int!
+  }
   extend type Query {
     ordersByStatus(status: [String]): [Order!]
     orderById(_id: ID!): Order!
     ordersMatch(input: FieldAndValue!): [Order!]!
+  }
+  extend type Mutation {
+    checkout(payload: CheckoutPayload!): CheckoutResponse!
   }
 `;

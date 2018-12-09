@@ -13,7 +13,7 @@ const typeDefs = [orderTypes, userTypes, specialOrderTypes, sharedTypes];
 // Combine resolvers
 const resolvers = {
   Query: { ...orderResolvers.Query, ...specialOrderResolvers.Query },
-  Mutation: { ...userResolvers.Mutation },
+  Mutation: { ...userResolvers.Mutation, ...orderResolvers.Mutation },
 };
 
 export default new ApolloServer({

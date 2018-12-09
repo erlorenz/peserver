@@ -17,7 +17,7 @@ export default {
     type: String,
   },
   pickupHour: {
-    required: true,
+    required: false,
     type: String,
   },
   returnDate: {
@@ -25,10 +25,9 @@ export default {
     type: String,
   },
   returnHour: {
-    required: true,
+    required: false,
     type: String,
   },
-
   cartItems: [
     {
       _id: false,

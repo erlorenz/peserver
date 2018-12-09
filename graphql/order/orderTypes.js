@@ -10,14 +10,38 @@ export default gql`
     email: String!
     hotel: String!
     room: String!
+    created: String!
+    pickupDate: String!
+    returnDate: String!
+    starch: Boolean!
+    specialInstructions: String
+    promoCode: PromoCode
+    stripeCharge: String!
+    stripeCustomer: String!
+    adminComments: [AdminComment!]
+    pickedUp: String
+    checkedIn: String
+    outForDelivery: String
+    completed: String
+    refunds: [Refund!]
+    additionals: [Additional!]
+    textSent: String!
+    emailSent: String!
+    cartItems: [CartItem!]!
   }
-  input FindInput {
-    type: String!
-    value: String!
+  type CartItem {
+    name: String!
+    id: String!
+    price: Int!
+    quantity: Int!
+  }
+  type PromoCode {
+    name: String!
+    amount: Int!
   }
   extend type Query {
     ordersByStatus(status: [String]): [Order!]
     orderById(_id: ID!): Order!
-    orderByInput(input: FindInput!): [Order!]!
+    ordersMatch(input: FieldAndValue!): [Order!]!
   }
 `;

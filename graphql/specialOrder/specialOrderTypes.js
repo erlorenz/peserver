@@ -10,10 +10,20 @@ export default gql`
     email: String!
     company: String!
     description: String!
+    adminComments: [AdminComment!]
+    refunds: [Refund!]
+    additionals: [Additional!]
+    pickedUp: String
+    checkedIn: String
+    outForDelivery: String
+    completed: String
+    stripeCharge: String!
+    stripeCustomer: String!
+    created: String!
   }
   extend type Query {
-    specialOrdersByStatus(status: [String]): [SpecialOrder!]
+    specialOrdersByStatus(status: [String]): [SpecialOrder!]!
     specialOrderById(_id: ID!): SpecialOrder!
-    specialOrderByEmail(email: String!): [SpecialOrder!]
+    specialOrdersMatch(input: FieldAndValue!): [SpecialOrder!]!
   }
 `;

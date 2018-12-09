@@ -136,7 +136,7 @@ export default {
         type: String,
       },
       refundTime: {
-        required: true,
+        default: Date.now,
         type: Date,
       },
       refundUser: {
@@ -161,7 +161,7 @@ export default {
       },
       additionalTime: {
         type: Date,
-        default: true,
+        default: Date.now,
       },
       additionalUser: {
         required: true,

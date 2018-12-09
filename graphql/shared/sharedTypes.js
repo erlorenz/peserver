@@ -8,11 +8,6 @@ export default gql`
     PARTIAL
   }
 
-  input FieldAndValue {
-    field: String!
-    value: String!
-    matchType: MatchTypes!
-  }
   type AdminComment {
     user: String!
     time: String!
@@ -31,6 +26,31 @@ export default gql`
     additionalUser: String!
     additionalDescription: String!
     additionalAmount: Int!
+  }
+
+  input FieldAndValue {
+    field: String!
+    value: String!
+    matchType: MatchTypes!
+  }
+  input AdminCommentInput {
+    _id: ID!
+    user: String!
+    comment: String!
+  }
+  input RefundInput {
+    _id: ID!
+    user: String
+    refundDescription: String
+    refundAmount: Int
+    stripeCharge: String
+  }
+  input AdditionalInput {
+    _id: ID!
+    user: String
+    additionalDescription: String
+    additioanlAmount: Int
+    stripeCustomer: String
   }
 
   type Query {

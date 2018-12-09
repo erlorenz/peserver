@@ -2,11 +2,10 @@ import StripeController from '../stripe';
 import EmailController from '../mailjet';
 import validate from './refundValidation';
 import Order from '../../models/Order';
-import { tryCatchAsync } from '../../utils';
 
-export default async (req, res) => {
+export default async payload => {
   // Create refund data object
-  const data = req.body;
+  const data = { ...payload };
 
   // Create metadata object
   const metadata = {
@@ -24,9 +23,7 @@ export default async (req, res) => {
   );
 
   // Send receipt email
-  const receiptResponse = await tryCatchAsync(
-    EmailController.refundEmail(data),
-  );
+  const receiptResponse = await EmailController.refundEmail(data);
 
   // Update database
   const refundDetails = {
@@ -37,8 +34,8 @@ export default async (req, res) => {
     refundDescription: data.refundDescription,
   };
 
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(payload._id);
   order.refunds.push(refundDetails);
 
-  res.json({ msg: order, email: receiptResponse });
+  return { msg: order, email: receiptResponse };
 };

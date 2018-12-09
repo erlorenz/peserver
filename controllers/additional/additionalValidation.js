@@ -2,6 +2,7 @@ import Joi from 'joi';
 
 export default payload => {
   const schema = {
+    _id: Joi.string().required(),
     user: Joi.string().required(),
     additionalDescription: Joi.string().required(),
     additionalAmount: Joi.number().required(),

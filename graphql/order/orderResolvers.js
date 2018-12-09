@@ -1,6 +1,7 @@
 import { checkAuth } from '../../utils';
 import { UserInputError } from 'apollo-server-express';
 import checkoutController from '../../controllers/checkout';
+import { changeStatus } from '../../controllers/adminActions';
 
 export const Query = {
   //
@@ -74,7 +75,11 @@ export const Query = {
 };
 
 export const Mutation = {
-  checkout: async (_, { payload }) => {
-    return await checkoutController(payload);
+  checkout(_, { payload }) {
+    return checkoutController(payload);
+  },
+
+  orderChangeStatus(_, { status, _id }, { models }) {
+    return changeStatus(status, _id, models.Order);
   },
 };

@@ -1,4 +1,4 @@
-import Order from '../../../models/Order';
+import Order from '../../models/Order';
 
 export default async (req, res) => {
   // ---- Validate

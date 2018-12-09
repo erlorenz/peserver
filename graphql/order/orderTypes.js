@@ -87,5 +87,7 @@ export default gql`
   }
   extend type Mutation {
     checkout(payload: CheckoutPayload!): CheckoutResponse!
+    orderChangeStatus(status: String!, _id: ID!): Order!
+    orderAddComment(payload: AdminCommentInput!): Order!
   }
 `;

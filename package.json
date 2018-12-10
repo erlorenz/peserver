@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon -r esm server.js ",
-    "start": "node -r esm server.js"
+    "start": "node -r esm server.js",
+    "debug": "nodemon -r esm --inspect server.js"
   },
   "author": "Erik Lorenz",
   "license": "ISC",

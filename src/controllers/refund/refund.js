@@ -1,5 +1,5 @@
-import StripeController from '../stripe';
-import EmailController from '../mailjet';
+import StripeController from '../../services/stripe';
+import EmailController from '../../services/mailjet';
 import validate from './refundValidation';
 import Order from '../../models/Order';
 

@@ -1,7 +1,7 @@
 import { UserInputError, ApolloError } from 'apollo-server-express';
 
-import { textBody, textArray } from '../twilio/messages';
-import twilioSend from '../twilio/twilio';
+import { textBody, textArray } from '../../services/twilio/messages';
+import twilioSend from '../../services/twilio/twilio';
 
 export default async (status, _id, Model) => {
   if (!status) throw new UserInputError('No status submitted');

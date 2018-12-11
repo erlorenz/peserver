@@ -1,20 +1,21 @@
 import SpecialOrder from '../../models/SpecialOrder';
-import StripeController from '../stripe';
+import StripeController from '../../services/stripe';
 import validate from './specialOrderValidation';
-import { tryCatchAsync } from '../../utils';
 //
 //
 
-export default async (req, res) => {
-  const orderFields = req.body;
-  const metadata = {
-    email: req.body.email,
-    name: req.body.name,
-    phone: req.body.phone,
-  };
+export default async payload => {
+  const orderFields = { ...payload };
 
   // Validate Data
   validate(orderFields);
+
+  // Create Metadata
+  const metadata = {
+    email: orderFields.email,
+    name: orderFields.name,
+    phone: orderFields.phone,
+  };
 
   // Create Stripe customer
   const customer = await StripeController.createCustomer(
@@ -35,10 +36,10 @@ export default async (req, res) => {
   orderFields.stripeCustomer = customer.id;
 
   // Save order in DB
-  const dbResponse = tryCatchAsync(new SpecialOrder(orderFields).save());
+  const dbResponse = await new SpecialOrder(orderFields).save();
 
   // Send success response
-  res.status(200).json({
+  return {
     mongoDB: dbResponse,
-  });
+  };
 };

@@ -1,8 +1,8 @@
-import StripeController from '../stripe';
+import StripeController from '../../services/stripe';
 import { formatPhone } from '../../utils';
-import EmailController from '../mailjet';
-import TextController from '../twilio/twilio';
-import { textBody } from '../twilio/messages';
+import EmailAPI from '../../services/mailjet';
+import TextAPI from '../../services/twilio';
+import { textBody } from '../../services/twilio/messages';
 import validate from './checkoutValidation';
 import Order from '../../models/Order';
 import { ApolloError } from 'apollo-server-express';
@@ -43,11 +43,11 @@ export default async payload => {
     orderFields.stripeCustomer = customer.id;
 
     // Send mailjet email
-    const receiptResponse = await EmailController.receiptEmail(orderFields);
+    const receiptResponse = await EmailAPI.receiptEmail(orderFields);
     orderFields.emailSent = receiptResponse.success;
 
     // Send twilio text message
-    const textResponse = await TextController.sendText(
+    const textResponse = await TextAPI.sendText(
       textBody.processed,
       orderFields.phone,
     );
@@ -57,7 +57,7 @@ export default async payload => {
     const dbResponse = await Order.createNew(orderFields);
     console.log(dbResponse);
     // Send email if exceptions thrown
-    let errorEmailResponse;
+    let errorEmailResponse = 'No error email necessary';
     if (
       !receiptResponse.success ||
       !textResponse.success ||
@@ -69,14 +69,14 @@ export default async payload => {
         receiptResponse,
         dbResponse,
       };
-      errorEmailResponse = await EmailController.errorEmail(errorData);
+      errorEmailResponse = await EmailAPI.errorEmail(errorData);
     }
     // Send success response
     return {
       mongoDB: dbResponse,
       twilio: textResponse,
       receiptEmail: receiptResponse,
-      errorEmail: errorEmailResponse || 'No error email necessary',
+      errorEmail: errorEmailResponse,
     };
   } catch (e) {
     throw new ApolloError(e.message);

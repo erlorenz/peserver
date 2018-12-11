@@ -3,8 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import 'dotenv/config';
 import morgan from 'morgan';
-import connectToDB from './startup/db';
-import configureWinston from './startup/logging';
+import connectToDB from './db';
+import configureWinston from './config/logging';
 import apolloServer from './graphql/schema';
 import winston from 'winston';
 

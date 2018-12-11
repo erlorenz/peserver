@@ -1,6 +1,6 @@
 import Order from '../../models/Order';
-import EmailController from '../mailjet';
-import StripeController from '../stripe';
+import EmailController from '../../services/mailjet';
+import StripeController from '../../services/stripe';
 import validate from './additionalValidation';
 import { tryCatchAsync } from '../../utils';
 

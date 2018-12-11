@@ -4,7 +4,10 @@ import winston from 'winston';
 
 export default async () => {
   try {
-    await mongoose.connect(dbURI);
+    await mongoose.connect(
+      dbURI,
+      { useNewUrlParser: true },
+    );
     winston.info('mlab mongodb connected');
   } catch (err) {
     winston.error('couldnt connect to mongodb');

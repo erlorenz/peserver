@@ -1,3 +1,4 @@
 node_modules/ 
 src/config/development.json
 .env
+dist/

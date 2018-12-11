@@ -8,7 +8,25 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/server.js"
-        }
+            "program": "${workspaceFolder}/dist/server.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Nodemon",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/nodemon/bin/nodemon.js",
+            "args": [
+                "${workspaceRoot}/src/server.js"
+            ],
+            "restart": true,
+            "protocol": "inspector",
+            "stopOnEntry": false,
+            "runtimeArgs": [
+                "--nolazy",
+                "--require",
+                "babel-core"
+            ],
+            "sourceMaps": true
+        },
     ]
 }

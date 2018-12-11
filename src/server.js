@@ -1,16 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import 'dotenv/config';
 import morgan from 'morgan';
 import connectToDB from './startup/db';
 import configureWinston from './startup/logging';
 import apolloServer from './graphql/schema';
 import winston from 'winston';
 
-import dotenv from 'dotenv';
-dotenv.config();
-console.log(process.env.NODE_ENV);
-
+// Initialize express
 const app = express();
 
 // Logging

@@ -7,7 +7,7 @@ export default {
   async sendText(bodyText, toNumber) {
     try {
       // Create and send the twilio message
-      const result = await client.messages.create({
+      await client.messages.create({
         body: bodyText, // This is the message that will be sent
         to: toNumber, // Text this number
         from: twilioNumber, // From a valid Twilio number

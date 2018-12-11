@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node src/server.js",
-    "start": "node dist/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
     "debug": "nodemon src/server.js --inspect --exec babel-node",
     "build": "./node_modules/.bin/babel src -d dist"
   },

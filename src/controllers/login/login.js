@@ -4,16 +4,17 @@ import {
   UserInputError,
   ApolloError,
 } from 'apollo-server-express';
-import User from '../../models/User';
 
-export default async (email, password) => {
+export default async (email, password, User) => {
   try {
     // Validate
     if (!email || !password)
       throw new UserInputError('Username/password can not be blank');
 
     // Check if user exists
-    const user = await User.query().select({ email });
+    const user = await User.query()
+      .where({ email })
+      .first();
     if (!user) throw new AuthenticationError('Incorrect username/password');
 
     // Compare password to password in DB
@@ -23,7 +24,12 @@ export default async (email, password) => {
     // Generate JWT
     const token = user.generateJWT();
 
-    return { token, name: user.name, roles: user.roles };
+    return {
+      token,
+      name: user.name,
+      roles: user.roles,
+      password: user.password,
+    };
   } catch (e) {
     throw new ApolloError(e);
   }

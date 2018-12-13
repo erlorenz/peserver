@@ -20,7 +20,7 @@
                 "--exec",
                 "babel-node"
             ],
-            "sourceMaps": true
+            "sourceMaps": true,
         },
     ]
 }

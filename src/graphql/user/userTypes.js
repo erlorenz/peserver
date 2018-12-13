@@ -11,6 +11,7 @@ export default gql`
     token: String!
     name: String!
     roles: [String]
+    password: String
   }
   extend type Query {
     me: User

@@ -1,36 +1,27 @@
-import mongoose from 'mongoose';
 import generateJWT from './generateJWT';
-import authRole from './authRole';
-import login from './login';
+import { ForbiddenError } from 'apollo-server-express';
+import { Model } from 'objection';
+import userSchema from './userSchema';
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  roles: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
-  name: {
-    type: String,
-    required: true,
-  },
-});
+export default class User extends Model {
+  static get tableName() {
+    return 'users';
+  }
 
-// Generate JWT Method
-userSchema.methods.generateJWT = generateJWT;
+  static get idColumn() {
+    return 'email';
+  }
 
-// Authorizations
-userSchema.methods.authRole = authRole;
+  static get jsonSchema() {
+    return userSchema;
+  }
 
-// Login
-userSchema.statics.login = login;
+  generateJWT() {
+    return generateJWT;
+  }
 
-export default mongoose.model('User', userSchema);
+  authRole(requiredRole) {
+    if (!this.roles.includes(requiredRole))
+      throw new ForbiddenError(`Forbidden: ${requiredRole} role required`);
+  }
+}

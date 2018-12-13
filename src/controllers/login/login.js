@@ -4,18 +4,19 @@ import {
   UserInputError,
   ApolloError,
 } from 'apollo-server-express';
+import User from '../../models/User';
 
-export default async function(email, password) {
+export default async (email, password) => {
   try {
     // Validate
     if (!email || !password)
       throw new UserInputError('Username/password can not be blank');
 
-    // ----------Check if user exists-----------------------
-    const user = await this.findOne({ email });
+    // Check if user exists
+    const user = await User.query().select({ email });
     if (!user) throw new AuthenticationError('Incorrect username/password');
 
-    // -------Compare password to password in DB------------------
+    // Compare password to password in DB
     const isMatch = await bcrypt.compareSync(password, user.password);
     if (!isMatch) throw new AuthenticationError('Incorrect password/username');
 
@@ -26,4 +27,4 @@ export default async function(email, password) {
   } catch (e) {
     throw new ApolloError(e);
   }
-}
+};

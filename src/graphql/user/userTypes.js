@@ -4,8 +4,8 @@ export default gql`
   type User {
     name: String!
     email: String!
-    roles: [String!]!
-    _id: ID!
+    password: String!
+    roles: [String]
   }
   type UserLoginResponse {
     token: String!
@@ -17,5 +17,11 @@ export default gql`
   }
   extend type Mutation {
     login(email: String!, password: String!): UserLoginResponse
+    register(
+      email: String!
+      password: String!
+      roles: [String]
+      name: String!
+    ): User
   }
 `;

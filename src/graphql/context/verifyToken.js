@@ -9,7 +9,7 @@ export default async (req, User) => {
   // Verify token
   try {
     const decoded = jwt.verify(token, jwtSecret);
-    const user = await User.findById(decoded._id);
+    const user = await User.query().where('email', decoded.email);
     return user;
   } catch (e) {
     return null;

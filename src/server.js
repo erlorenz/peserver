@@ -3,19 +3,20 @@ import cors from 'cors';
 import helmet from 'helmet';
 import 'dotenv/config';
 import morgan from 'morgan';
-import connectToDB from './db';
 import configureWinston from './config/logging';
 import apolloServer from './graphql/schema';
 import winston from 'winston';
+import { Model } from 'objection';
+import knex from './db';
 
 // Initialize express
 const app = express();
 
+// DB
+Model.knex(knex);
+
 // Logging
 configureWinston();
-
-// DB connection
-connectToDB();
 
 // Middleware
 app.use(morgan('dev'));

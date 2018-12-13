@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import { dbURI } from '../config/keys';
 import winston from 'winston';
+import Knex from 'knex';
+import { Model } from 'objection';
 
 export default async () => {
   try {
@@ -13,3 +15,10 @@ export default async () => {
     winston.error('couldnt connect to mongodb');
   }
 };
+
+const knex = Knex({
+  client: 'pg',
+  connection: dbURI,
+});
+
+Model.knex(knex);

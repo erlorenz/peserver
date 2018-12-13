@@ -7,13 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/dist/server.js"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Nodemon",
+            "name": "Nodemon Launch",
             "runtimeExecutable": "${workspaceRoot}/node_modules/nodemon/bin/nodemon.js",
             "args": [
                 "${workspaceRoot}/src/server.js"
@@ -23,8 +17,8 @@
             "stopOnEntry": false,
             "runtimeArgs": [
                 "--nolazy",
-                "--require",
-                "babel-core"
+                "--exec",
+                "babel-node"
             ],
             "sourceMaps": true
         },

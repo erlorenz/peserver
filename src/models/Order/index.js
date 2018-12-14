@@ -3,9 +3,7 @@ import updateStatus from './orderUpdateStatus';
 import createNew from './orderCreateNew';
 
 export default class Order extends Model {
-  static get tableName() {
-    return 'orders';
-  }
+  static tableName = 'orders';
 
   changeStatus() {
     return updateStatus;

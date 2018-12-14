@@ -1,20 +1,25 @@
 import generateJWT from './generateJWT';
 import { ForbiddenError } from 'apollo-server-express';
 import { Model } from 'objection';
-// import schema from './userSchema';
+import AdminComment from '../AdminComment';
 
 export default class User extends Model {
-  static get tableName() {
-    return 'users';
-  }
+  static tableName = 'users';
+
+  static relationMappings = {
+    comments: {
+      relation: Model.HasManyRelation,
+      modelClass: AdminComment,
+      join: {
+        from: 'users.id',
+        to: 'admin_comments.user_id',
+      },
+    },
+  };
 
   generateJWT() {
     return generateJWT;
   }
-
-  // static jsonSchema() {
-  //   return;
-  // }
 
   authRole(requiredRole) {
     if (!this.roles.includes(requiredRole))

@@ -14,6 +14,5 @@ export default async ({ roles, email, password, name }, User) => {
     roles,
   });
 
-  console.log(result);
   return result;
 };

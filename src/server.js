@@ -6,14 +6,13 @@ import morgan from 'morgan';
 import configureWinston from './config/logging';
 import apolloServer from './graphql/schema';
 import winston from 'winston';
-import { Model } from 'objection';
-import knex from './db';
+import initializeDB from './db';
 
 // Initialize express
 const app = express();
 
-// DB
-Model.knex(knex);
+// Initialize Database and Objection
+initializeDB();
 
 // Logging
 configureWinston();

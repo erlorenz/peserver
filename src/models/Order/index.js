@@ -1,12 +1,17 @@
-import mongoose from 'mongoose';
-import schema from './orderSchema';
-import statusChange from './orderStatusChange';
-import orderCreateNew from './orderCreateNew';
+import { Model } from 'objection';
+import updateStatus from './orderUpdateStatus';
+import createNew from './orderCreateNew';
 
-const orderSchema = new mongoose.Schema(schema);
+export default class Order extends Model {
+  static get tableName() {
+    return 'orders';
+  }
 
-orderSchema.methods.changeStatus = statusChange;
+  changeStatus() {
+    return updateStatus;
+  }
 
-orderSchema.statics.createNew = orderCreateNew;
-
-export default mongoose.model('Order', orderSchema);
+  createNew() {
+    return createNew;
+  }
+}

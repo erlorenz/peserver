@@ -1,9 +1,17 @@
-import mongoose from 'mongoose';
-import schema from './specialOrderSchema';
-import statusChange from './specialOrderStatusChange';
+import updateStatus from './specialOrderUpdateStatus';
+import createNew from './specialOrderCreateNew';
+import { Model } from 'objection';
 
-const specialOrderSchema = new mongoose.Schema(schema);
+export default class AdminComment extends Model {
+  static get tableName() {
+    return 'refunds';
+  }
 
-specialOrderSchema.methods.changeStatus = statusChange;
+  changeStatus() {
+    return updateStatus;
+  }
 
-export default mongoose.model('SpecialOrder', specialOrderSchema);
+  createNew() {
+    return createNew;
+  }
+}

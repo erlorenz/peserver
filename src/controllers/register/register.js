@@ -8,10 +8,12 @@ export default async ({ roles, email, password, name }, User) => {
   const hash = bcrypt.hashSync(password, salt);
 
   const result = await User.query().insert({
-    roles,
     email,
     password: hash,
     name,
+    roles,
   });
+
+  console.log(result);
   return result;
 };

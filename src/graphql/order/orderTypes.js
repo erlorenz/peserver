@@ -5,7 +5,7 @@ export default gql`
     name: String!
     totalPrice: Int!
     status: String!
-    _id: ID!
+    id: ID!
     phone: String!
     email: String!
     hotel: String!
@@ -36,6 +36,7 @@ export default gql`
     quantity: Int!
   }
   type PromoCode {
+    id: String!
     name: String!
     amount: Int!
   }

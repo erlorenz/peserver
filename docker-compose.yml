@@ -1,17 +1,12 @@
 version: '3'
 services: 
   db: 
-  image: postgres:10
+  image: postgres:9
   networks: 
     - webnet
   environment: 
     POSTGRES_PASSWORD: postgres
     POSTGRES_USER: postgres
     POSTGRES_DB: postgres
-  web:
-    image: peserver
-    networks:
-      -webnet
-  environment: 
 networks:
   webnet:

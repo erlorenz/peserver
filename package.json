@@ -11,11 +11,12 @@
     "dev": "nodemon --exec babel-node src/server.js",
     "start": "node dist/server.js",
     "debug": "nodemon src/server.js --inspect --exec babel-node",
-    "build": "npx babel src -d --watch dist"
+    "build": "npx babel src -d dist"
   },
   "author": "Erik Lorenz",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
     "apollo-server-express": "^2.2.6",
     "bcryptjs": "^2.4.3",
     "config": "^3.0.0",

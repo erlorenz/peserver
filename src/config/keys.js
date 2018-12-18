@@ -1,6 +1,4 @@
-export const dbHost = process.env.DB_HOST;
-export const dbName = process.env.DB_NAME;
-export const dbUser = process.env.DB_USER;
+export const dbURI = process.env.DB_URI
 export const dbPassword = process.env.DB_PASSWORD;
 export const jwtSecret = process.env.JWT_SECRET;
 export const twilioSID = process.env.TWILIO_SID;

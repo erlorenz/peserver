@@ -12,7 +12,6 @@
     "start": "node dist/server.js",
     "debug": "nodemon src/server.js --inspect --exec babel-node",
     "build": "npx babel src -d dist",
-    "db": "pg-docker",
     "docker": "docker run -it -p 3001:3001 peserver"
   },
   "author": "Erik Lorenz",

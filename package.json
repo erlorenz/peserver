@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "press express node server app",
   "main": "server.js",
-  "engines": {
-    "node": "^10.13.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node src/server.js",
@@ -53,11 +50,11 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
     "@babel/register": "^7.0.0",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.9",
     "eslint": "^5.10.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "jest": "^23.6.0",
-    "nodemon": "^1.18.9",
     "prettier": "^1.15.3"
   }
 }

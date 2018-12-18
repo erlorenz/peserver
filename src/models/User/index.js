@@ -20,7 +20,7 @@ export default class User extends Model {
   generateJWT() {
     return generateJWT;
   }
-
+ 
   authRole(requiredRole) {
     if (!this.roles.includes(requiredRole))
       throw new ForbiddenError(`Forbidden: ${requiredRole} role required`);

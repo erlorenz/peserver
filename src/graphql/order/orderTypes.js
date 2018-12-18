@@ -10,24 +10,24 @@ export default gql`
     email: String
     hotel: String
     room: String
-    created: String
-    pickupDate: String
-    returnDate: String
+    created_at: String
+    pickup_date: String
+    return_date: String
     starch: Boolean
-    specialInstructions: String
-    promoCode: PromoCode
-    stripeCharge: String
-    stripeCustomer: String
-    adminComments: [AdminComment]
-    pickedUp: String
-    checkedIn: String
-    outForDelivery: String
+    special_instructions: String
+    promo_code: PromoCode
+    stripe_charge: String
+    stripe_customer: String
+    admin_comments: [AdminComment]
+    picked_up: String
+    checked_in: String
+    out_for_delivery: String
     completed: String
     refunds: [Refund]
     additionals: [Additional]
-    textSent: String
-    receiptSent: String
-    cartItems: [CartItem]!
+    text_sent: String
+    receipt_sent: String
+    cart_items: [CartItem]!
   }
   type CartItem {
     name: String
@@ -49,35 +49,29 @@ export default gql`
     message: String
   }
   type CheckoutResponse {
-    mongoDB: DbResponse
+    mongoDB: SuccessAndMessage
     twilio: SuccessAndMessage
     receiptEmail: SuccessAndMessage
     errorEmail: SuccessAndMessage
   }
   input CheckoutPayload {
     name: String!
-    totalPrice: Int!
+    total_price: Int!
     phone: String!
     email: String!
     hotel: String!
     room: String!
-    pickupDate: String!
-    returnDate: String!
+    pickup_date: String!
+    return_date: String!
     starch: Boolean!
-    specialInstructions: String
-    promoCode: PromoCodeInput
+    special_instructions: String
+    promo_code: String
     cartItems: [CartItemInput!]!
     stripeToken: String!
   }
-  input PromoCodeInput {
-    name: String!
-    id: String!
-    price: Int!
-    quantity: Int!
-  }
   input CartItemInput {
     name: String!
-    id: String!
+    slug: String!
     price: Int!
     quantity: Int!
   }

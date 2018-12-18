@@ -4,15 +4,15 @@ import { Model } from 'objection';
 import AdminComment from '../AdminComment';
 
 export default class User extends Model {
-  static tableName = 'users';
+  static tableName = 'user';
 
   static relationMappings = {
-    comments: {
+    adminComments: {
       relation: Model.HasManyRelation,
       modelClass: AdminComment,
       join: {
-        from: 'users.id',
-        to: 'admin_comments.user_id',
+        from: 'user.id',
+        to: 'admin_comment.user_id',
       },
     },
   };
@@ -20,7 +20,7 @@ export default class User extends Model {
   generateJWT() {
     return generateJWT;
   }
- 
+
   authRole(requiredRole) {
     if (!this.roles.includes(requiredRole))
       throw new ForbiddenError(`Forbidden: ${requiredRole} role required`);

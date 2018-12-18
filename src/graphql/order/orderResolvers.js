@@ -79,7 +79,7 @@ export const Mutation = {
     return checkoutController(payload);
   },
 
-  orderChangeStatus(_, { status, _id }, { models }) {
-    return changeStatus(status, _id, models.Order);
+  orderChangeStatus(_, { status, id }, { models }) {
+    return changeStatus(status, id, models.Order);
   },
 };

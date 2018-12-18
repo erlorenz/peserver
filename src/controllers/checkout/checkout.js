@@ -4,15 +4,16 @@ import EmailAPI from '../../services/mailjet';
 import TextAPI from '../../services/twilio';
 import { textBody } from '../../services/twilio/messages';
 import validate from './checkoutValidation';
-import Order from '../../models/Order';
+import checkoutTransaction from './transaction';
 import { ApolloError } from 'apollo-server-express';
 
 export default async payload => {
   // Create order object and metadata object
-  const orderFields = payload;
+  const orderFields = { ...payload };
   const metadata = {
-    email: payload.email,
-    name: payload.name,
+    email: orderFields.email,
+    name: orderFields.name,
+    phone: '',
   };
 
   try {
@@ -31,31 +32,33 @@ export default async payload => {
       metadata,
     );
 
+    delete orderFields.stripeToken;
+
     // Create Stripe Charge - fails on error
     const charge = await StripeController.createCharge(
-      orderFields.totalPrice,
+      orderFields.total_price,
       customer.id,
       metadata,
     );
 
     // Add Stripe customer and charge to orderFields
-    orderFields.stripeCharge = charge.id;
-    orderFields.stripeCustomer = customer.id;
+    orderFields.stripe_charge = charge.id;
+    orderFields.stripe_customer = customer.id;
 
     // Send mailjet email
     const receiptResponse = await EmailAPI.receiptEmail(orderFields);
-    orderFields.emailSent = receiptResponse.success;
+    orderFields.receipt_sent = receiptResponse.success;
 
     // Send twilio text message
     const textResponse = await TextAPI.sendText(
       textBody.processed,
       orderFields.phone,
     );
-    orderFields.textSent = textResponse.success;
+    orderFields.text_sent = textResponse.success;
 
     // Save order in DB
-    const dbResponse = await Order.createNew(orderFields);
-    console.log(dbResponse);
+    const dbResponse = checkoutTransaction(orderFields);
+
     // Send email if exceptions thrown
     let errorEmailResponse = 'No error email necessary';
     if (

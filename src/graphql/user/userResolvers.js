@@ -3,8 +3,8 @@ import registerController from '../../controllers/register';
 
 export const Mutation = {
   login: (_, { email, password }, { models }) =>
-    loginController(email, password, models.AdminUser),
+    loginController(email, password, models.User),
 
   register: (_, payload, { models }) =>
-    registerController(payload, models.AdminUser),
+    registerController(payload, models.User),
 };

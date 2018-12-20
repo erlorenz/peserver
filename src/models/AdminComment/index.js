@@ -1,6 +1,6 @@
 import { Model } from 'objection';
 import Order from '../Order';
-import AdminUser from '../AdminUser';
+import User from '../User';
 
 export default class AdminComment extends Model {
   static tableName = 'admin_comment';
@@ -16,10 +16,10 @@ export default class AdminComment extends Model {
     },
     user: {
       relation: Model.BelongsToOneRelation,
-      modelClass: AdminUser,
+      modelClass: User,
       join: {
         from: 'admin_comment.order_id',
-        to: 'admin_user.id',
+        to: 'user.id',
       },
     },
   };

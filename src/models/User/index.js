@@ -4,17 +4,17 @@ import { Model } from 'objection';
 import AdminComment from '../AdminComment';
 
 export default class User extends Model {
-  static tableName = 'admin_user';
+  static tableName = 'user';
 
   static relationMappings = {
-    // adminComments: {
-    //   relation: Model.HasManyRelation,
-    //   modelClass: AdminComment,
-    //   join: {
-    //     from: 'user.id',
-    //     to: 'admin_comment.user_id',
-    //   },
-    // },
+    adminComments: {
+      relation: Model.HasManyRelation,
+      modelClass: AdminComment,
+      join: {
+        from: 'user.id',
+        to: 'admin_comment.user_id',
+      },
+    },
   };
 
   generateJWT() {

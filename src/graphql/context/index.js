@@ -1,4 +1,4 @@
-import AdminUser from '../../models/AdminUser';
+import User from '../../models/User';
 import Order from '../../models/Order';
 import OrderItem from '../../models/OrderItem';
 import SpecialOrder from '../../models/SpecialOrder';
@@ -11,7 +11,7 @@ import verifyToken from './verifyToken';
 export default async ({ req }) => {
   const context = {
     // Add Models to Context
-    models: { AdminUser, Order, SpecialOrder },
+    models: { User, Order, SpecialOrder },
 
     // User defaults to null
     user: null,
@@ -19,7 +19,7 @@ export default async ({ req }) => {
 
   // Verify token
   try {
-    const user = await verifyToken(req, AdminUser);
+    const user = await verifyToken(req, User);
 
     // Add the verified user to the context
     context.user = user;

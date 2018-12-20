@@ -1,9 +1,8 @@
 import { transaction } from 'objection';
-import { Order } from '../../models';
+import Order from '../../models/Order';
 
 // Get knex from any model
 const knex = Order.knex();
-console.log('Transaction: ', transaction);
 export default async payload => {
   // Extract CartItems
   const { cartItems, ...orderData } = payload;

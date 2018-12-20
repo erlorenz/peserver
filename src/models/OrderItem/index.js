@@ -1,5 +1,5 @@
 import { Model } from 'objection';
-import { Order } from '..';
+import Order from '../Order';
 
 export default class OrderItem extends Model {
   static tableName = 'order_item';

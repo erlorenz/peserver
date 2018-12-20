@@ -1,5 +1,5 @@
 import { Model } from 'objection';
-import { Order } from '..';
+import Order from '../Order';
 
 export default class Refund extends Model {
   static tableName = 'refund';

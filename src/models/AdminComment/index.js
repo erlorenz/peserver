@@ -1,5 +1,6 @@
 import { Model } from 'objection';
-import { Order, User } from '..';
+import Order from '../Order';
+import User from '../User';
 
 export default class AdminComment extends Model {
   static tableName = 'admin_comment';

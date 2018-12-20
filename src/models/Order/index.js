@@ -1,6 +1,9 @@
 import { Model } from 'objection';
 import updateStatus from './orderUpdateStatus';
-import { OrderItem, AdminComment, Refund, AdditionalCharge } from '..';
+import OrderItem from '../OrderItem';
+import AdditionalCharge from '../AdditionalCharge';
+import AdminComment from '../AdminComment';
+import Refund from '../Refund';
 
 export default class Order extends Model {
   static tableName = 'order';

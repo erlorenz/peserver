@@ -1,28 +1,29 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  type User {
-    name: String!
-    email: String!
-    password: String!
-    roles: [String]
+  type AdminUser {
+    id: ID
+    name: String
+    email: String
+    password: String
+    role: String
   }
-  type UserLoginResponse {
+  type AdminUserLoginResponse {
     token: String!
     name: String!
     roles: [String]
     password: String
   }
   extend type Query {
-    me: User
+    user: AdminUser
   }
   extend type Mutation {
-    login(email: String!, password: String!): UserLoginResponse
+    login(email: String!, password: String!): AdminUserLoginResponse
     register(
       email: String!
       password: String!
-      roles: [String]
+      role: String
       name: String!
-    ): User
+    ): AdminUser
   }
 `;

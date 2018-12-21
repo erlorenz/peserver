@@ -10,10 +10,10 @@ const completedText =
 
 export const textBody = {
   processed: processedText,
-  pickedUp: pickedUpText,
-  outForDelivery: outForDeliveryText,
+  picked_up: pickedUpText,
+  out_for_delivery: outForDeliveryText,
   completed: completedText,
 };
 
 // Array of all the ones that actually send a text
-export const textArray = ['pickedUp', 'outForDelivery', 'completed'];
+export const textArray = ['picked_up', 'out_for_delivery', 'completed'];

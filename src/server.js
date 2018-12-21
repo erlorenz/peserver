@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import 'dotenv/config';
 import morgan from 'morgan';
 import configureWinston from './config/logging';
-import apolloServer from './graphql/schema';
+import apolloServer from './schema';
 import winston from 'winston';
 import initializeDB from './db';
 

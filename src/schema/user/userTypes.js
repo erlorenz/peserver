@@ -12,7 +12,7 @@ export default gql`
     token: String
     name: String
     access_level: String
-    password: String
+    email: String
   }
   extend type Query {
     me: AdminUser

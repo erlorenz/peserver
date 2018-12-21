@@ -27,8 +27,8 @@ export default async (email, password, User) => {
     return {
       token,
       name: user.name,
-      roles: user.roles,
-      password: user.password,
+      email: user.email,
+      access_level: user.access_level,
     };
   } catch (e) {
     throw new ApolloError(e);

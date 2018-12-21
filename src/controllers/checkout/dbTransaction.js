@@ -1,33 +1,28 @@
 import { transaction } from 'objection';
 import CustomerOrder from '../../models/CustomerOrder';
 
-// Get knex from any model
-const knex = CustomerOrder.knex();
 export default async payload => {
-  // Extract CartItems
-  const { cartItems, ...orderData } = payload;
+  // const { customerOrderItems, ...customerOrderData } = payload;
 
-  // Begin Transaction
+  let trx;
   try {
-    // eslint:
+    // Begin Transaction
+    trx = await transaction.start(CustomerOrder.knex());
 
-    const order = await transaction(knex, async trx => {
-      const order = await CustomerOrder.query(trx).insert(orderData);
+    // Insert Into Both Tables
+    const order = await CustomerOrder.query(trx).insertGraph(payload);
 
-      const items = await order
-        .$relatedQuery('order_item', trx)
-        .insert(cartItems);
+    // Commit Transaction
+    await trx.commit();
 
-      console.log('Order:', order, ' ---- Items:', items);
-
-      return order;
-    });
     return {
       success: true,
       message: order.id,
     };
   } catch (e) {
-    console.log(e);
+    // Rollback transaction on error
+    await trx.rollback();
+
     return {
       success: false,
       message: e.message,

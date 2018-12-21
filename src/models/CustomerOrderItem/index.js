@@ -5,9 +5,9 @@ export default class CustomerOrderItem extends Model {
   static tableName = 'customer_order_item';
 
   static relationMappings = {
-    order: {
+    customerOrder: {
       relation: Model.BelongsToOneRelation,
-      modelClass: CustomerOrder,
+      modelClass: `${__dirname}/../CustomerOrder`,
       join: {
         from: 'customer_order_item.order_id',
         to: 'customer_order.id',

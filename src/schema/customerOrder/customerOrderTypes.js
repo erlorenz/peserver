@@ -26,29 +26,27 @@ export default gql`
     additionals: [Additional]
     text_sent: Boolean
     receipt_sent: Boolean
-    cart_items: [CartItem]!
+    customerOrderItems: [CustomerOrderItem]!
   }
-  type CartItem {
-    name: String
-    id: String
+  type CustomerOrderItem {
+    description: String
+    id: ID
     price: Int
     quantity: Int
+    slug: String
   }
   type PromoCode {
     id: String
     name: String
     amount: Int
   }
-  type DbResponse {
-    success: Boolean
-    message: Order
-  }
+
   type SuccessAndMessage {
     success: Boolean
     message: String
   }
   type CheckoutResponse {
-    mongoDB: SuccessAndMessage
+    database: SuccessAndMessage
     twilio: SuccessAndMessage
     receiptEmail: SuccessAndMessage
     errorEmail: SuccessAndMessage
@@ -65,11 +63,11 @@ export default gql`
     starch: Boolean!
     special_instructions: String
     promo_code: String
-    cartItems: [CartItemInput!]!
+    customerOrderItems: [CustomerOrderItemInput!]!
     stripeToken: String!
   }
-  input CartItemInput {
-    name: String!
+  input CustomerOrderItemInput {
+    description: String!
     slug: String!
     price: Int!
     quantity: Int!

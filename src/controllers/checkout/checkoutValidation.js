@@ -14,7 +14,7 @@ export default payload => {
     hotel: Joi.string().required(),
     pickup_date: Joi.required(),
     return_date: Joi.required(),
-    cartItems: Joi.array().required(),
+    customerOrderItems: Joi.array().required(),
     starch: Joi.boolean().optional(),
     special_instructions: Joi.string().optional(),
     total_price: Joi.number().required(),

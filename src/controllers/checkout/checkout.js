@@ -1,4 +1,4 @@
-import StripeController from '../../services/stripe';
+import { createCharge, createCustomer } from '../../services/stripe';
 import { formatPhone } from '../../utils';
 import EmailAPI from '../../services/mailjet';
 import TextAPI from '../../services/twilio';
@@ -26,7 +26,7 @@ export default async payload => {
     orderFields.phone = formattedPhone;
 
     // Create Stripe customer - fails on error
-    const customer = await StripeController.createCustomer(
+    const customer = await createCustomer(
       orderFields.email,
       orderFields.stripeToken,
       metadata,
@@ -35,7 +35,7 @@ export default async payload => {
     delete orderFields.stripeToken;
 
     // Create Stripe Charge - fails on error
-    const charge = await StripeController.createCharge(
+    const charge = await createCharge(
       orderFields.total_price,
       customer.id,
       metadata,
@@ -57,7 +57,7 @@ export default async payload => {
     orderFields.text_sent = textResponse.success;
 
     // Save order in DB
-    const dbResponse = dbTransaction(orderFields);
+    const dbResponse = await dbTransaction(orderFields);
 
     // Send email if exceptions thrown
     let errorEmailResponse = 'No error email necessary';
@@ -76,7 +76,7 @@ export default async payload => {
     }
     // Send success response
     return {
-      mongoDB: dbResponse,
+      database: dbResponse,
       twilio: textResponse,
       receiptEmail: receiptResponse,
       errorEmail: errorEmailResponse,

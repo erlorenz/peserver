@@ -7,7 +7,7 @@ export default class CustomerOrder extends Model {
   static tableName = 'customer_order';
 
   static relationMappings = {
-    orderItems: {
+    customerOrderItems: {
       relation: Model.HasManyRelation,
       modelClass: CustomerOrderItem,
       join: {

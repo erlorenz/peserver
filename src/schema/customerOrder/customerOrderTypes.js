@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 export default gql`
   type Order {
     name: String
-    totalPrice: Int
+    total_price: Int
     status: String
     id: ID
     phone: String
@@ -15,7 +15,6 @@ export default gql`
     return_date: String
     starch: Boolean
     special_instructions: String
-    promo_code: PromoCode
     stripe_charge: String
     stripe_customer: String
     admin_comments: [AdminComment]
@@ -25,8 +24,8 @@ export default gql`
     completed: String
     refunds: [Refund]
     additionals: [Additional]
-    text_sent: String
-    receipt_sent: String
+    text_sent: Boolean
+    receipt_sent: Boolean
     cart_items: [CartItem]!
   }
   type CartItem {

@@ -5,14 +5,14 @@ import {
   ApolloError,
 } from 'apollo-server-express';
 
-export default async (email, password, User) => {
+export default async (email, password, AdminUser) => {
   try {
     // Validate
     if (!email || !password)
       throw new UserInputError('Username/password can not be blank');
 
     // Check if user exists
-    const user = await User.query()
+    const user = await AdminUser.query()
       .where({ email })
       .first();
     if (!user) throw new AuthenticationError('Incorrect username/password');

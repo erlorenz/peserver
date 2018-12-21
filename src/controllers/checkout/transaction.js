@@ -1,8 +1,8 @@
 import { transaction } from 'objection';
-import Order from '../../models/Order';
+import CustomerOrder from '../../models/CustomerOrder';
 
 // Get knex from any model
-const knex = Order.knex();
+const knex = CustomerOrder.knex();
 export default async payload => {
   // Extract CartItems
   const { cartItems, ...orderData } = payload;
@@ -12,7 +12,7 @@ export default async payload => {
     // eslint:
 
     const order = await transaction(knex, async trx => {
-      const order = await Order.query(trx).insert(orderData);
+      const order = await CustomerOrder.query(trx).insert(orderData);
 
       const items = await order
         .$relatedQuery('order_item', trx)

@@ -2,7 +2,7 @@ import generateJWT from './generateJWT';
 import { ForbiddenError } from 'apollo-server-express';
 import { Model } from 'objection';
 
-export default class User extends Model {
+export default class AdminUser extends Model {
   static tableName = 'admin_user';
 
   // static relationMappings = {

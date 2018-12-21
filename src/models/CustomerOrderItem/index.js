@@ -1,16 +1,16 @@
 import { Model } from 'objection';
 import CustomerOrder from '../CustomerOrder';
 
-export default class AdditionalCharge extends Model {
-  static tableName = 'additional_charge';
+export default class CustomerOrderItem extends Model {
+  static tableName = 'customer_order_item';
 
   static relationMappings = {
     order: {
       relation: Model.BelongsToOneRelation,
       modelClass: CustomerOrder,
       join: {
-        from: 'additional_charge.order_id',
-        to: 'order.id',
+        from: 'customer_order_item.order_id',
+        to: 'customer_order.id',
       },
     },
   };

@@ -1,19 +1,27 @@
 import { ApolloServer } from 'apollo-server-express';
-import userTypes from './user/userTypes';
-import orderTypes from './order/orderTypes';
+import adminUserTypes from './adminUser/adminUserTypes';
+import customerOrderTypes from './customerOrder/customerOrderTypes';
 import specialOrderTypes from './specialOrder/specialOrderTypes';
 import sharedTypes from './shared/sharedTypes';
-import * as userResolvers from './user/userResolvers';
-import * as orderResolvers from './order/orderResolvers';
+import * as adminUserResolvers from './adminUser/adminUserResolvers';
+import * as customerOrderResolvers from './customerOrder/customerOrderResolvers';
 import * as specialOrderResolvers from './specialOrder/specialOrderResolvers';
 import context from './context';
 
-const typeDefs = [orderTypes, userTypes, specialOrderTypes, sharedTypes];
+const typeDefs = [
+  customerOrderTypes,
+  adminUserTypes,
+  specialOrderTypes,
+  sharedTypes,
+];
 
 // Combine resolvers
 const resolvers = {
-  Query: { ...orderResolvers.Query, ...specialOrderResolvers.Query },
-  Mutation: { ...userResolvers.Mutation, ...orderResolvers.Mutation },
+  Query: { ...customerOrderResolvers.Query, ...specialOrderResolvers.Query },
+  Mutation: {
+    ...adminUserResolvers.Mutation,
+    ...customerOrderResolvers.Mutation,
+  },
 };
 
 export default new ApolloServer({

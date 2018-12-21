@@ -1,7 +1,7 @@
 import { checkAuth } from '../../utils';
 import { UserInputError } from 'apollo-server-express';
 import checkoutController from '../../controllers/checkout';
-import { changeStatus } from '../../controllers/adminActions';
+import changeStatusController from '../../controllers/changeStatus';
 
 export const Query = {
   //
@@ -80,6 +80,6 @@ export const Mutation = {
   },
 
   orderChangeStatus(_, { status, id }, { models }) {
-    return changeStatus(status, id, models.Order);
+    return changeStatusController(status, id, models.Order);
   },
 };

@@ -13,6 +13,7 @@ export default gql`
     name: String
     access_level: String
     email: String
+    id: ID
   }
   extend type Query {
     me: AdminUser

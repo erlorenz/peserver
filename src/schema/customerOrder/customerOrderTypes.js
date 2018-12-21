@@ -17,7 +17,7 @@ export default gql`
     special_instructions: String
     stripe_charge: String
     stripe_customer: String
-    admin_comments: [AdminComment]
+    adminComments: [AdminComment]
     picked_up: String
     checked_in: String
     out_for_delivery: String
@@ -41,10 +41,6 @@ export default gql`
     amount: Int
   }
 
-  type SuccessAndMessage {
-    success: Boolean
-    message: String
-  }
   type CheckoutResponse {
     database: SuccessAndMessage
     twilio: SuccessAndMessage
@@ -74,7 +70,7 @@ export default gql`
   }
   extend type Query {
     ordersByStatus(status: [String]): [Order!]
-    orderById(_id: ID!): Order!
+    orderAndCommentsById(customer_order_id: ID!): Order!
     ordersMatch(input: FieldAndValue!): [Order!]!
   }
   extend type Mutation {

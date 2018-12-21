@@ -1,6 +1,6 @@
 import { Model } from 'objection';
 import CustomerOrderItem from '../CustomerOrderItem';
-import AdditionalCharge from '../AdditionalCharge';
+import AdminComment from '../AdminComment';
 import Refund from '../Refund';
 
 export default class CustomerOrder extends Model {
@@ -23,12 +23,12 @@ export default class CustomerOrder extends Model {
         to: 'refund.customer_order_id',
       },
     },
-    additionalCharges: {
+    adminComments: {
       relation: Model.HasManyRelation,
-      modelClass: AdditionalCharge,
+      modelClass: AdminComment,
       join: {
         from: 'customer_order.id',
-        to: 'additional_charge.customer_order_id',
+        to: 'admin_comment.customer_order_id',
       },
     },
   };

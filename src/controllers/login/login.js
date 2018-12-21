@@ -29,6 +29,7 @@ export default async (email, password, AdminUser) => {
       name: user.name,
       email: user.email,
       access_level: user.access_level,
+      id: user.id,
     };
   } catch (e) {
     throw new ApolloError(e);

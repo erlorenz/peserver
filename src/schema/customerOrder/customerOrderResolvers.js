@@ -32,15 +32,20 @@ export const Query = {
   //
   // Find Individual Order by ID
   //
-  async orderById(_, { _id }, { user, models }) {
-    checkAuth(user);
+  async orderAndCommentsById(_, { customer_order_id }, { models }) {
+    // checkAuth(user);
 
-    const result = await models.Order.findById(_id);
+    const orderAndComments = await models.CustomerOrder.query()
+      .where('id', customer_order_id)
+      .eager('adminComments')
+      .first();
 
+    console.log('OAC', orderAndComments);
     // Throw error if no order found
-    if (!result) throw new UserInputError('No order found with this ID.');
+    if (!orderAndComments)
+      throw new UserInputError('No order found with this ID.');
 
-    return result;
+    return orderAndComments;
   },
 
   //
@@ -79,7 +84,6 @@ export const Mutation = {
     return checkoutController(payload);
   },
 
-  orderChangeStatus(_, { status, id }, { models }) {
-    return changeStatusController(status, id, models.Order);
-  },
+  orderChangeStatus: (_, { status, id }, { models }) =>
+    changeStatusController(status, id, models.Order),
 };

@@ -8,11 +8,6 @@ export default gql`
     PARTIAL
   }
 
-  type AdminComment {
-    user: String!
-    time: String!
-    comment: String!
-  }
   type Refund {
     refundID: String!
     refundTime: String!
@@ -28,16 +23,17 @@ export default gql`
     additionalAmount: Int!
   }
 
+  type SuccessAndMessage {
+    success: Boolean
+    message: String
+  }
+
   input FieldAndValue {
     field: String!
     value: String!
     matchType: MatchTypes!
   }
-  input AdminCommentInput {
-    _id: ID!
-    user: String!
-    comment: String!
-  }
+
   input RefundInput {
     _id: ID!
     user: String

@@ -4,7 +4,7 @@ import EmailAPI from '../../services/mailjet';
 import TextAPI from '../../services/twilio';
 import { textBody } from '../../services/twilio/messages';
 import validate from './checkoutValidation';
-import checkoutTransaction from './transaction';
+import dbTransaction from './dbTransaction';
 import { ApolloError } from 'apollo-server-express';
 
 export default async payload => {
@@ -57,7 +57,7 @@ export default async payload => {
     orderFields.text_sent = textResponse.success;
 
     // Save order in DB
-    const dbResponse = checkoutTransaction(orderFields);
+    const dbResponse = dbTransaction(orderFields);
 
     // Send email if exceptions thrown
     let errorEmailResponse = 'No error email necessary';

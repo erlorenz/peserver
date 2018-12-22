@@ -18,7 +18,7 @@ export default gql`
   }
 
   extend type Query {
-    getAdminCommentsByOrder(customer_order_id: String): [AdminComment!]
+    getAdminCommentsByOrderID(customer_order_id: String): [AdminComment!]
   }
 
   extend type Mutation {

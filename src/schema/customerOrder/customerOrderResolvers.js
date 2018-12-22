@@ -30,7 +30,7 @@ export const Query = {
   },
 
   //
-  // Find Individual Order by ID
+  // Find Individual Order by ID including comments
   //
   async orderAndCommentsById(_, { customer_order_id }, { models }) {
     // checkAuth(user);

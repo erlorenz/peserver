@@ -9,7 +9,6 @@ export default async payload => {
     // Begin Transaction
     trx = await transaction.start(CustomerOrder.knex());
 
-    // Insert Into Both Tables
     const order = await CustomerOrder.query(trx).insertGraph(payload);
 
     // Commit Transaction

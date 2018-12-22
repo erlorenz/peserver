@@ -17,7 +17,7 @@ export default gql`
     special_instructions: String
     stripe_charge: String
     stripe_customer: String
-    adminComments: [AdminComment]
+    adminComments: [AdminCommentDisplay]
     picked_up: String
     checked_in: String
     out_for_delivery: String

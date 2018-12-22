@@ -1,11 +1,10 @@
 import adminCommentController from '../../controllers/adminComment';
-import { UserInputError } from 'apollo-server-express';
 
 export const Query = {
   async getAdminCommentsByOrderID(_, args, { models }) {
     // Validate
     if (!args.customer_order_id && !args.special_order_id)
-      throw new UserInputError('Missing order ID');
+      throw new Error('Missing order ID');
 
     // Search by either special order or order id
     let comments;

@@ -1,25 +1,20 @@
 import bcrypt from 'bcryptjs';
-import {
-  AuthenticationError,
-  UserInputError,
-  ApolloError,
-} from 'apollo-server-express';
 
 export default async (email, password, AdminUser) => {
   try {
     // Validate
     if (!email || !password)
-      throw new UserInputError('Username/password can not be blank');
+      throw new Error('Username/password can not be blank');
 
     // Check if user exists
     const user = await AdminUser.query()
       .where({ email })
       .first();
-    if (!user) throw new AuthenticationError('Incorrect username/password');
+    if (!user) throw new Error('Incorrect username/password');
 
     // Compare password to password in DB
     const isMatch = await bcrypt.compareSync(password, user.password);
-    if (!isMatch) throw new AuthenticationError('Incorrect password/username');
+    if (!isMatch) throw new Error('Incorrect password/username');
 
     // Generate JWT
     const token = user.generateJWT();
@@ -32,6 +27,6 @@ export default async (email, password, AdminUser) => {
       id: user.id,
     };
   } catch (e) {
-    throw new ApolloError(e);
+    throw new Error(e);
   }
 };

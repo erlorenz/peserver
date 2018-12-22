@@ -1,4 +1,4 @@
-export const dbURI = process.env.DB_URI
+export const dbURI = process.env.DB_URI;
 export const dbPassword = process.env.DB_PASSWORD;
 export const jwtSecret = process.env.JWT_SECRET;
 export const twilioSID = process.env.TWILIO_SID;

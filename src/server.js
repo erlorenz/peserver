@@ -6,13 +6,13 @@ import morgan from 'morgan';
 import configureWinston from './config/logging';
 import apolloServer from './schema';
 import winston from 'winston';
-import initializeDB from './db';
+import { dbTest } from './db';
 
 // Initialize express
 const app = express();
 
 // Initialize Database and Objection
-initializeDB();
+dbTest();
 
 // Logging
 configureWinston();
@@ -30,8 +30,7 @@ apolloServer.applyMiddleware({ app });
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
   winston.info(
-    `Express running... port: ${port}, Environment: ${process.env.NODE_ENV},
-    )},
+    `Express running... port: ${port}, Environment: ${process.env.NODE_ENV}
     🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,
   );
 });

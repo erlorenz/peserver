@@ -5,6 +5,6 @@ const { combine, simple, colorize } = format;
 export default () => {
   winston.configure({
     transports: [new transports.Console()],
-    format: combine(simple(), colorize()),
+    format: combine(simple(), colorize({ message: true })),
   });
 };

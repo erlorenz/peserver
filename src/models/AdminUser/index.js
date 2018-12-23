@@ -1,5 +1,4 @@
 import generateJWT from './generateJWT';
-import { ForbiddenError } from 'apollo-server-express';
 import { Model } from 'objection';
 import AdminComment from '../AdminComment';
 import Refund from '../Refund';
@@ -40,7 +39,7 @@ export default class AdminUser extends Model {
   }
 
   authRole(requiredRole) {
-    if (!this.roles.includes(requiredRole))
-      throw new ForbiddenError(`Forbidden: ${requiredRole} role required`);
+    if (!this.role !== requiredRole)
+      throw new Error(`Forbidden: ${requiredRole} role required`);
   }
 }

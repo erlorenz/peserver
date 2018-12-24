@@ -1,12 +1,10 @@
-import Order from '../../models/Order';
 import EmailController from '../../services/mailjet';
 import StripeController from '../../services/stripe';
 import validate from './additionalValidation';
-import { tryCatchAsync } from '../../utils';
 
-export default async (req, res) => {
+export default async (payload, AdditionalCharge) => {
   // Create data object
-  const data = req.body;
+  const data = { ...payload };
 
   // Create metadata object
   const metadata = { description: data.additionalDescription };
@@ -41,8 +39,7 @@ export default async (req, res) => {
     additionalDescription: data.additionalDescription,
   };
 
-  const order = await Order.findById(req.params.id);
-  order.additionals.push(additionalDetails);
+  const refund = await AdditionalCharge.query().insert(additionalDetails);
 
-  res.json({ msg: order, mailjet: emailResponse });
+  return refund;
 };

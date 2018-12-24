@@ -2,11 +2,12 @@ import Joi from 'joi';
 
 export default payload => {
   const schema = {
-    _id: Joi.string().required(),
-    user: Joi.string().required(),
-    refundDescription: Joi.string().required(),
-    refundAmount: Joi.number().required(),
-    stripeCharge: Joi.string().required(),
+    customer_order_id: Joi.string().optional(),
+    special_order_id: Joi.string().optional(),
+    admin_user_id: Joi.string().required(),
+    description: Joi.string().required(),
+    amount: Joi.number().required(),
+    stripe_charge: Joi.string().required(),
   };
 
   const result = Joi.validate(payload, schema);

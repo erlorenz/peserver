@@ -6,7 +6,7 @@ export default async (payload, AdminComment) => {
 
   try {
     const adminComment = await AdminComment.query().insert(payload);
-    console.log(adminComment.created_at);
+    console.log(adminComment);
 
     return adminComment;
   } catch (e) {

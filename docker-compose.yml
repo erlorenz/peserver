@@ -1,12 +1,24 @@
 version: '3'
 services: 
-  db: 
+  pg: 
   image: postgres:9
   networks: 
     - webnet
   environment: 
-    POSTGRES_PASSWORD: postgres
-    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: password
+    POSTGRES_USER: erik
     POSTGRES_DB: postgres
+  pgweb:
+  container_name: pgweb  # optional
+  restart: always  # optional
+  image: sosedoff/pgweb
+  ports: 
+    - "8081:8081" 
+  links: 
+    - postgres:postgres  # my database container is called postgres, not db
+  environment:
+    - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+  depends_on:
+    - postgres  # my database container is called postgres, not db  
 networks:
   webnet:

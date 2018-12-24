@@ -1,15 +1,14 @@
 import StripeController from '../../services/stripe';
 import EmailController from '../../services/mailjet';
 import validate from './refundValidation';
-import Order from '../../models/Order';
 
-export default async payload => {
+export default async (payload, Refund) => {
   // Create refund data object
   const data = { ...payload };
 
   // Create metadata object
   const metadata = {
-    description: data.refundDescription,
+    description: data.description,
   };
 
   // Validate data
@@ -17,8 +16,8 @@ export default async payload => {
 
   // ---- Make refund
   const refundResponse = await StripeController.createRefund(
-    data.refundAmount,
-    data.stripeCharge,
+    data.amount,
+    data.stripe_charge,
     metadata,
   );
 
@@ -27,15 +26,13 @@ export default async payload => {
 
   // Update database
   const refundDetails = {
-    refundID: refundResponse.id,
-    refundAmount: data.refundAmount,
-    refundTime: Date.now(),
-    refundUser: data.user,
-    refundDescription: data.refundDescription,
+    stripe_refund: refundResponse.id,
+    amount: data.amount,
+    admin_user_id: data.admin_user_id,
+    description: data.description,
   };
 
-  const order = await Order.findById(payload._id);
-  order.refunds.push(refundDetails);
+  const refund = await Refund.query().insert(refundDetails);
 
-  return { msg: order, email: receiptResponse };
+  return refund;
 };

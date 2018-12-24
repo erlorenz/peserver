@@ -1,1 +1,1 @@
-export { default } from './mailjet';
+export * from './mailjet';

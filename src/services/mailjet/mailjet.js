@@ -2,24 +2,22 @@ import sendEmail from './sendEmail';
 
 // Set up mailjet connection
 
-export default {
-  // Receipt email
-  receiptEmail: async payload => {
-    return await sendEmail(payload, 460188, 'Your Order Confirmation');
-  },
+// Receipt email
+export const receiptEmail = async payload => {
+  return await sendEmail(payload, 460188, 'Your Order Confirmation');
+};
 
-  // Refund email
-  refundEmail: async payload => {
-    return await sendEmail(payload, 4000, 'Your Refund Confirmation');
-  },
+// Refund email
+export const refundEmail = async payload => {
+  return await sendEmail(payload, 4000, 'Your Refund Confirmation');
+};
 
-  // Additional charge email
-  additionalEmail: async payload => {
-    return await sendEmail(payload, 4000, 'Receipt for Additional Charge');
-  },
+// Additional charge email
+export const additionalEmail = async payload => {
+  return await sendEmail(payload, 4000, 'Receipt for Additional Charge');
+};
 
-  // Error email
-  errorEmail: async payload => {
-    return await sendEmail(payload, 4000, 'There was a checkout error');
-  },
+// Error email
+export const errorEmail = async payload => {
+  return await sendEmail(payload, 4000, 'There was a checkout error');
 };

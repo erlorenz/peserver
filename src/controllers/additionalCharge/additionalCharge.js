@@ -27,9 +27,7 @@ export default async (payload, AdditionalCharge) => {
     additionalDescription: data.additionalDescription,
   };
 
-  const emailResponse = await tryCatchAsync(
-    EmailController.additionalEmail(mailjetData),
-  );
+  const emailResponse = EmailController.additionalEmail(mailjetData);
 
   const additionalDetails = {
     additionalID: charge.id,

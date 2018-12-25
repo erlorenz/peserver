@@ -7,21 +7,17 @@ export const Query = {
   //
   // Find Orders by Status
   //
-  async ordersByStatus(_, { status }, { user, models }) {
+  async getOrdersByStatus(_, { status }, { user, models }) {
     // Check for user in context
     checkAuth(user);
 
     // Return all if no status included
-    if (!status) return await models.Order.find().sort({ _id: -1 });
+    if (!status) return await models.CustomerOrder.query();
 
-    const result = await models.Order.find({
-      status: {
-        $in: status,
-      },
-    }).sort({ _id: -1 });
+    const result = await models.CustomerOrder.query().whereIn('status', status);
 
     // Throw error if no order found
-    if (result.length === 0)
+    if (!result.length)
       throw new UserInputError(
         `No orders found with the queried status/statuses.`,
       );
@@ -32,12 +28,17 @@ export const Query = {
   //
   // Find Individual Order by ID including comments
   //
-  async orderAndCommentsById(_, { customer_order_id }, { models }) {
+  async getAllOrderDetails(_, { customer_order_id }, { models }) {
     // checkAuth(user);
 
     const orderAndComments = await models.CustomerOrder.query()
       .where('id', customer_order_id)
-      .eager('adminComments')
+      .eager([
+        'adminComments',
+        'refunds',
+        'additionalCharges',
+        'customerOrderItems',
+      ])
       .first();
 
     console.log('OAC', orderAndComments);

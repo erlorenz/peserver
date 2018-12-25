@@ -5,7 +5,7 @@ export default class Refund extends Model {
   static tableName = 'refund';
 
   static relationMappings = {
-    order: {
+    customerOrder: {
       relation: Model.BelongsToOneRelation,
       modelClass: CustomerOrder,
       join: {

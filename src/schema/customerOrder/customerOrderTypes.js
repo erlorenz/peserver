@@ -1,7 +1,30 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  type Order {
+  type CustomerOrder {
+    name: String
+    total_price: Int
+    status: String
+    id: ID
+    phone: String
+    email: String
+    hotel: String
+    room: String
+    created_at: String
+    pickup_date: String
+    return_date: String
+    starch: Boolean
+    special_instructions: String
+    stripe_charge: String
+    stripe_customer: String
+    picked_up: String
+    checked_in: String
+    out_for_delivery: String
+    completed: String
+    text_sent: Boolean
+    receipt_sent: Boolean
+  }
+  type AllOrderDetails {
     name: String
     total_price: Int
     status: String
@@ -23,7 +46,7 @@ export default gql`
     out_for_delivery: String
     completed: String
     refunds: [Refund]
-    additionals: [Additional]
+    additionalCharges: [AdditionalChargeDisplay]
     text_sent: Boolean
     receipt_sent: Boolean
     customerOrderItems: [CustomerOrderItem]!
@@ -69,13 +92,13 @@ export default gql`
     quantity: Int!
   }
   extend type Query {
-    ordersByStatus(status: [String]): [Order!]
-    orderAndCommentsById(customer_order_id: ID!): Order!
-    ordersMatch(input: FieldAndValue!): [Order!]!
+    getOrdersByStatus(status: [String]): [CustomerOrder!]
+    getAllOrderDetails(customer_order_id: ID!): AllOrderDetails!
+    ordersMatch(input: FieldAndValue!): [CustomerOrder!]!
   }
   extend type Mutation {
     checkout(payload: CheckoutPayload!): CheckoutResponse!
-    orderChangeStatus(status: String!, id: ID!): Order!
-    orderAddComment(payload: AdminCommentInput!): Order!
+    orderChangeStatus(status: String!, id: ID!): SuccessAndMessage!
+    orderAddComment(payload: AdminCommentInput!): AdminCommentDisplay!
   }
 `;

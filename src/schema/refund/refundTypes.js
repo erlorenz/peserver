@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 export default gql`
   type Refund {
     created_at: String
-    amount: Integer
+    amount: Int
     id: ID
     customer_order_id: ID
     admin_user_id: ID
@@ -12,7 +12,7 @@ export default gql`
   }
   type RefundDisplay {
     created_at: String
-    amount: Integer
+    amount: Int
     id: ID
     customer_order_id: ID
     admin_user_id: ID

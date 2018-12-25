@@ -1,43 +1,58 @@
-import EmailController from '../../services/mailjet';
-import StripeController from '../../services/stripe';
-import validate from './additionalValidation';
+import * as EmailController from '../../services/mailjet';
+import * as StripeController from '../../services/stripe';
+import validate from './additionalChargeValidation';
+import insertAdditionalCharge from './insertAdditionalCharge';
 
 export default async (payload, AdditionalCharge) => {
   // Create data object
-  const data = { ...payload };
-
-  // Create metadata object
-  const metadata = { description: data.additionalDescription };
+  const {
+    description,
+    amount,
+    admin_user_id,
+    customer_order_id,
+    stripe_customer,
+    name,
+    email,
+    special_order_id,
+  } = payload;
 
   // Validate additional data
-  validate(data);
+  validate(payload);
 
-  // ---- Make refund
+  // Create metadata object
+  const metadata = { description };
+
+  // ---- Make additional charge
   const charge = await StripeController.createCharge(
-    data.additionalAmount,
-    data.stripeCustomer,
+    amount,
+    stripe_customer,
     metadata,
   );
 
   // Send receipt email
   const mailjetData = {
-    name: data.name,
-    email: data.email,
-    additionalAmount: data.additionalAmount,
-    additionalDescription: data.additionalDescription,
+    name: name,
+    email: email,
+    additionalAmount: amount,
+    additionalDescription: description,
   };
 
   const emailResponse = EmailController.additionalEmail(mailjetData);
 
   const additionalDetails = {
-    additionalID: charge.id,
-    additionalAmount: data.additionalAmount,
-    additionalTime: Date.now(),
-    additionalUser: data.user,
-    additionalDescription: data.additionalDescription,
+    stripe_charge: charge.id,
+    amount,
+    admin_user_id: admin_user_id,
+    description: description,
+    customer_order_id,
+    special_order_id,
   };
 
-  const refund = await AdditionalCharge.query().insert(additionalDetails);
+  // Save to DB
+  const dbResponse = await insertAdditionalCharge(
+    additionalDetails,
+    AdditionalCharge,
+  );
 
-  return refund;
+  return { receiptEmail: emailResponse, database: dbResponse };
 };

@@ -8,7 +8,7 @@ export default async (payload, AdminComment) => {
     const adminComment = await AdminComment.query().insert(payload);
     console.log(adminComment);
 
-    return adminComment;
+    return { success: true, message: adminComment.id };
   } catch (e) {
     return { success: false, message: e.message };
   }

@@ -12,7 +12,7 @@ export default gql`
     description: String!
     adminComments: [AdminComment!]
     refunds: [Refund!]
-    additionals: [Additional!]
+    additionals: [AdditionalCharge!]
     pickedUp: String
     checkedIn: String
     outForDelivery: String

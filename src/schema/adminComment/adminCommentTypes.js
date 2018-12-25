@@ -25,10 +25,10 @@ export default gql`
   }
 
   extend type Query {
-    getAdminCommentsByOrderID(customer_order_id: String): [AdminComment!]
+    getAdminCommentsByOrderID(customer_order_id: String): [AdminCommentDisplay!]
   }
 
   extend type Mutation {
-    insertAdminComment(payload: AdminCommentInput!): AdminComment
+    insertAdminComment(payload: AdminCommentInput!): SuccessAndMessage
   }
 `;

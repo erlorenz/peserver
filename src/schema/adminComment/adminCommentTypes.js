@@ -17,13 +17,6 @@ export default gql`
     email: String
   }
 
-  input AdminCommentInput {
-    customer_order_id: ID
-    special_order_id: ID
-    admin_user_id: ID!
-    comment_body: String!
-  }
-
   extend type Query {
     getAdminCommentsByOrderID(
       customer_order_id: ID
@@ -32,6 +25,11 @@ export default gql`
   }
 
   extend type Mutation {
-    insertAdminComment(payload: AdminCommentInput!): SuccessAndMessage
+    insertAdminComment(
+      customer_order_id: ID
+      special_order_id: ID
+      admin_user_id: ID!
+      comment_body: String!
+    ): SuccessAndMessage
   }
 `;

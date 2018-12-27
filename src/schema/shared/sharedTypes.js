@@ -17,10 +17,9 @@ export default gql`
     twilio: SuccessAndMessage
   }
 
-  input FieldAndValue {
-    field: String!
+  input ColumnAndValue {
+    column: String!
     value: String!
-    matchType: MatchTypes!
   }
 
   type Query {

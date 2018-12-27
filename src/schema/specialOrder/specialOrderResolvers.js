@@ -7,14 +7,14 @@ export const Query = {
     checkAuth(currentUser);
 
     // Return all if no status included
-    if (!status) return await models.SpecialOrder.query();
+    if (!status.length) return await models.SpecialOrder.query();
 
     const result = await models.SpecialOrder.query().whereIn('status', status);
 
     return result;
   },
 
-  async getAllSpecialOrderDetails(_, args, { models, currentUser }) {
+  async getSpecialOrderDetails(_, args, { models, currentUser }) {
     const { special_order_id } = args;
 
     checkAuth(currentUser);
@@ -31,9 +31,24 @@ export const Query = {
     return order;
   },
 
+  // Search orders by partial match
   //
-  // Search orders by exact or partial match
-  //
+  async getSpecialOrdersLike(_, { column, value }, { currentUser, models }) {
+    checkAuth(currentUser);
+
+    // Query DB
+    const result = await models.SpecialOrder.query().where(
+      column,
+      'ilike',
+      `%${value}%`,
+    );
+
+    // Throw error if no order found
+    if (result.length === 0)
+      throw new Error(`No orders found with ${column} of ${value}.`);
+
+    return result;
+  },
 };
 
 export const Mutation = {

@@ -17,17 +17,6 @@ export default gql`
     database: SuccessAndMessage
   }
 
-  input AdditionalChargeInput {
-    customer_order_id: ID
-    special_order_id: ID
-    admin_user_id: ID!
-    amount: Int!
-    stripe_customer: String!
-    name: String!
-    email: String!
-    description: String!
-  }
-
   extend type Query {
     getAdditionalChargesByOrderID(
       customer_order_id: ID
@@ -36,7 +25,13 @@ export default gql`
   }
   extend type Mutation {
     insertAdditionalCharge(
-      payload: AdditionalChargeInput!
+      customer_order_id: ID
+      special_order_id: ID
+      admin_user_id: ID!
+      amount: Int!
+      stripe_customer: String!
+      name: String!
+      email: String!
     ): AdditionalChargeResponse
   }
 `;

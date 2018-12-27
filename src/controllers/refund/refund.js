@@ -4,7 +4,7 @@ import validate from './refundValidation';
 import insertRefund from './insertRefund';
 import { checkAuth } from '../../utils';
 
-export default async ({ payload }, { models, currentUser }) => {
+export default async (payload, { models, currentUser }) => {
   checkAuth(currentUser);
 
   // Validate data

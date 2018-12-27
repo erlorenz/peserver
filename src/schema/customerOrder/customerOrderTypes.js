@@ -92,9 +92,9 @@ export default gql`
     quantity: Int!
   }
   extend type Query {
-    getOrdersByStatus(status: [String]): [CustomerOrder!]
-    getAllCustomerOrderDetails(customer_order_id: ID!): AllOrderDetails!
-    ordersMatch(input: FieldAndValue!): [CustomerOrder!]!
+    getCustomerOrdersByStatus(status: [String]): [CustomerOrder]
+    getCustomerOrderDetails(customer_order_id: ID!): AllOrderDetails
+    getCustomerOrdersLike(column: String, value: String): [CustomerOrder]
   }
   extend type Mutation {
     checkout(payload: CheckoutPayload!): CheckoutResponse!

@@ -15,19 +15,17 @@ export default gql`
     database: SuccessAndMessage
   }
 
-  input RefundInput {
-    customer_order_id: ID
-    special_order_id: ID
-    admin_user_id: ID!
-    amount: Int!
-    stripe_charge: String!
-  }
-
   extend type Query {
     getRefundsByOrderID(customer_order_id: String): [Refund!]
   }
 
   extend type Mutation {
-    insertRefund(payload: RefundInput!): RefundResponse
+    insertRefund(
+      customer_order_id: ID
+      special_order_id: ID
+      admin_user_id: ID!
+      amount: Int!
+      stripe_charge: String!
+    ): RefundResponse
   }
 `;

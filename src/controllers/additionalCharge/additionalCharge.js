@@ -4,7 +4,7 @@ import validate from './additionalChargeValidation';
 import insertAdditionalCharge from './insertAdditionalCharge';
 import { checkAuth } from '../../utils';
 
-export default async ({ payload }, { models, currentUser }) => {
+export default async (payload, { models, currentUser }) => {
   checkAuth(currentUser);
 
   // Create data object

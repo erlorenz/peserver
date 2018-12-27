@@ -35,9 +35,9 @@ export default gql`
     stripeToken: String!
   }
   extend type Query {
-    getSpecialOrdersByStatus(status: [String!]): [SpecialOrder!]
-    getAllSpecialOrderDetails(special_order_id: ID!): SpecialOrder
-    specialOrdersMatch(input: FieldAndValue!): [SpecialOrder!]!
+    getSpecialOrdersByStatus(status: [String!]): [SpecialOrder]
+    getSpecialOrderDetails(special_order_id: ID!): SpecialOrder
+    getSpecialOrdersLike(column: String, value: String): [SpecialOrder]
   }
 
   extend type Mutation {

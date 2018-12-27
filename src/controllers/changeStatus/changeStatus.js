@@ -1,8 +1,11 @@
 import { textBody, textArray } from '../../services/twilio/messages';
-import twilioSend from '../../services/twilio/twilio';
+import twilioSend from '../../services/twilio';
 import statusList from './statusList';
+import { checkAuth } from '../../utils';
 
 export default async (args, { models, currentUser }) => {
+  checkAuth(currentUser);
+
   const { status, customer_order_id, special_order_id } = args;
   const { SpecialOrder, CustomerOrder } = models;
 

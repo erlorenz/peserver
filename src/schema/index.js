@@ -12,6 +12,7 @@ import * as specialOrderResolvers from './specialOrder/specialOrderResolvers';
 import * as adminCommentResolvers from './adminComment/adminCommentResolvers';
 import * as refundResolvers from './refund/refundResolvers';
 import * as additionalChargeResolvers from './additionalCharge/additionalChargeResolvers';
+import * as sharedResolvers from './shared/sharedResolvers';
 
 import context from './context';
 
@@ -40,6 +41,7 @@ const resolvers = {
     ...adminCommentResolvers.Mutation,
     ...refundResolvers.Mutation,
     ...additionalChargeResolvers.Mutation,
+    ...sharedResolvers.Mutation,
   },
 };
 

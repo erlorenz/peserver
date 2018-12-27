@@ -98,7 +98,5 @@ export default gql`
   }
   extend type Mutation {
     checkout(payload: CheckoutPayload!): CheckoutResponse!
-    orderChangeStatus(status: String!, id: ID!): SuccessAndMessage!
-    orderAddComment(payload: AdminCommentInput!): AdminCommentDisplay!
   }
 `;

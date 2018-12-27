@@ -70,7 +70,4 @@ export const Mutation = {
   checkout(_, { payload }) {
     return checkoutController(payload);
   },
-
-  orderChangeStatus: (_, { status, id }, { models }) =>
-    changeStatusController(status, id, models.Order),
 };

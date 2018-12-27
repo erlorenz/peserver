@@ -1,6 +1,6 @@
 import { createCharge, createCustomer } from '../../services/stripe';
 import { formatPhone } from '../../utils';
-import EmailAPI from '../../services/mailjet';
+import * as EmailAPI from '../../services/mailjet';
 import TextAPI from '../../services/twilio';
 import { textBody } from '../../services/twilio/messages';
 import validate from './checkoutValidation';
@@ -49,10 +49,7 @@ export default async payload => {
     orderFields.receipt_sent = receiptResponse.success;
 
     // Send twilio text message
-    const textResponse = await TextAPI.sendText(
-      textBody.processed,
-      orderFields.phone,
-    );
+    const textResponse = await TextAPI(textBody.processed, orderFields.phone);
     orderFields.text_sent = textResponse.success;
 
     // Save order in DB

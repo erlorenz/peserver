@@ -13,7 +13,7 @@ export default payload => {
       .min(10)
       .required(),
     description: Joi.string().required(),
-    totalPrice: Joi.number().required(),
+    total_price: Joi.number().required(),
     stripeToken: Joi.string().required(),
   };
 

@@ -1,5 +1,5 @@
 import { checkAuth } from '../../utils';
-import { UserInputError } from 'apollo-server-express';
+import specialOrderController from '../../controllers/specialOrder';
 
 export const Query = {
   // Find Orders by Status
@@ -34,4 +34,10 @@ export const Query = {
   //
   // Search orders by exact or partial match
   //
+};
+
+export const Mutation = {
+  insertSpecialOrder(_, args, context) {
+    return specialOrderController(args, context);
+  },
 };

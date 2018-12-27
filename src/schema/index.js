@@ -38,6 +38,7 @@ const resolvers = {
   Mutation: {
     ...adminUserResolvers.Mutation,
     ...customerOrderResolvers.Mutation,
+    ...specialOrderResolvers.Mutation,
     ...adminCommentResolvers.Mutation,
     ...refundResolvers.Mutation,
     ...additionalChargeResolvers.Mutation,

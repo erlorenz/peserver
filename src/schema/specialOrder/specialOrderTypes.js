@@ -21,9 +21,26 @@ export default gql`
     stripe_customer: String
     created_at: String!
   }
+  type SpecialOrderResponse {
+    database: SuccessAndMessage
+  }
+
+  input SpecialOrderInput {
+    name: String!
+    total_price: Int!
+    phone: String!
+    email: String!
+    company: String!
+    description: String!
+    stripeToken: String!
+  }
   extend type Query {
     getSpecialOrdersByStatus(status: [String!]): [SpecialOrder!]
     getAllSpecialOrderDetails(special_order_id: ID!): SpecialOrder
     specialOrdersMatch(input: FieldAndValue!): [SpecialOrder!]!
+  }
+
+  extend type Mutation {
+    insertSpecialOrder(payload: SpecialOrderInput): SpecialOrderResponse
   }
 `;

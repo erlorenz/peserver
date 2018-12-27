@@ -11,11 +11,11 @@ import initializeDB from './db';
 // Initialize express
 const app = express();
 
-// Initialize Database and Objection
-initializeDB();
-
 // Logging
 configureWinston();
+
+// Initialize Database and Objection
+initializeDB();
 
 // Middleware
 app.use(morgan('dev'));

@@ -1,4 +1,5 @@
-export const dbURI = process.env.DB_URI
+export const dbURI =
+  process.env.DB_URI || 'postgres://erik:password@127.0.0.1:5432/press_express';
 export const dbPassword = process.env.DB_PASSWORD;
 export const jwtSecret = process.env.JWT_SECRET;
 export const twilioSID = process.env.TWILIO_SID;

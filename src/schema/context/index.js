@@ -3,6 +3,7 @@ import CustomerOrder from '../../models/CustomerOrder';
 import CustomerOrderItem from '../../models/CustomerOrderItem';
 import SpecialOrder from '../../models/SpecialOrder';
 import AdminComment from '../../models/AdminComment';
+import AdminCommentDisplay from '../../models/AdminCommentDisplay';
 import AdditionalCharge from '../../models/AdditionalCharge';
 import Refund from '../../models/Refund';
 
@@ -17,6 +18,7 @@ export default async ({ req }) => {
       SpecialOrder,
       CustomerOrderItem,
       AdminComment,
+      AdminCommentDisplay,
       AdditionalCharge,
       Refund,
     },

@@ -5,7 +5,6 @@ export const Query = {
   async getAdditionalChargesByOrderID(_, payload, { models, currentUser }) {
     checkAuth(currentUser);
 
-    // Deconstruct
     const { customer_order_id, special_order_id } = payload;
 
     // Search by either special order or order id

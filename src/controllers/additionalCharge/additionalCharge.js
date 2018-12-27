@@ -9,7 +9,6 @@ export default async ({ payload }, { models, currentUser }) => {
 
   // Create data object
   const {
-    description,
     amount,
     admin_user_id,
     customer_order_id,
@@ -22,22 +21,14 @@ export default async ({ payload }, { models, currentUser }) => {
   // Validate additional data -- fails on error
   validate(payload);
 
-  // Create metadata object
-  const metadata = { description };
-
   // Make additional charge -- fails on error
-  const charge = await StripeController.createCharge(
-    amount,
-    stripe_customer,
-    metadata,
-  );
+  const charge = await StripeController.createCharge(amount, stripe_customer);
 
   // Send receipt email
   const mailjetData = {
     name: name,
     email: email,
     additionalAmount: amount,
-    additionalDescription: description,
   };
 
   const emailResponse = await EmailController.additionalEmail(mailjetData);
@@ -46,7 +37,6 @@ export default async ({ payload }, { models, currentUser }) => {
     stripe_charge: charge.id,
     amount,
     admin_user_id: admin_user_id,
-    description: description,
     customer_order_id,
     special_order_id,
   };

@@ -1,38 +1,34 @@
-import StripeController from '../../services/stripe';
-import EmailController from '../../services/mailjet';
+import * as StripeController from '../../services/stripe';
+import * as EmailController from '../../services/mailjet';
 import validate from './refundValidation';
+import insertRefund from './insertRefund';
+import { checkAuth } from '../../utils';
 
-export default async (payload, Refund) => {
-  // Create refund data object
-  const data = { ...payload };
-
-  // Create metadata object
-  const metadata = {
-    description: data.description,
-  };
+export default async ({ payload }, { models, currentUser }) => {
+  checkAuth(currentUser);
 
   // Validate data
-  validate(data);
+  validate(payload);
 
-  // ---- Make refund
+  // Make refund -- fails on error
   const refundResponse = await StripeController.createRefund(
-    data.amount,
-    data.stripe_charge,
-    metadata,
+    payload.amount,
+    payload.stripe_charge,
   );
 
   // Send receipt email
-  const receiptResponse = await EmailController.refundEmail(data);
+  const receiptResponse = await EmailController.refundEmail(payload);
 
   // Update database
   const refundDetails = {
     stripe_refund: refundResponse.id,
-    amount: data.amount,
-    admin_user_id: data.admin_user_id,
-    description: data.description,
+    amount: payload.amount,
+    admin_user_id: payload.admin_user_id,
+    customer_order_id: payload.customer_order_id,
+    special_order_id: payload.special_order_id,
   };
 
-  const refund = await Refund.query().insert(refundDetails);
+  const dbResponse = await insertRefund(refundDetails, models);
 
-  return refund;
+  return { receiptEmail: receiptResponse, database: dbResponse };
 };

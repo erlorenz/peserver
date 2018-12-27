@@ -1,35 +1,25 @@
 import refundController from '../../controllers/refund';
+import { checkAuth } from '../../utils';
 
 export const Query = {
-  async getRefundsByOrderID(_, args, { models }) {
-    // Validate
-    if (!args.customer_order_id && !args.special_order_id)
-      throw new Error('Missing order ID');
+  async getRefundsByOrderID(_, args, { models, currentUser }) {
+    checkAuth(currentUser);
+
+    const { customer_order_id, special_order_id } = args;
 
     // Search by either special order or order id
-    let refunds;
-    try {
-      if (args.special_order_id) {
-        refunds = await models.Refund.query().where(
-          'special_order_id',
-          args.special_order_id,
-        );
-      } else {
-        refunds = await models.Refund.query().where(
-          'customer_order_id',
-          args.customer_order_id,
-        );
-      }
-      console.log(refunds);
+    const columnName = special_order_id
+      ? 'special_order_id'
+      : 'customer_order_id';
 
-      return refunds;
-    } catch (e) {
-      console.log(e);
-    }
+    const orderID = special_order_id ? special_order_id : customer_order_id;
+
+    // Perform query
+    const charges = await models.Refund.query().where(columnName, orderID);
+    return charges;
   },
 };
 
 export const Mutation = {
-  insertRefund: (_, { payload }, { models }) =>
-    refundController(payload, models.Refund),
+  insertRefund: (_, args, context) => refundController(args, context),
 };

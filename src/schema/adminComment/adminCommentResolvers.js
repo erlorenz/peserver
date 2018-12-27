@@ -1,9 +1,11 @@
 import adminCommentController from '../../controllers/adminComment';
+import { checkAuth } from '../../utils';
 
 export const Query = {
-  async getAdminCommentsByOrderID(_, payload, { models }) {
-    // Deconstruct
-    const { customer_order_id, special_order_id } = payload;
+  async getAdminCommentsByOrderID(_, args, { models, currentUser }) {
+    checkAuth(currentUser);
+
+    const { customer_order_id, special_order_id } = args;
 
     // Search by either special order or order id
     const columnName = special_order_id
@@ -23,6 +25,6 @@ export const Query = {
 };
 
 export const Mutation = {
-  insertAdminComment: (_, { payload }, { models }) =>
-    adminCommentController(payload, models.AdminComment),
+  insertAdminComment: (_, args, context) =>
+    adminCommentController(args, context),
 };

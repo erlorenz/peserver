@@ -2,8 +2,11 @@ import * as EmailController from '../../services/mailjet';
 import * as StripeController from '../../services/stripe';
 import validate from './additionalChargeValidation';
 import insertAdditionalCharge from './insertAdditionalCharge';
+import { checkAuth } from '../../utils';
 
-export default async (payload, AdditionalCharge) => {
+export default async ({ payload }, { models, currentUser }) => {
+  checkAuth(currentUser);
+
   // Create data object
   const {
     description,
@@ -15,47 +18,44 @@ export default async (payload, AdditionalCharge) => {
     email,
     special_order_id,
   } = payload;
-  try {
-    // Validate additional data -- fails on error
-    validate(payload);
 
-    // Create metadata object
-    const metadata = { description };
+  // Validate additional data -- fails on error
+  validate(payload);
 
-    // Make additional charge -- fails on error
-    const charge = await StripeController.createCharge(
-      amount,
-      stripe_customer,
-      metadata,
-    );
+  // Create metadata object
+  const metadata = { description };
 
-    // Send receipt email
-    const mailjetData = {
-      name: name,
-      email: email,
-      additionalAmount: amount,
-      additionalDescription: description,
-    };
+  // Make additional charge -- fails on error
+  const charge = await StripeController.createCharge(
+    amount,
+    stripe_customer,
+    metadata,
+  );
 
-    const emailResponse = EmailController.additionalEmail(mailjetData);
+  // Send receipt email
+  const mailjetData = {
+    name: name,
+    email: email,
+    additionalAmount: amount,
+    additionalDescription: description,
+  };
 
-    const additionalDetails = {
-      stripe_charge: charge.id,
-      amount,
-      admin_user_id: admin_user_id,
-      description: description,
-      customer_order_id,
-      special_order_id,
-    };
+  const emailResponse = await EmailController.additionalEmail(mailjetData);
 
-    // Save to DB
-    const dbResponse = await insertAdditionalCharge(
-      additionalDetails,
-      AdditionalCharge,
-    );
+  const additionalDetails = {
+    stripe_charge: charge.id,
+    amount,
+    admin_user_id: admin_user_id,
+    description: description,
+    customer_order_id,
+    special_order_id,
+  };
 
-    return { receiptEmail: emailResponse, database: dbResponse };
-  } catch (e) {
-    throw new Error(e.message);
-  }
+  // Save to DB
+  const dbResponse = await insertAdditionalCharge(
+    additionalDetails,
+    models.AdditionalCharge,
+  );
+
+  return { receiptEmail: emailResponse, database: dbResponse };
 };

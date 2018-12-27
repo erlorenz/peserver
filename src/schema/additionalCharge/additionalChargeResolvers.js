@@ -1,7 +1,10 @@
 import additionalChargeController from '../../controllers/additionalCharge';
+import { checkAuth } from '../../utils';
 
 export const Query = {
-  async getAdditionalChargesByOrderID(_, payload, { models }) {
+  async getAdditionalChargesByOrderID(_, payload, { models, currentUser }) {
+    checkAuth(currentUser);
+
     // Deconstruct
     const { customer_order_id, special_order_id } = payload;
 
@@ -22,6 +25,6 @@ export const Query = {
 };
 
 export const Mutation = {
-  insertAdditionalCharge: (_, { payload }, { models }) =>
-    additionalChargeController(payload, models.AdditionalCharge),
+  insertAdditionalCharge: (_, args, context) =>
+    additionalChargeController(args, context),
 };

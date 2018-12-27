@@ -6,8 +6,8 @@ import AdminComment from '../../models/AdminComment';
 import AdminCommentDisplay from '../../models/AdminCommentDisplay';
 import AdditionalCharge from '../../models/AdditionalCharge';
 import Refund from '../../models/Refund';
-
 import verifyToken from './verifyToken';
+import winston from 'winston';
 
 export default async ({ req }) => {
   const context = {
@@ -24,17 +24,17 @@ export default async ({ req }) => {
     },
 
     // User defaults to null
-    user: null,
+    currentUser: null,
   };
 
   // Verify token
   try {
-    const user = await verifyToken(req, AdminUser);
+    const currentUser = await verifyToken(req, AdminUser);
 
     // Add the verified user to the context
-    context.user = user;
+    context.currentUser = currentUser;
   } catch (e) {
-    console.log('context: No token match');
+    winston.warn('Context: No token match');
   }
 
   return context;

@@ -1,6 +1,4 @@
-import { AuthenticationError } from 'apollo-server-express';
-
 export default user => {
-  if (!user) throw new AuthenticationError('Invalid token');
+  if (!user) throw new Error('Invalid token');
   return user;
 };

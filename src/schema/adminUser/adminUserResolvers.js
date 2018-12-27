@@ -5,6 +5,6 @@ export const Mutation = {
   login: (_, { email, password }, { models }) =>
     loginController(email, password, models.AdminUser),
 
-  register: (_, payload, { models }) =>
-    registerController(payload, models.AdminUser),
+  register: (_, payload, { models, currentUser }) =>
+    registerController(payload, models.AdminUser, currentUser),
 };

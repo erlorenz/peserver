@@ -5,6 +5,6 @@ export default async (additionalDetails, AdditionalCharge) => {
     );
     return { success: true, message: additionalCharge.id };
   } catch (e) {
-    return { success: false, message: e.details };
+    return { success: false, message: e.message };
   }
 };

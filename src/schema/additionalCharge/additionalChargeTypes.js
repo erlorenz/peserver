@@ -9,6 +9,7 @@ export default gql`
     admin_user_id: ID
     special_order_id: ID
     stripe_charge: ID
+    description: String
   }
 
   type AdditionalChargeResponse {

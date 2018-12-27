@@ -31,7 +31,7 @@ export const Query = {
   async getAllOrderDetails(_, { customer_order_id }, { models }) {
     // checkAuth(user);
 
-    const orderAndComments = await models.CustomerOrder.query()
+    const order = await models.CustomerOrder.query()
       .where('id', customer_order_id)
       .eager([
         'adminComments',
@@ -41,12 +41,10 @@ export const Query = {
       ])
       .first();
 
-    console.log('OAC', orderAndComments);
     // Throw error if no order found
-    if (!orderAndComments)
-      throw new UserInputError('No order found with this ID.');
+    if (!order) throw new UserInputError('No order found with this ID.');
 
-    return orderAndComments;
+    return order;
   },
 
   //

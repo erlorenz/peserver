@@ -45,7 +45,7 @@ export default gql`
     checked_in: String
     out_for_delivery: String
     completed: String
-    refunds: [Refund]
+    refunds: [RefundDisplay]
     additionalCharges: [AdditionalChargeDisplay]
     text_sent: Boolean
     receipt_sent: Boolean

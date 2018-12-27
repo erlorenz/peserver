@@ -1,7 +1,7 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import 'dotenv/config';
 import morgan from 'morgan';
 import configureWinston from './config/logging';
 import apolloServer from './schema';
@@ -27,11 +27,11 @@ app.use(express.json());
 apolloServer.applyMiddleware({ app });
 
 // Connect server to port
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 app.listen(port, () => {
   winston.info(
-    `Express running... port: ${port}, Environment: ${process.env.NODE_ENV},
-    )},
+    `Express running at: ${port}, 
+    Environment: ${process.env.NODE_ENV},
     🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,
   );
 });

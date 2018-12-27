@@ -15,6 +15,7 @@ export default gql`
     customer_order_id: ID
     name: String
     email: String
+    special_order_id: ID
   }
 
   extend type Query {

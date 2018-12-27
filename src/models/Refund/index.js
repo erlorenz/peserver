@@ -1,5 +1,4 @@
 import { Model } from 'objection';
-import CustomerOrder from '../CustomerOrder';
 
 export default class Refund extends Model {
   static tableName = 'refund';
@@ -7,7 +6,7 @@ export default class Refund extends Model {
   static relationMappings = {
     customerOrder: {
       relation: Model.BelongsToOneRelation,
-      modelClass: CustomerOrder,
+      modelClass: `${__dirname}/../CustomerOrder`,
       join: {
         from: 'refund.order_id',
         to: 'customer_order.id',

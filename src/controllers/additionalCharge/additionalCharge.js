@@ -15,44 +15,47 @@ export default async (payload, AdditionalCharge) => {
     email,
     special_order_id,
   } = payload;
+  try {
+    // Validate additional data -- fails on error
+    validate(payload);
 
-  // Validate additional data
-  validate(payload);
+    // Create metadata object
+    const metadata = { description };
 
-  // Create metadata object
-  const metadata = { description };
+    // Make additional charge -- fails on error
+    const charge = await StripeController.createCharge(
+      amount,
+      stripe_customer,
+      metadata,
+    );
 
-  // ---- Make additional charge
-  const charge = await StripeController.createCharge(
-    amount,
-    stripe_customer,
-    metadata,
-  );
+    // Send receipt email
+    const mailjetData = {
+      name: name,
+      email: email,
+      additionalAmount: amount,
+      additionalDescription: description,
+    };
 
-  // Send receipt email
-  const mailjetData = {
-    name: name,
-    email: email,
-    additionalAmount: amount,
-    additionalDescription: description,
-  };
+    const emailResponse = EmailController.additionalEmail(mailjetData);
 
-  const emailResponse = EmailController.additionalEmail(mailjetData);
+    const additionalDetails = {
+      stripe_charge: charge.id,
+      amount,
+      admin_user_id: admin_user_id,
+      description: description,
+      customer_order_id,
+      special_order_id,
+    };
 
-  const additionalDetails = {
-    stripe_charge: charge.id,
-    amount,
-    admin_user_id: admin_user_id,
-    description: description,
-    customer_order_id,
-    special_order_id,
-  };
+    // Save to DB
+    const dbResponse = await insertAdditionalCharge(
+      additionalDetails,
+      AdditionalCharge,
+    );
 
-  // Save to DB
-  const dbResponse = await insertAdditionalCharge(
-    additionalDetails,
-    AdditionalCharge,
-  );
-
-  return { receiptEmail: emailResponse, database: dbResponse };
+    return { receiptEmail: emailResponse, database: dbResponse };
+  } catch (e) {
+    throw new Error(e.message);
+  }
 };

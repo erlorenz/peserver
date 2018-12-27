@@ -1,5 +1,4 @@
 import { checkAuth } from '../../utils';
-import { UserInputError } from 'apollo-server-express';
 import checkoutController from '../../controllers/checkout';
 import changeStatusController from '../../controllers/changeStatus';
 
@@ -18,31 +17,25 @@ export const Query = {
 
     // Throw error if no order found
     if (!result.length)
-      throw new UserInputError(
-        `No orders found with the queried status/statuses.`,
-      );
+      throw new Error(`No orders found with the queried status/statuses.`);
 
     return result;
   },
 
   //
-  // Find Individual Order by ID including comments
+  // Find Individual Order by ID with all related info
   //
   async getAllOrderDetails(_, { customer_order_id }, { models }) {
     // checkAuth(user);
 
     const order = await models.CustomerOrder.query()
+      .eager('[customerOrderItems, refunds, additionalCharges, adminComments]')
       .where('id', customer_order_id)
-      .eager([
-        'adminComments',
-        'refunds',
-        'additionalCharges',
-        'customerOrderItems',
-      ])
       .first();
 
     // Throw error if no order found
-    if (!order) throw new UserInputError('No order found with this ID.');
+    if (!order) throw new Error('No order found with this ID.');
+    console.log(order);
 
     return order;
   },
@@ -55,7 +48,7 @@ export const Query = {
 
     // Validate that the fields are filled out
     if (!input.field || !input.value || !input.matchType)
-      throw new UserInputError('Missing field, value, or match type');
+      throw new Error('Missing field, value, or match type');
 
     // Decide whether to do an exact or partial search, default = exact
     let searchTerm = input.value;
@@ -70,9 +63,7 @@ export const Query = {
 
     // Throw error if no order found
     if (result.length === 0)
-      throw new UserInputError(
-        `No orders found with ${input.field} of ${input.value}.`,
-      );
+      throw new Error(`No orders found with ${input.field} of ${input.value}.`);
 
     return result;
   },

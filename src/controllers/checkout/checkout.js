@@ -5,7 +5,6 @@ import TextAPI from '../../services/twilio';
 import { textBody } from '../../services/twilio/messages';
 import validate from './checkoutValidation';
 import dbTransaction from './dbTransaction';
-import { ApolloError } from 'apollo-server-express';
 
 export default async payload => {
   // Create order object and metadata object
@@ -82,6 +81,6 @@ export default async payload => {
       errorEmail: errorEmailResponse,
     };
   } catch (e) {
-    throw new ApolloError(e.message);
+    throw new Error(e.message);
   }
 };

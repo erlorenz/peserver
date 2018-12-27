@@ -45,11 +45,11 @@ export default gql`
     checked_in: String
     out_for_delivery: String
     completed: String
-    refunds: [RefundDisplay]
-    additionalCharges: [AdditionalChargeDisplay]
+    refunds: [Refund]
+    additionalCharges: [AdditionalCharge]
     text_sent: Boolean
     receipt_sent: Boolean
-    customerOrderItems: [CustomerOrderItem]!
+    customerOrderItems: [CustomerOrderItem]
   }
   type CustomerOrderItem {
     description: String

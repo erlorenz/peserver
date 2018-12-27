@@ -10,13 +10,6 @@ export default gql`
     special_order_id: ID
     stripe_charge: ID
   }
-  type AdditionalChargeDisplay {
-    created_at: String
-    amount: Int
-    stripe_charge: ID
-    name: String
-    description: String
-  }
 
   type AdditionalChargeResponse {
     receiptEmail: SuccessAndMessage
@@ -34,13 +27,12 @@ export default gql`
     description: String!
   }
 
-  # extend type Query {
-  #   getAdditionalChargesByOrderID(
-  #     customer_order_id: String
-  #     special_order_id: String
-  #   ): [AdditionalChargeDisplay!]
-  # }
-
+  extend type Query {
+    getAdditionalChargesByOrderID(
+      customer_order_id: ID
+      special_order_id: ID
+    ): [AdditionalCharge]
+  }
   extend type Mutation {
     insertAdditionalCharge(
       payload: AdditionalChargeInput!

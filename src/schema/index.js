@@ -6,12 +6,15 @@ import specialOrderTypes from './specialOrder/specialOrderTypes';
 import additionalChargeTypes from './additionalCharge/additionalChargeTypes';
 import refundTypes from './refund/refundTypes';
 import sharedTypes from './shared/sharedTypes';
+import garmentTypes from './garment/garmentTypes';
+
 import * as adminUserResolvers from './adminUser/adminUserResolvers';
 import * as customerOrderResolvers from './customerOrder/customerOrderResolvers';
 import * as specialOrderResolvers from './specialOrder/specialOrderResolvers';
 import * as adminCommentResolvers from './adminComment/adminCommentResolvers';
 import * as refundResolvers from './refund/refundResolvers';
 import * as additionalChargeResolvers from './additionalCharge/additionalChargeResolvers';
+import * as garmentResolvers from './garment/garmentResolvers';
 import * as sharedResolvers from './shared/sharedResolvers';
 
 import context from './context';
@@ -24,6 +27,7 @@ const typeDefs = [
   sharedTypes,
   additionalChargeTypes,
   refundTypes,
+  garmentTypes,
 ];
 
 // Combine resolvers
@@ -34,6 +38,7 @@ const resolvers = {
     ...adminCommentResolvers.Query,
     ...refundResolvers.Query,
     ...additionalChargeResolvers.Query,
+    ...garmentResolvers.Query,
   },
   Mutation: {
     ...adminUserResolvers.Mutation,
@@ -43,6 +48,7 @@ const resolvers = {
     ...refundResolvers.Mutation,
     ...additionalChargeResolvers.Mutation,
     ...sharedResolvers.Mutation,
+    ...garmentResolvers.Mutation,
   },
 };
 

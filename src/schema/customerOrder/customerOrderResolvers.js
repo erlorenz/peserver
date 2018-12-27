@@ -34,7 +34,7 @@ export const Query = {
     return order;
   },
 
-  // Search orders by exact or partial match
+  // Search orders by partial match
   //
   async getCustomerOrdersLike(_, { column, value }, { currentUser, models }) {
     checkAuth(currentUser);

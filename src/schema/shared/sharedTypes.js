@@ -12,6 +12,10 @@ export default gql`
     success: Boolean
     message: String
   }
+  type ChangeStatusResponse {
+    database: SuccessAndMessage
+    twilio: SuccessAndMessage
+  }
 
   input FieldAndValue {
     field: String!
@@ -24,5 +28,10 @@ export default gql`
   }
   type Mutation {
     _empty: String
+    changeStatus(
+      status: String!
+      customer_order_id: ID
+      special_order_id: ID
+    ): ChangeStatusResponse
   }
 `;

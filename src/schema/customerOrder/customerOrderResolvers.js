@@ -6,18 +6,13 @@ export const Query = {
   //
   // Find Orders by Status
   //
-  async getOrdersByStatus(_, { status }, { user, models }) {
-    // Check for user in context
-    checkAuth(user);
+  async getOrdersByStatus(_, { status }, { currentUser, models }) {
+    checkAuth(currentUser);
 
     // Return all if no status included
     if (!status) return await models.CustomerOrder.query();
 
     const result = await models.CustomerOrder.query().whereIn('status', status);
-
-    // Throw error if no order found
-    if (!result.length)
-      throw new Error(`No orders found with the queried status/statuses.`);
 
     return result;
   },
@@ -25,8 +20,10 @@ export const Query = {
   //
   // Find Individual Order by ID with all related info
   //
-  async getAllOrderDetails(_, { customer_order_id }, { models }) {
-    // checkAuth(user);
+  async getAllCustomerOrderDetails(_, args, { models, currentUser }) {
+    const { customer_order_id } = args;
+
+    checkAuth(currentUser);
 
     const order = await models.CustomerOrder.query()
       .eager('[customerOrderItems, refunds, additionalCharges, adminComments]')

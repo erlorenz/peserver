@@ -93,7 +93,7 @@ export default gql`
   }
   extend type Query {
     getOrdersByStatus(status: [String]): [CustomerOrder!]
-    getAllOrderDetails(customer_order_id: ID!): AllOrderDetails!
+    getAllCustomerOrderDetails(customer_order_id: ID!): AllOrderDetails!
     ordersMatch(input: FieldAndValue!): [CustomerOrder!]!
   }
   extend type Mutation {

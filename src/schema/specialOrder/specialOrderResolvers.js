@@ -3,59 +3,35 @@ import { UserInputError } from 'apollo-server-express';
 
 export const Query = {
   // Find Orders by Status
-  async specialOrdersByStatus(_, { status }, { user, models }) {
-    checkAuth(user);
+  async getSpecialOrdersByStatus(_, { status }, { currentUser, models }) {
+    checkAuth(currentUser);
 
     // Return all if no status included
-    if (!status) return await models.SpecialOrder.find();
+    if (!status) return await models.SpecialOrder.query();
 
-    const result = await models.SpecialOrder.find({
-      status: {
-        $in: status,
-      },
-    }).sort({ _id: -1 });
+    const result = await models.SpecialOrder.query().whereIn('status', status);
 
     return result;
   },
 
-  // Find Individual Order by ID
-  async specialOrderById(_, { _id }, { user, models }) {
-    checkAuth(user);
+  async getAllSpecialOrderDetails(_, args, { models, currentUser }) {
+    const { special_order_id } = args;
 
-    const result = await models.SpecialOrder.findById(_id);
+    checkAuth(currentUser);
+
+    const order = await models.SpecialOrder.query()
+      .eager('[refunds, additionalCharges, adminComments]')
+      .where('id', special_order_id)
+      .first();
 
     // Throw error if no order found
-    if (!result) throw new UserInputError('No order found with this ID');
+    if (!order) throw new Error('No order found with this ID.');
+    console.log(order);
 
-    return result;
+    return order;
   },
 
   //
   // Search orders by exact or partial match
   //
-  async specialOrdersMatch(_, { input }, { user, models }) {
-    checkAuth(user);
-
-    // Validate that the fields are filled out
-    if (!input.field || !input.value || !input.matchType)
-      throw new UserInputError('Missing field, value, or match type');
-
-    // Decide whether to do an exact or partial search, default = exact
-    let searchTerm = input.value;
-    if (input.matchType === 'PARTIAL')
-      searchTerm = new RegExp(input.value, 'i');
-
-    // Query DB
-    const result = await models.SpecialOrder.find({
-      [input.field]: searchTerm,
-    }).sort({ _id: -1 });
-
-    // Throw error if no order found
-    if (result.length === 0)
-      throw new UserInputError(
-        `No orders found with ${input.field} of ${input.value}.`,
-      );
-
-    return result;
-  },
 };

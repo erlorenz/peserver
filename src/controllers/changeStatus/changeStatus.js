@@ -1,21 +1,38 @@
-import { UserInputError, ApolloError } from 'apollo-server-express';
-
 import { textBody, textArray } from '../../services/twilio/messages';
 import twilioSend from '../../services/twilio/twilio';
+import statusList from './statusList';
 
-export default async (status, _id, Model) => {
-  if (!status) throw new UserInputError('No status submitted');
+export default async (args, { models, currentUser }) => {
+  const { status, customer_order_id, special_order_id } = args;
+  const { SpecialOrder, CustomerOrder } = models;
 
-  const order = await Model.findById(_id);
-  if (!order) throw new ApolloError('No order with that ID');
+  if (!statusList.includes(status)) throw new Error('Invalid status');
 
-  order.changeStatus(status);
+  // Decide which model to use
+  const Model = special_order_id ? SpecialOrder : CustomerOrder;
+  const id = special_order_id ? special_order_id : customer_order_id;
 
-  const result = await order.save();
+  const order = await Model.query()
+    .patch({ status })
+    .where({ id })
+    .returning('*')
+    .first();
 
-  // // ------Send twilio message if it is a matching status
-  // if (textArray.includes(status))
-  //   await twilioSend(textBody[status], order.phone);
+  const dbResponse = { success: true, message: order.id };
 
-  return result;
+  //  Send twilio message if it is a matching status
+  if (textArray.includes(status) && customer_order_id) {
+    const textResponse = await twilioSend(textBody[status], order.phone);
+
+    return {
+      database: dbResponse,
+      twilio: textResponse,
+    };
+  }
+
+  // No text needed to be sent
+  return {
+    database: dbResponse,
+    twilio: { success: false, message: 'No text needed to be sent' },
+  };
 };

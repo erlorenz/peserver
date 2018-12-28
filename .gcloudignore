@@ -1,0 +1,14 @@
+.gcloudignore
+.git
+.gitignore
+node_modules/
+.env
+src/
+.vscode/
+.babelrc
+.dockerignore
+.eslintrc.js
+.eslintignore
+.docker-compose.yml
+.knexfile.js
+migrations/

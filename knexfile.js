@@ -28,4 +28,17 @@ module.exports = {
       tableName: 'knex_migrations',
     },
   },
+
+  production: {
+    client: 'pg',
+    connection: {
+      database: DB_NAME,
+      user: DB_USER,
+      password: DB_PASSWORD,
+      host: `/cloudsql/${DB_SOCKET_NAME}`,
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+    },
+  },
 };

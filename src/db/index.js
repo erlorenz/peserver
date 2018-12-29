@@ -1,5 +1,4 @@
 import Knex from 'knex';
-import { dbURI } from '../config/keys';
 import { Model } from 'objection';
 import AdminUser from '../models/AdminUser';
 import winston from 'winston';

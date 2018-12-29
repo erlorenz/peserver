@@ -29,7 +29,6 @@ export const Query = {
 
     // Throw error if no order found
     if (!order) throw new Error('No order found with this ID.');
-    console.log(order);
 
     return order;
   },

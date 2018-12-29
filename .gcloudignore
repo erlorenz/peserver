@@ -10,5 +10,4 @@ src/
 .eslintrc.js
 .eslintignore
 .docker-compose.yml
-.knexfile.js
 migrations/

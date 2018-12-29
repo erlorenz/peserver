@@ -14,13 +14,12 @@ export default async () => {
 
   Model.knex(knex);
 
-  const testDB = async () => {
+  (async () => {
     try {
       await AdminUser.query();
       winston.info('Postgres Server Connected');
     } catch (e) {
       winston.warn('Postgres: ' + e.message);
     }
-  };
-  await testDB();
+  })();
 };

@@ -23,15 +23,19 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 
+// Basic GET
+app.get('/', (req, res) => res.send('SERVER RUNNING'));
+
 // GraphQL
 apolloServer.applyMiddleware({ app });
 
-// Connect server to port
-const port = process.env.PORT;
-app.listen(port, () => {
+// Connect server to PORT
+const { PORT, NODE_ENV } = process.env;
+
+app.listen(PORT, () => {
   winston.info(
-    `Express running at: ${port}, 
-    Environment: ${process.env.NODE_ENV},
-    🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`,
+    `Express running at: ${PORT}, 
+    Environment: ${NODE_ENV},
+    🚀 Server ready at http://localhost:${PORT}${apolloServer.graphqlPath}`,
   );
 });

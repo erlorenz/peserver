@@ -52,8 +52,14 @@ const resolvers = {
   },
 };
 
+// Enable Graphql playground in staging
+const enablePlaygound = process.env.PLAYGROUND
+  ? { introspection: true, playground: true }
+  : {};
+
 export default new ApolloServer({
   typeDefs,
   resolvers,
   context,
+  ...enablePlaygound,
 });

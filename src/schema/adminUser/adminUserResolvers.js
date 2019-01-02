@@ -5,7 +5,7 @@ import { checkAuth } from '../../utils';
 export const Query = {
   checkToken: (_, args, { currentUser }) => {
     checkAuth(currentUser);
-    return { success: true, message: 'User authenticated' };
+    return currentUser;
   },
 };
 

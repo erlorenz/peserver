@@ -4,7 +4,6 @@ export default gql`
   type AdminUser {
     name: String
     email: String
-    password: String
     access_level: String
     id: ID
   }
@@ -16,7 +15,7 @@ export default gql`
     id: ID
   }
   extend type Query {
-    checkToken: SuccessAndMessage
+    checkToken: AdminUser
   }
   extend type Mutation {
     login(email: String!, password: String!): AdminUserLoginResponse

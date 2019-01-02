@@ -39,6 +39,7 @@ const resolvers = {
     ...refundResolvers.Query,
     ...additionalChargeResolvers.Query,
     ...garmentResolvers.Query,
+    ...adminUserResolvers.Query,
   },
   Mutation: {
     ...adminUserResolvers.Mutation,

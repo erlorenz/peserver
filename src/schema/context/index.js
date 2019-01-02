@@ -36,7 +36,7 @@ export default async ({ req }) => {
     // Add the verified user to the context
     context.currentUser = currentUser;
   } catch (e) {
-    winston.warn('Context: No token match');
+    winston.info(e.message);
   }
 
   return context;

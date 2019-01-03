@@ -1,4 +1,4 @@
-import loginController from '../../controllers/login';
+import signInController from '../../controllers/signIn';
 import registerController from '../../controllers/register';
 import { checkAuth } from '../../utils';
 
@@ -10,8 +10,8 @@ export const Query = {
 };
 
 export const Mutation = {
-  login: (_, { email, password }, { models }) =>
-    loginController(email, password, models.AdminUser),
+  signIn: (_, { email, password }, { models }) =>
+    signInController(email, password, models.AdminUser),
 
   register: (_, payload, { models, currentUser }) =>
     registerController(payload, models.AdminUser, currentUser),

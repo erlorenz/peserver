@@ -7,7 +7,7 @@ export default gql`
     access_level: String
     id: ID
   }
-  type AdminUserLoginResponse {
+  type AdminUserSignInResponse {
     token: String
     name: String
     access_level: String
@@ -18,7 +18,7 @@ export default gql`
     checkToken: AdminUser
   }
   extend type Mutation {
-    login(email: String!, password: String!): AdminUserLoginResponse
+    signIn(email: String!, password: String!): AdminUserSignInResponse
     register(
       email: String!
       password: String!

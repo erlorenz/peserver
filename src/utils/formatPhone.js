@@ -1,8 +1,6 @@
 export default unformattedNumber => {
-  const newString = unformattedNumber.toString();
-
-  // const regExArray = unformattedNumber.match(/[0-9]{0,14}/g);
-  // const newString = regExArray.join('');
+  const regExArray = unformattedNumber.match(/[0-9]{0,14}/g);
+  const newString = regExArray.join('');
 
   if (newString.length !== 10) {
     throw new Error('Please enter a 10 digit phone number');

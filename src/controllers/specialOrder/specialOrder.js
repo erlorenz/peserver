@@ -3,10 +3,10 @@ import validate from './specialOrderValidation';
 import { formatPhone, checkAuth } from '../../utils';
 import insertSpecialOrder from './insertSpecialOrder';
 
-export default async ({ payload }, { models, currentUser }) => {
+export default async (_, args, { models, currentUser }) => {
   checkAuth(currentUser);
 
-  const orderFields = { ...payload };
+  const orderFields = { ...args };
   const { SpecialOrder } = models;
 
   // Validate Data

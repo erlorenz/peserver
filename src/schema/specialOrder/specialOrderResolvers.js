@@ -52,7 +52,7 @@ export const Query = {
 };
 
 export const Mutation = {
-  insertSpecialOrder(_, args, context) {
-    return specialOrderController(args, context);
+  createSpecialOrder(_, args, context) {
+    return specialOrderController(_, args, context);
   },
 };

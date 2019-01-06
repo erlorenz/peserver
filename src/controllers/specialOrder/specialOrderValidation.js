@@ -11,6 +11,7 @@ export default payload => {
     company: Joi.string().required(),
     phone: Joi.string()
       .min(10)
+      .max(10)
       .required(),
     description: Joi.string().required(),
     total_price: Joi.number().required(),

@@ -25,15 +25,6 @@ export default gql`
     database: SuccessAndMessage
   }
 
-  input SpecialOrderInput {
-    name: String!
-    total_price: Int!
-    phone: String!
-    email: String!
-    company: String!
-    description: String!
-    stripeToken: String!
-  }
   extend type Query {
     getSpecialOrdersByStatus(status: [String!]): [SpecialOrder]
     getSpecialOrderDetails(special_order_id: ID!): SpecialOrder
@@ -41,6 +32,14 @@ export default gql`
   }
 
   extend type Mutation {
-    insertSpecialOrder(payload: SpecialOrderInput): SpecialOrderResponse
+    createSpecialOrder(
+      name: String!
+      total_price: Int!
+      phone: String!
+      email: String!
+      company: String!
+      description: String!
+      stripeToken: String!
+    ): SpecialOrderResponse
   }
 `;

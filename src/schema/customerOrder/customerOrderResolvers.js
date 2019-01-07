@@ -4,13 +4,17 @@ import checkoutController from '../../controllers/checkout';
 export const Query = {
   // Find Orders by Status
   //
-  async getCustomerOrdersByStatus(_, { status }, { currentUser, models }) {
+  async getCustomerOrdersByStatus(_, args, { currentUser, models }) {
     checkAuth(currentUser);
+
+    const { status, orderBy = 'created_at', direction = 'desc' } = args;
 
     // Return all if no status included
     if (!status.length) return await models.CustomerOrder.query();
 
-    const result = await models.CustomerOrder.query().whereIn('status', status);
+    const result = await models.CustomerOrder.query()
+      .whereIn('status', status)
+      .orderBy(orderBy, direction);
 
     return result;
   },

@@ -3,13 +3,17 @@ import specialOrderController from '../../controllers/specialOrder';
 
 export const Query = {
   // Find Orders by Status
-  async getSpecialOrdersByStatus(_, { status }, { currentUser, models }) {
+  async getSpecialOrdersByStatus(_, args, { currentUser, models }) {
     checkAuth(currentUser);
+
+    const { status, orderBy = 'created_at', direction = 'desc' } = args;
 
     // Return all if no status included
     if (!status.length) return await models.SpecialOrder.query();
 
-    const result = await models.SpecialOrder.query().whereIn('status', status);
+    const result = await models.SpecialOrder.query()
+      .whereIn('status', status)
+      .orderBy(orderBy, direction);
 
     return result;
   },

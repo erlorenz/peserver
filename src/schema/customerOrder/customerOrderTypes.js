@@ -92,7 +92,11 @@ export default gql`
     quantity: Int!
   }
   extend type Query {
-    getCustomerOrdersByStatus(status: [String]): [CustomerOrder]
+    getCustomerOrdersByStatus(
+      status: [String]
+      direction: String
+      orderBy: String
+    ): [CustomerOrder]
     getCustomerOrderDetails(customer_order_id: ID!): AllOrderDetails
     getCustomerOrdersLike(column: String, value: String): [CustomerOrder]
   }

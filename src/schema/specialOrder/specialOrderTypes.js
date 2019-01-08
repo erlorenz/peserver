@@ -26,7 +26,11 @@ export default gql`
   }
 
   extend type Query {
-    getSpecialOrdersByStatus(status: [String!]): [SpecialOrder]
+    getSpecialOrdersByStatus(
+      status: [String!]
+      direction: String
+      orderBy: String
+    ): [SpecialOrder]
     getSpecialOrderDetails(special_order_id: ID!): SpecialOrder
     getSpecialOrdersLike(column: String, value: String): [SpecialOrder]
   }

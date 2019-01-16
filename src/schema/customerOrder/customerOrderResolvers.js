@@ -21,7 +21,7 @@ export const Query = {
 
   // Find Individual Order by ID with all related info
   //
-  async getCustomerOrderDetails(_, args, { models, currentUser }) {
+  async getCustomerOrder(_, args, { models, currentUser }) {
     checkAuth(currentUser);
 
     const { customer_order_id } = args;

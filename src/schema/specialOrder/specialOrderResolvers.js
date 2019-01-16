@@ -18,7 +18,7 @@ export const Query = {
     return result;
   },
 
-  async getSpecialOrderDetails(_, args, { models, currentUser }) {
+  async getSpecialOrder(_, args, { models, currentUser }) {
     const { special_order_id } = args;
 
     checkAuth(currentUser);

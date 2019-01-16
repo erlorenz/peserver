@@ -1,7 +1,7 @@
-import changeStatusController from '../../controllers/changeStatus';
+import updateStatusController from '../../controllers/updateStatus';
 
 export const Mutation = {
-  changeStatus(_, args, context) {
-    return changeStatusController(args, context);
+  updateStatus(_, args, context) {
+    return updateStatusController(args, context);
   },
 };

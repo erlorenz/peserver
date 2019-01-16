@@ -27,7 +27,7 @@ export default gql`
   }
   type Mutation {
     _empty: String
-    changeStatus(
+    updateStatus(
       status: String!
       customer_order_id: ID
       special_order_id: ID

@@ -26,6 +26,8 @@ export default gql`
       admin_user_id: ID!
       amount: Int!
       stripe_charge: String!
+      name: String!
+      email: String!
     ): RefundResponse
   }
 `;

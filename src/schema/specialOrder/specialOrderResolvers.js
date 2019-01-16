@@ -19,18 +19,17 @@ export const Query = {
   },
 
   async getSpecialOrder(_, args, { models, currentUser }) {
-    const { special_order_id } = args;
+    const { id } = args;
 
     checkAuth(currentUser);
 
     const order = await models.SpecialOrder.query()
       .eager('[refunds, additionalCharges, adminComments]')
-      .where('id', special_order_id)
+      .where('id', id)
       .first();
 
     // Throw error if no order found
     if (!order) throw new Error('No order found with this ID.');
-    console.log(order);
 
     return order;
   },

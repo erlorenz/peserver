@@ -24,11 +24,11 @@ export const Query = {
   async getCustomerOrder(_, args, { models, currentUser }) {
     checkAuth(currentUser);
 
-    const { customer_order_id } = args;
+    const { id } = args;
 
     const order = await models.CustomerOrder.query()
       .eager('[customerOrderItems, refunds, additionalCharges, adminComments]')
-      .where('id', customer_order_id)
+      .where('id', id)
       .first();
 
     // Throw error if no order found

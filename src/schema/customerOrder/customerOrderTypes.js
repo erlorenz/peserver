@@ -97,7 +97,7 @@ export default gql`
       direction: String
       orderBy: String
     ): [CustomerOrder]
-    getCustomerOrder(customer_order_id: ID!): AllOrderDetails
+    getCustomerOrder(id: ID!): AllOrderDetails
     getCustomerOrdersLike(column: String, value: String): [CustomerOrder]
   }
   extend type Mutation {

@@ -31,7 +31,7 @@ export default gql`
       direction: String
       orderBy: String
     ): [SpecialOrder]
-    getSpecialOrder(special_order_id: ID!): SpecialOrder
+    getSpecialOrder(id: ID!): SpecialOrder
     getSpecialOrdersLike(column: String, value: String): [SpecialOrder]
   }
 

@@ -7,6 +7,8 @@ export default payload => {
     admin_user_id: Joi.string().required(),
     amount: Joi.number().required(),
     stripe_charge: Joi.string().required(),
+    name: Joi.string().required(),
+    email: Joi.string().required(),
   };
 
   const result = Joi.validate(payload, schema);

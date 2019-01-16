@@ -7,8 +7,6 @@ import { checkAuth } from '../../utils';
 export default async (payload, { models, currentUser }) => {
   checkAuth(currentUser);
 
-  console.log(payload);
-
   // Validate data
   validate(payload);
 

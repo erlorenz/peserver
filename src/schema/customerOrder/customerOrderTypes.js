@@ -14,6 +14,7 @@ export default gql`
     pickup_date: String
     return_date: String
     starch: Boolean
+    crease: Boolean
     special_instructions: String
     stripe_charge: String
     stripe_customer: String
@@ -37,6 +38,7 @@ export default gql`
     pickup_date: String
     return_date: String
     starch: Boolean
+    crease: Boolean
     special_instructions: String
     stripe_charge: String
     stripe_customer: String
@@ -80,6 +82,7 @@ export default gql`
     pickup_date: String!
     return_date: String!
     starch: Boolean!
+    crease: Boolean!
     special_instructions: String
     promo_code: String
     customerOrderItems: [CustomerOrderItemInput!]!

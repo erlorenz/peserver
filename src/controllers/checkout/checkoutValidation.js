@@ -16,6 +16,7 @@ export default payload => {
     return_date: Joi.required(),
     customerOrderItems: Joi.array().required(),
     starch: Joi.boolean().optional(),
+    crease: Joi.boolean().optional(),
     special_instructions: Joi.string().optional(),
     total_price: Joi.number().required(),
     promo_code: Joi.string().optional(),

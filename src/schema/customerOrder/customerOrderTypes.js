@@ -37,8 +37,8 @@ export default gql`
     created_at: String
     pickup_date: String
     return_date: String
-    starch: Boolean
-    crease: Boolean
+    starch: String
+    crease: String
     special_instructions: String
     stripe_charge: String
     stripe_customer: String

@@ -58,7 +58,7 @@ export const Query = {
 };
 
 export const Mutation = {
-  checkout(_, { payload }) {
-    return checkoutController(payload);
+  checkout(_, args) {
+    return checkoutController(args);
   },
 };

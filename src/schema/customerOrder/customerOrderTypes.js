@@ -104,6 +104,21 @@ export default gql`
     getCustomerOrdersLike(column: String, value: String): [CustomerOrder]
   }
   extend type Mutation {
-    checkout(payload: CheckoutPayload!): CheckoutResponse!
+    checkout(
+      name: String!
+      total_price: Int!
+      phone: String!
+      email: String!
+      hotel: String!
+      room: String!
+      pickup_date: String!
+      return_date: String!
+      starch: String!
+      crease: String!
+      special_instructions: String
+      promo_code: String
+      customerOrderItems: [CustomerOrderItemInput!]!
+      stripeToken: String!
+    ): CheckoutResponse!
   }
 `;

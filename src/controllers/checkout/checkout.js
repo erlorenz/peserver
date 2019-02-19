@@ -70,13 +70,7 @@ export default async payload => {
       };
       errorEmailResponse = await EmailAPI.errorEmail(errorData);
     }
-    // Send success response
-    console.log({
-      database: dbResponse,
-      twilio: textResponse,
-      receiptEmail: receiptResponse,
-      errorEmail: errorEmailResponse,
-    });
+
     return {
       database: dbResponse,
       twilio: textResponse,
@@ -84,6 +78,7 @@ export default async payload => {
       errorEmail: errorEmailResponse,
     };
   } catch (e) {
+    console.log('THERE WAS AN ERROR AT CHECKOUT: ', e.message);
     throw new Error(e.message);
   }
 };

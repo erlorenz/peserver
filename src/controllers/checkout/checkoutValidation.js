@@ -12,12 +12,14 @@ export default payload => {
       .required(),
     room: Joi.string().required(),
     hotel: Joi.string().required(),
-    pickup_date: Joi.required(),
-    return_date: Joi.required(),
+    pickup_date: Joi.string().required(),
+    return_date: Joi.string().required(),
     customerOrderItems: Joi.array().required(),
     starch: Joi.string().optional(),
     crease: Joi.string().optional(),
-    special_instructions: Joi.string().optional(),
+    special_instructions: Joi.string()
+      .optional()
+      .allow(''),
     total_price: Joi.number().required(),
     promo_code: Joi.string().optional(),
     stripeToken: Joi.string().required(),
@@ -25,7 +27,8 @@ export default payload => {
 
   const result = Joi.validate(payload, schema);
 
-  if (result.error) throw new Error(result.error.details[0].message);
+  if (result.error)
+    throw new Error('JOI Error:' + result.error.details[0].message);
 
   return result;
 };

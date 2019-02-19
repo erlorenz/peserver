@@ -18,6 +18,7 @@ configureWinston();
 initializeDB();
 
 // Middleware
+app.options('*', cors());
 app.use(morgan('dev'));
 app.use(cors());
 app.use(helmet());

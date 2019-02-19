@@ -5,6 +5,7 @@ import TextAPI from '../../services/twilio';
 import { textBody } from '../../services/twilio/messages';
 import validate from './checkoutValidation';
 import dbTransaction from './dbTransaction';
+import dayjs from 'dayjs';
 
 export default async payload => {
   // Create order object and metadata object
@@ -18,6 +19,12 @@ export default async payload => {
   try {
     // Validation
     validate(orderFields);
+
+    // Format Timestamps for Postgres
+    orderFields.pickup_date = dayjs(+orderFields.pickup_date).toISOString();
+    orderFields.return_date = dayjs(+orderFields.return_date).toISOString();
+
+    console.log(orderFields.pickup_date);
 
     // Format phone number - fails on error
     const formattedPhone = formatPhone(orderFields.phone);

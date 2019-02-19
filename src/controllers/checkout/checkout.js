@@ -71,6 +71,12 @@ export default async payload => {
       errorEmailResponse = await EmailAPI.errorEmail(errorData);
     }
     // Send success response
+    console.log({
+      database: dbResponse,
+      twilio: textResponse,
+      receiptEmail: receiptResponse,
+      errorEmail: errorEmailResponse,
+    });
     return {
       database: dbResponse,
       twilio: textResponse,

@@ -13,23 +13,34 @@ export default async payload => {
   };
 
   try {
-    // Validation
-    validate(orderFields);
+    try {
+      // Validation
+      validate(orderFields);
 
-    // Format Timestamps into ISO for Postgres (turn string to number)
-    orderFields.pickup_date = DateTime.fromMillis(
-      +orderFields.pickup_date,
-    ).toISO();
-    orderFields.return_date = DateTime.fromMillis(
-      +orderFields.return_date,
-    ).toISO();
+      // Format Timestamps into ISO for Postgres (turn string to number)
+      orderFields.pickup_date = DateTime.fromMillis(
+        +orderFields.pickup_date,
+      ).toISO();
+      orderFields.return_date = DateTime.fromMillis(
+        +orderFields.return_date,
+      ).toISO();
 
-    // Format phone number - fails on error
-    const formattedPhone = formatPhone(orderFields.phone);
-    metadata.phone = formattedPhone;
-    orderFields.phone = formattedPhone;
+      // Format phone number - fails on error
+      const formattedPhone = formatPhone(orderFields.phone);
+      metadata.phone = formattedPhone;
+      orderFields.phone = formattedPhone;
+    } catch (e) {
+      console.log(e);
+      // Return the validation error if it doesnt work
+      return {
+        stripe_charge: '',
+        stripe_customer: '',
+        error: 'validation',
+        message: e.message,
+      };
+    }
 
-    // Create Stripe customer - fails on error
+    // Create Stripe customer
     const customer = await createCustomer(
       orderFields.email,
       orderFields.stripeToken,
@@ -38,7 +49,7 @@ export default async payload => {
 
     delete orderFields.stripeToken;
 
-    // Create Stripe Charge - fails on error
+    // Create Stripe Charge
     const charge = await createCharge(
       orderFields.total_price,
       customer.id,
@@ -49,9 +60,16 @@ export default async payload => {
     return {
       stripe_charge: charge.id,
       stripe_customer: customer.id,
+      error: '',
+      message: '',
     };
   } catch (e) {
-    console.log('There was an error at validation or payment: ', e.message);
-    throw new Error(e.message);
+    // If stripe fails return payment error
+    return {
+      stripe_charge: '',
+      stripe_customer: '',
+      error: 'payment',
+      message: e.message,
+    };
   }
 };

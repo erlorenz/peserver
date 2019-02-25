@@ -1,6 +1,6 @@
 import { emailAndText, payment, dbTransaction } from '../controllers/checkout';
 
-export const stripeHandler = async (req, res) => {
+export const paymentHandler = async (req, res) => {
   try {
     const response = await payment(req.body);
 

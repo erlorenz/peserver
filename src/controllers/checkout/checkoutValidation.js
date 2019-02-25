@@ -27,8 +27,7 @@ export default payload => {
 
   const result = Joi.validate(payload, schema);
 
-  if (result.error)
-    throw new Error('JOI Error:' + result.error.details[0].message);
+  if (result.error) throw new Error(result.error.details[0].message);
 
   return result;
 };

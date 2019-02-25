@@ -30,7 +30,7 @@ app.get('/', (req, res) =>
 );
 
 // Checkout
-app.post('/checkout/stripe', checkoutHandler.stripeHandler);
+app.post('/checkout/payment', checkoutHandler.paymentHandler);
 app.post('/checkout/emailandtext', checkoutHandler.emailAndTextHandler);
 app.post('/checkout/dbtransaction', checkoutHandler.dbTransactionHandler);
 

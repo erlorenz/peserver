@@ -9,6 +9,11 @@ export default async payload => {
     email: orderFields.email,
     name: orderFields.name,
     phone: '',
+    total_price: orderFields.total_price,
+    hotel: orderFields.hotel,
+    room: orderFields.room,
+    pickup_date: orderFields.pickup_date,
+    return_date: orderFields.return_date,
   };
 
   try {

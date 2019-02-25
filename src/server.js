@@ -25,7 +25,9 @@ app.use(helmet());
 app.use(express.json());
 
 // Basic GET
-app.get('/', (req, res) => res.send('Server is up'));
+app.get('/', (req, res) =>
+  res.send('Server is up in env: ' + process.env.NODE_ENV),
+);
 
 // Checkout
 app.post('/checkout', checkoutHandler);

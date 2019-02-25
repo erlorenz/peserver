@@ -3,7 +3,7 @@ import { twilioToken, twilioSID, twilioNumber } from '../../config/keys';
 
 const client = new twilio(twilioSID, twilioToken);
 
-export default async (bodyText, toNumber) => {
+const TextAPI = async (bodyText, toNumber) => {
   try {
     // Create and send the twilio message
     await client.messages.create({
@@ -16,3 +16,5 @@ export default async (bodyText, toNumber) => {
     return { success: false, message: e.message };
   }
 };
+
+export default TextAPI;

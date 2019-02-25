@@ -7,7 +7,7 @@ import configureWinston from './config/logging';
 import apolloServer from './schema';
 import winston from 'winston';
 import initializeDB from './db';
-import checkoutHandler from './routes/checkout';
+import * as checkoutHandler from './routes/checkout';
 
 // Initialize express
 const app = express();
@@ -30,7 +30,9 @@ app.get('/', (req, res) =>
 );
 
 // Checkout
-app.post('/checkout', checkoutHandler);
+app.post('/checkout/stripe', checkoutHandler.stripeHandler);
+app.post('/checkout/emailandtext', checkoutHandler.emailAndTextHandler);
+app.post('/checkout/dbtransaction', checkoutHandler.dbTransactionHandler);
 
 // GraphQL
 apolloServer.applyMiddleware({ app });

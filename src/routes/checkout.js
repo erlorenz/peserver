@@ -2,9 +2,9 @@ import checkout from '../controllers/checkout';
 
 const checkoutHandler = async (req, res) => {
   try {
-    const response = await checkout(req.body);
+    // const response = await checkout(req.body);
 
-    res.status(200).json(response);
+    res.status(200).json({ test: 'test' });
   } catch (e) {
     res.status(500).json({ error: e, message: e.message });
   }

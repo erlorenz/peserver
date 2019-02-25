@@ -7,6 +7,7 @@ import configureWinston from './config/logging';
 import apolloServer from './schema';
 import winston from 'winston';
 import initializeDB from './db';
+import checkoutHandler from './routes/checkout';
 
 // Initialize express
 const app = express();
@@ -24,7 +25,10 @@ app.use(helmet());
 app.use(express.json());
 
 // Basic GET
-app.get('/', (req, res) => res.send('SERVER RUNNING'));
+app.get('/', (req, res) => res.send('Server is up'));
+
+// Checkout
+app.post('/checkout', checkoutHandler);
 
 // GraphQL
 apolloServer.applyMiddleware({ app });

@@ -5,7 +5,8 @@ import TextAPI from '../../services/twilio';
 import { textBody } from '../../services/twilio/messages';
 import validate from './checkoutValidation';
 import dbTransaction from './dbTransaction';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
+import { DateTime } from 'luxon';
 
 export default async payload => {
   // Create order object and metadata object
@@ -20,9 +21,13 @@ export default async payload => {
     // Validation
     validate(orderFields);
 
-    // Format Timestamps for Postgres
-    orderFields.pickup_date = dayjs(+orderFields.pickup_date).toISOString();
-    orderFields.return_date = dayjs(+orderFields.return_date).toISOString();
+    // Format Timestamps into ISO for Postgres (turn string to number)
+    orderFields.pickup_date = DateTime.fromMillis(
+      +orderFields.pickup_date,
+    ).toISO();
+    orderFields.return_date = DateTime.fromMillis(
+      +orderFields.return_date,
+    ).toISO();
 
     console.log(orderFields.pickup_date);
 

@@ -35,9 +35,9 @@
 //   errorEmailResponse = await EmailAPI.errorEmail(errorData);
 // }
 
-return {
-  stripe: 'test response',
-  // twilio: textResponse,
-  // receiptEmail: receiptResponse,
-  // errorEmail: errorEmailResponse,
-};
+// return {
+//   stripe: 'test response',
+//   // twilio: textResponse,
+//   // receiptEmail: receiptResponse,
+//   // errorEmail: errorEmailResponse,
+// };

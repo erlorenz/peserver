@@ -51,6 +51,7 @@ export default async payload => {
     return {
       stripe_charge: charge.id,
       stripe_customer: customer.id,
+      phone: orderFields.phone,
       error: '',
       message: '',
     };

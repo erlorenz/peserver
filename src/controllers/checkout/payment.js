@@ -1,7 +1,6 @@
 import { createCharge, createCustomer } from '../../services/stripe';
 import { formatPhone } from '../../utils';
 import validate from './checkoutValidation';
-import { DateTime } from 'luxon';
 
 export default async payload => {
   // Create order object and metadata object
@@ -16,14 +15,6 @@ export default async payload => {
     try {
       // Validation
       validate(orderFields);
-
-      // Format Timestamps into ISO for Postgres (turn string to number)
-      orderFields.pickup_date = DateTime.fromMillis(
-        +orderFields.pickup_date,
-      ).toISO();
-      orderFields.return_date = DateTime.fromMillis(
-        +orderFields.return_date,
-      ).toISO();
 
       // Format phone number - fails on error
       const formattedPhone = formatPhone(orderFields.phone);

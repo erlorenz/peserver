@@ -4,7 +4,7 @@ import sendEmail from './sendEmail';
 
 // Receipt email
 export const receiptEmail = async payload => {
-  return await sendEmail(payload, 460188, 'Your Order Confirmation');
+  return await sendEmail(payload, 710280, 'Your Press Express Order');
 };
 
 // Refund email

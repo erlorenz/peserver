@@ -1,10 +1,7 @@
 import { mailjetKey, mailjetSecret } from '../../config/keys';
 import nodeMailjet from 'node-mailjet';
 
-const mailjet = nodeMailjet.connect(
-  mailjetKey,
-  mailjetSecret,
-);
+const mailjet = nodeMailjet.connect(mailjetKey, mailjetSecret);
 
 export default async (payload, templateID, subject) => {
   try {

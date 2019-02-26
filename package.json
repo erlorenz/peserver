@@ -8,13 +8,12 @@
     "dev": "nodemon --exec babel-node src/server.js",
     "start": "node dist/server.js",
     "debug": "nodemon src/server.js --inspect --exec babel-node",
-    "build": "npx babel src -d dist",
-    "docker": "docker run -it -p 3001:3001 peserver"
+    "build": "npx babel src -d dist"
   },
   "author": "Erik Lorenz",
   "license": "ISC",
   "dependencies": {
-    "apollo-server-express": "^2.4.6",
+    "apollo-server-express": "^2.4.8",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dayjs": "^1.8.8",
@@ -39,12 +38,12 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.3",
+    "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.3.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.3.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-env": "^7.3.4",
     "@babel/register": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.14.1",

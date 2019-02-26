@@ -1,6 +1,6 @@
 import TextAPI from '../../services/twilio';
 import { textBody } from '../../services/twilio/messages';
-import sendReceipt from './sendReceipt';
+import sendReceipt from '../../services/mailjet/sendReceipt';
 import { DateTime } from 'luxon';
 
 export default async payload => {

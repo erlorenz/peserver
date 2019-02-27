@@ -33,7 +33,7 @@ const sendReceipt = async payload => {
         // Duplicate email to support
         {
           From: {
-            Email: 'support@pressexpresslv.com',
+            Email: 'amin@pressexpresslv.com',
             Name: 'Admin',
           },
           To: [

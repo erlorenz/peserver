@@ -7,6 +7,7 @@ const sendReceipt = async payload => {
   try {
     const message = {
       Messages: [
+        // The customer email
         {
           From: {
             Email: 'support@pressexpresslv.com',
@@ -24,10 +25,12 @@ const sendReceipt = async payload => {
           Variables: payload,
           TemplateErrorDeliver: true,
           TemplateErrorReporting: {
-            Email: payload.email,
-            Name: payload.name,
+            Email: 'support@pressexpresslv.com',
+            Name: 'Admin',
           },
         },
+
+        // Duplicate email to support
         {
           From: {
             Email: 'support@pressexpresslv.com',

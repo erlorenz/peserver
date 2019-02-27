@@ -14,8 +14,8 @@ const sendReceipt = async payload => {
           },
           To: [
             {
-              Email: 'erikslorenz@gmail.com',
-              Name: 'Erik Lorenz',
+              Email: payload.email,
+              Name: payload.name,
             },
           ],
           TemplateID: 710280,
@@ -31,33 +31,31 @@ const sendReceipt = async payload => {
         {
           From: {
             Email: 'support@pressexpresslv.com',
-            Name: 'Order Update',
+            Name: 'Admin',
           },
           To: [
             {
               Email: 'support@pressexpresslv.com',
-              Name: 'Press Express',
+              Name: 'Admin',
             },
           ],
           TemplateID: 710280,
           TemplateLanguage: true,
-          Subject: 'New Order',
+          Subject: `New Order - ${payload.name}`,
           Variables: payload,
           TemplateErrorDeliver: true,
           TemplateErrorReporting: {
             Email: 'support@pressexpresslv.com',
-            Name: 'Error With Template',
+            Name: 'Admin',
           },
         },
       ],
     };
 
     await mailjet.post('send', { version: 'v3.1' }).request(message);
-    console.log(payload.customerOrderItems);
     return { success: true, message: 'Email Sent' };
   } catch (e) {
     console.log(e);
-    console.log(payload.customerOrderItems);
     return { success: false, message: e.ErrorMessage };
   }
 };

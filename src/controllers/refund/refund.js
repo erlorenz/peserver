@@ -17,7 +17,8 @@ export default async (payload, { models, currentUser }) => {
   );
 
   // Send receipt email
-  const receiptResponse = await EmailController.refundEmail(payload);
+  // const receiptResponse = await EmailController.refundEmail(payload);
+  const receiptResponse = { success: false, message: 'Not sending right now.' };
 
   // Update database
   const refundDetails = {

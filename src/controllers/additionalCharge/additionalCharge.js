@@ -31,7 +31,8 @@ export default async (payload, { models, currentUser }) => {
     additionalAmount: amount,
   };
 
-  const emailResponse = await EmailController.additionalEmail(mailjetData);
+  // const emailResponse = await EmailController.additionalEmail(mailjetData);
+  const emailResponse = { success: false, message: 'Not sending right now' };
 
   const additionalDetails = {
     stripe_charge: charge.id,

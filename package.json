@@ -8,7 +8,9 @@
     "dev": "nodemon --exec babel-node src/server.js",
     "start": "node dist/server.js",
     "debug": "nodemon src/server.js --inspect --exec babel-node",
-    "build": "npx babel src -d dist"
+    "build": "npx babel src -d dist",
+    "deploy:staging": "npm run build && gcloud config set project press-express-staging && gcloud app deploy staging.yaml",
+    "deploy:production": "npm run build && gcloud config set project press-express-225200 && gcloud app deploy production.yaml"
   },
   "author": "Erik Lorenz",
   "license": "ISC",

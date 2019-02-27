@@ -2,11 +2,29 @@ import Knex from 'knex';
 import { Model } from 'objection';
 import AdminUser from '../models/AdminUser';
 import winston from 'winston';
-import knexConfig from '../../knexfile';
 
-// Decide which Knex config to use based on Env
-let config = knexConfig.development;
-if (process.env.NODE_ENV === 'production') config = knexConfig.staging;
+const { DB_NAME, DB_PASSWORD, DB_USER, DB_SOCKET_NAME } = process.env;
+
+// Decide which Knex config to use based on NODE_ENV
+let config = {
+  client: 'pg',
+  connection: {
+    database: DB_NAME,
+    user: DB_USER,
+    password: DB_PASSWORD,
+  },
+};
+
+if (process.env.NODE_ENV === 'production')
+  config = {
+    client: 'pg',
+    connection: {
+      database: DB_NAME,
+      user: DB_USER,
+      password: DB_PASSWORD,
+      host: `/cloudsql/${DB_SOCKET_NAME}`,
+    },
+  };
 
 // Initialize Knex and Objection
 export default async () => {

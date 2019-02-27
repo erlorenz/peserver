@@ -33,6 +33,7 @@ app.get('/', (req, res) =>
 app.post('/checkout/payment', checkoutHandler.paymentHandler);
 app.post('/checkout/emailandtext', checkoutHandler.emailAndTextHandler);
 app.post('/checkout/dbtransaction', checkoutHandler.dbTransactionHandler);
+app.post('/checkout/error', checkoutHandler.errorHandler);
 
 // GraphQL
 apolloServer.applyMiddleware({ app });

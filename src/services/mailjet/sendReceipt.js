@@ -3,7 +3,7 @@ import nodeMailjet from 'node-mailjet';
 
 const mailjet = nodeMailjet.connect(mailjetKey, mailjetSecret);
 
-export default async payload => {
+const sendReceipt = async payload => {
   try {
     const message = {
       Messages: [
@@ -52,38 +52,6 @@ export default async payload => {
       ],
     };
 
-    // {
-    //   FromEmail: 'support@pressexpresslv.com',
-    //   FromName: 'Press Express',
-    //   Subject: 'Your Press Express Order',
-    //   'Mj-TemplateID': '710280',
-    //   'Mj-TemplateLanguage': 'true',
-    //   Recipients: [
-    //     {
-    //       Email: 'erikslorenz@gmail.com',
-    //     },
-    //   ],
-    //   Vars: { customerOrderItems },
-    // };
-    //   Messages: [
-    //     {
-    //       From: {
-    //         Email: 'support@pressexpresslv.com',
-    //         Name: 'Press Express',
-    //       },
-    //       To: [
-    //         {
-    //           Email: payload.email,
-    //           Name: payload.name,
-    //         },
-    //       ],
-    //       TemplateID: templateID,
-    //       TemplateLanguage: true,
-    //       Subject: subject,
-    //       Variables: payload,
-    //     },
-    //   ],
-
     await mailjet.post('send', { version: 'v3.1' }).request(message);
     console.log(payload.customerOrderItems);
     return { success: true, message: 'Email Sent' };
@@ -93,3 +61,5 @@ export default async payload => {
     return { success: false, message: e.ErrorMessage };
   }
 };
+
+export default sendReceipt;

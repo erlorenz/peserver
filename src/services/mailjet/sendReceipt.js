@@ -21,7 +21,7 @@ const sendReceipt = async payload => {
           ],
           TemplateID: 710280,
           TemplateLanguage: true,
-          Subject: 'Your Press Express Order',
+          Subject: 'Your Press Express Receipt',
           Variables: payload,
           TemplateErrorDeliver: true,
           TemplateErrorReporting: {

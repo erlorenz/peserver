@@ -11,8 +11,8 @@ async function sendCheckoutError(payload) {
       Messages: [
         {
           From: {
-            Email: 'support@pressexpresslv.com',
-            Name: 'Press Express Automated',
+            Email: 'admin@pressexpresslv.com',
+            Name: 'Admin',
           },
           To: [
             {
@@ -23,12 +23,12 @@ async function sendCheckoutError(payload) {
 
           Subject: `ERROR WITH CHECKOUT ${name}`,
           HTMLPart: `<h3>There was a checkout error!</h3><br />
-          <h3>${!database ? 'Database error' : ''}</h3><br/>
-          <h3>${!receipt ? 'Receipt error' : ''}</h3><br/>
-          <h3>${!text ? 'Text error' : ''}</h3><br/>
-          <h3>Name: ${name}</h3><br/>
-          <h3>Phone: ${phone}</h3><br/>
-          <h3>Email: ${email}</h3><br/>
+          <h4>${!database ? 'Database error' : ''}</h4><br/>
+          <h4>${!receipt ? 'Receipt error' : ''}</h4><br/>
+          <h4>${!text ? 'Text error' : ''}</h4><br/>
+          <p>Name: ${name}</p><br/>
+          <p>Phone: ${phone}</p><br/>
+          <p>Email: ${email}</p><br/>
           `,
         },
       ],

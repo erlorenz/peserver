@@ -57,7 +57,7 @@ export default async payload => {
       stripe_charge: charge.id,
       stripe_customer: customer.id,
       phone: orderFields.phone,
-      success: true,
+      error: '',
       message: 'Successfully completed payment',
     };
   } catch (e) {
@@ -65,7 +65,7 @@ export default async payload => {
     return {
       stripe_charge: '',
       stripe_customer: '',
-      success: false,
+      error: 'payment',
       message: e.message,
     };
   }

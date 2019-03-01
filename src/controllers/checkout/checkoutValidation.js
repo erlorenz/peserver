@@ -20,7 +20,10 @@ export default payload => {
     special_instructions: Joi.string()
       .optional()
       .allow(''),
-    total_price: Joi.number().required(),
+    total_price: Joi.number()
+      .min(1000)
+      .max(100000)
+      .required(),
     promo_code: Joi.string().optional(),
     stripeToken: Joi.string().required(),
   };

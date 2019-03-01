@@ -1,17 +1,15 @@
-import TextAPI from '../../services/twilio';
-import { textBody } from '../../services/twilio/messages';
 import sendReceipt from '../../services/mailjet/sendReceipt';
 import { DateTime } from 'luxon';
 
-export default async payload => {
+const receiptEmail = async payload => {
   const orderFields = { ...payload };
 
-  // Send mailjet email
-
+  // Format the prices
   const addSubtotal = orderFields.customerOrderItems.map(item => ({
     ...item,
     subTotal: ((item.price * item.quantity) / 100).toFixed(2),
   }));
+  const total_price = (orderFields.total_price / 100).toFixed(2);
 
   const emailPayload = {
     phone: orderFields.phone,
@@ -27,12 +25,11 @@ export default async payload => {
       .setZone('America/Los_Angeles')
       .toFormat('EEEE, M/d h:mm a'),
     customerOrderItems: addSubtotal,
-    total_price: (orderFields.total_price / 100).toFixed(2),
+    total_price,
   };
   const receiptResponse = await sendReceipt(emailPayload);
 
-  // // Send twilio text message
-  const textResponse = await TextAPI(textBody.processed, orderFields.phone);
-
-  return { receiptResponse, textResponse };
+  return receiptResponse;
 };
+
+export default receiptEmail;

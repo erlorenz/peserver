@@ -56,7 +56,7 @@ const sendReceipt = async payload => {
     };
 
     await mailjet.post('send', { version: 'v3.1' }).request(message);
-    return { success: true, message: 'Email Sent' };
+    return { success: true, message: 'Receipt email sent.' };
   } catch (e) {
     console.log(e);
     return { success: false, message: e.ErrorMessage };

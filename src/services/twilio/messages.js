@@ -1,4 +1,5 @@
-const processedText = `This is Press Express - we received your order! Make sure to drop your garments at the bell desk by the scheduled pickup time. Call us at 702-620-3315 or email us at support@pressexpresslv.com with any questions.`;
+const processedText = firstName =>
+  `Hi ${firstName} this is Press Express - we received your order! Make sure to drop your garments at the bell desk by the scheduled pickup time. Call us at 702-620-3315 or email us at support@pressexpresslv.com with any questions.`;
 
 const pickedUpText = `Update from Press Express: Your items have been picked up.`;
 

@@ -31,9 +31,10 @@ app.get('/', (req, res) =>
 
 // Checkout
 app.post('/checkout/payment', checkoutHandler.paymentHandler);
-app.post('/checkout/emailandtext', checkoutHandler.emailAndTextHandler);
+app.post('/checkout/receipt', checkoutHandler.receiptEmailHandler);
 app.post('/checkout/dbtransaction', checkoutHandler.dbTransactionHandler);
 app.post('/checkout/error', checkoutHandler.errorHandler);
+app.post('/checkout/text', checkoutHandler.textHandler);
 
 // GraphQL
 apolloServer.applyMiddleware({ app });
@@ -45,6 +46,6 @@ app.listen(PORT, () => {
   winston.info(
     `Express running at: ${PORT}, 
     Environment: ${NODE_ENV},
-    🚀 Server ready at http://localhost:${PORT}${apolloServer.graphqlPath}`,
+    🚀 Server ready.`,
   );
 });

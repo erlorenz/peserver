@@ -25,7 +25,7 @@ export default async payload => {
   } catch (e) {
     // Rollback transaction on error
     await trx.rollback();
-
+    console.log(e);
     return {
       success: false,
       message: 'Error writing to database.',

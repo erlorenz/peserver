@@ -32,7 +32,10 @@ export const textHandler = async (req, res) => {
     firstName = req.body.name.split(' ')[0];
   }
   try {
-    const textResponse = await TextAPI(textBody.processed(firstName), req.body);
+    const textResponse = await TextAPI(
+      textBody.processed(firstName),
+      req.body.phone,
+    );
     res.status(200).json(textResponse);
   } catch (e) {
     res.status(500).json({ success: false, message: e.message });

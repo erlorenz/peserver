@@ -19,7 +19,7 @@ router.post('/notifications/sms', (req, res) => {
 router.post('/notifications/voice', (request, response) => {
   const twiml = new twilio.twiml.VoiceResponse();
 
-  twiml.say({ voice: 'alice' }, 'Forwarding call to Press Express');
+  twiml.say({ voice: 'alice' }, 'Forwarding now!');
   twiml.dial('702-620-3315');
 
   // Render the response as XML in reply to the webhook request

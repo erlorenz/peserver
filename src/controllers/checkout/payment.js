@@ -1,6 +1,9 @@
 import { createCharge, createCustomer } from '../../services/stripe';
 import { formatPhone } from '../../utils';
 import validate from './checkoutValidation';
+import TextAPI from '../../services/twilio';
+import { textNoResponse } from '../../services/twilio/twilio';
+import { DateTime } from 'luxon';
 
 export default async payload => {
   // Create order object and metadata object
@@ -50,6 +53,16 @@ export default async payload => {
       orderFields.total_price,
       customer.id,
       metadata,
+    );
+
+    // Send text notification, dont wait for a response
+    textNoResponse(
+      `New order ${orderFields.hotel} - pickup at ${DateTime.fromMillis(
+        +orderFields.pickup_date,
+      )
+        .setZone('America/Los_Angeles')
+        .toFormat('EEEE h:mm a')}`,
+      process.env.PERSONAL_PHONE,
     );
 
     // Return Stripe Charge and Customer ID

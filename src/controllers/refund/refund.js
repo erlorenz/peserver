@@ -3,6 +3,7 @@ import * as EmailController from '../../services/mailjet';
 import validate from './refundValidation';
 import insertRefund from './insertRefund';
 import { checkAuth } from '../../utils';
+import sendRefund from '../../services/mailjet/sendRefund';
 
 export default async (payload, { models, currentUser }) => {
   checkAuth(currentUser);
@@ -17,8 +18,13 @@ export default async (payload, { models, currentUser }) => {
   );
 
   // Send receipt email
-  // const receiptResponse = await EmailController.refundEmail(payload);
-  const receiptResponse = { success: false, message: 'Not sending right now.' };
+  const mailjetData = {
+    amount: (payload.amount / 100).toFixed(2),
+    name: payload.name,
+    email: payload.email,
+  };
+
+  const receiptResponse = await sendRefund(mailjetData);
 
   // Update database
   const refundDetails = {

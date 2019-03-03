@@ -1,8 +1,8 @@
-import * as EmailController from '../../services/mailjet';
 import * as StripeController from '../../services/stripe';
 import validate from './additionalChargeValidation';
 import insertAdditionalCharge from './insertAdditionalCharge';
 import { checkAuth } from '../../utils';
+import sendAdditionalCharge from '../../services/mailjet/sendAdditionalCharge';
 
 export default async (payload, { models, currentUser }) => {
   checkAuth(currentUser);
@@ -28,11 +28,11 @@ export default async (payload, { models, currentUser }) => {
   const mailjetData = {
     name: name,
     email: email,
-    additionalAmount: amount,
+    amount: (amount / 100).toFixed(2),
   };
 
   // const emailResponse = await EmailController.additionalEmail(mailjetData);
-  const emailResponse = { success: false, message: 'Not sending right now' };
+  const emailResponse = await sendAdditionalCharge(mailjetData);
 
   const additionalDetails = {
     stripe_charge: charge.id,

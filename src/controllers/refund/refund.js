@@ -1,5 +1,4 @@
 import * as StripeController from '../../services/stripe';
-import * as EmailController from '../../services/mailjet';
 import validate from './refundValidation';
 import insertRefund from './insertRefund';
 import { checkAuth } from '../../utils';

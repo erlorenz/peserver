@@ -26,6 +26,7 @@ export default payload => {
       .required(),
     promo_code: Joi.string().optional(),
     stripeToken: Joi.string().required(),
+    test: Joi.boolean().optional(),
   };
 
   const result = Joi.validate(payload, schema);
